@@ -1,41 +1,65 @@
 package client;
-
-import java.io.IOException;
 import java.net.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.DatagramChannel;
+import java.util.List;
+
+import collection.Dragon;
+import managers.DragonManager;
+import utility.CSV;
+import utility.DragonCSVParser;
+
+import java.io.*;
+import java.math.BigInteger;
 
 public class Client {
-    public static void main(String[] args) {
+    public static void main(String[] args){
+    
+        
+        
+        List<String[]> parsedDragons = CSV.read("test.1.csv");
+        DragonManager dragonManager = new DragonManager();
+        for (String[] strings : parsedDragons) {
+            Dragon dragon = DragonCSVParser.parseDragonFromRow(strings);
+            dragonManager.addDragon(dragon);
+            //System.out.println(dragon);
+        }
+        
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); // https://stackoverflow.com/questions/2836646/java-serializable-object-to-byte-array
+        byte[] serialized;
+        try (ObjectOutputStream out = new ObjectOutputStream(byteArrayOutputStream)) {
+            for (Dragon dragon : dragonManager.getDragonSet()) {
+                out.writeObject(dragon);
+            }
+            serialized = byteArrayOutputStream.toByteArray();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         try {
-            // Создаем DatagramSocket
-            DatagramSocket socket = new DatagramSocket();
-
-            // Адрес и порт сервера
-            InetAddress serverAddress = InetAddress.getByName("localhost");
-            int serverPort = 8080;
-
-            // Сообщение для отправки
-            String message = "Привет от клиента!";
-            byte[] buffer = message.getBytes();
-
-            // Создаем пакет для отправки
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, serverAddress, serverPort);
-
-            // Отправляем пакет
-            socket.send(packet);
-            System.out.println("Сообщение отправлено серверу: " + message);
-
-            // Получаем ответ от сервера
-            byte[] receiveBuffer = new byte[1024];
-            DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
-            socket.receive(receivePacket);
-
-            String receivedMessage = new String(receivePacket.getData(), 0, receivePacket.getLength());
-            System.out.println("Получено сообщение от сервера: " + receivedMessage);
-
-            // Закрываем сокет
-            socket.close();
-        } catch (IOException e) {
+            InetAddress ip = InetAddress.getByName("localhost");
+            int port = 1111;
+            InetSocketAddress inetSocketAddress = new InetSocketAddress(ip, port);
+            DatagramChannel datagramChannel = DatagramChannel.open();
+            ByteBuffer byteBuffer = ByteBuffer.wrap(serialized);
+            datagramChannel.send(ByteBuffer.wrap(intToBytes(serialized.length)), inetSocketAddress);
+            datagramChannel.send(byteBuffer, inetSocketAddress);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        
     }
+    public static byte[] intToBytes(int x) { //https://stackoverflow.com/questions/2183240/java-integer-to-byte-array
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            DataOutputStream out = new DataOutputStream(bos);
+            out.writeInt(x);
+            byte[] int_bytes = bos.toByteArray();
+            return int_bytes;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }
