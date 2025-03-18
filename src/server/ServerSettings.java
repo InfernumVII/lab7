@@ -1,6 +1,6 @@
 package server;
 
-import temp.Settings;
+import network.Settings;
 
 public class ServerSettings extends Settings {
     public ServerSettings(){

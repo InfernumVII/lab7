@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import client.commands.Command;
-import newcommands.CommandInterface;
+import servercommands.CommandInterface;
 
 
 public class CommandManager {

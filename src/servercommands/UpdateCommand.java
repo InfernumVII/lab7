@@ -1,4 +1,4 @@
-package newcommands;
+package servercommands;
 
 import java.util.StringJoiner;
 

@@ -1,20 +1,22 @@
-package newcommands;
+package servercommands;
+import java.util.StringJoiner;
+
+import collection.Dragon;
 import managers.DragonManager;
 import utility.ConsoleInputHandler;
 
 /**
- * Команда для очистки коллекции драконов.
+ * Команда для вывода всех элементов коллекции в строковом представлении.
  * Реализует интерфейс {@link CommandInterface}.
  */
-public class ClearCommand implements CommandInterface{
+public class ShowCommand implements CommandInterface {
     private DragonManager dragonManager;
-
     /**
-     * Конструктор команды ClearCommand.
+     * Конструктор команды ShowCommand.
      *
      * @param dragonManager объект {@link DragonManager} для управления коллекцией драконов.
      */
-    public ClearCommand(DragonManager dragonManager) {
+    public ShowCommand(DragonManager dragonManager) {
         this.dragonManager = dragonManager;
     }
 
@@ -29,14 +31,17 @@ public class ClearCommand implements CommandInterface{
     }
 
     /**
-     * Выполняет команду очистки коллекции драконов.
+     * Выполняет команду вывода всех элементов коллекции в строковом представлении.
      *
      * @param arg аргумент команды (в данной команде не используется).
      */
     @Override
     public String execute(Object arg){
-        dragonManager.clearDragonSet();
-        return "Драконы были очищены!";
+        StringJoiner stringJoiner = new StringJoiner("\n");
+        for (Dragon dragon : dragonManager.getSortedDragons()) {
+            stringJoiner.add(dragon.toString());
+        }
+        return stringJoiner.toString();
     }
 
     /**
@@ -46,7 +51,7 @@ public class ClearCommand implements CommandInterface{
      */
     @Override
     public String getDescription(){
-        return "очистить коллекцию";
+        return "вывести в стандартный поток вывода все элементы коллекции в строковом представлении";
     }
     
 }

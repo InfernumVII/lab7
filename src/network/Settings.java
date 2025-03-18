@@ -1,4 +1,4 @@
-package temp;
+package network;
 public abstract class Settings {
     private String ip;
     private int port;

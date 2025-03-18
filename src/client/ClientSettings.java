@@ -1,6 +1,6 @@
 package client;
 
-import temp.Settings;
+import network.Settings;
 
 public class ClientSettings extends Settings {
     public ClientSettings(){

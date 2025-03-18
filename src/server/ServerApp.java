@@ -8,13 +8,13 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.util.List;
 
-import newcommands.*;
 import managers.CommandManager;
 import managers.DragonManager;
-import temp.Command;
-import temp.Answer;
-import temp.Settings;
-import temp.UdpNetwork;
+import network.Answer;
+import network.Command;
+import network.Settings;
+import network.UdpNetwork;
+import servercommands.*;
 import utility.CSV;
 
 public class ServerApp extends UdpNetwork {
@@ -35,7 +35,7 @@ public class ServerApp extends UdpNetwork {
         ServerApp server = new ServerApp(settings);
 
         DragonManager dragonManager = new DragonManager();
-        /* 
+        
         String fileName = System.getenv("DRAGON_FILE");
         if (fileName == null || fileName.isEmpty()) {
             System.err.println("Ошибка: переменная окружения DRAGON_FILE не задана.");
@@ -45,7 +45,7 @@ public class ServerApp extends UdpNetwork {
                 dragonManager.collectParsedDragons(fileData);
                 System.out.println("Коллекция успешно загружена из файла: " + fileName);
             } 
-        }*/
+        }
 
 
         CommandManager manager = new CommandManager();
@@ -85,7 +85,7 @@ public class ServerApp extends UdpNetwork {
         manager.registerCommand("remove_by_id", new RemoveByIdCommand(dragonManager));
         manager.registerCommand("clear", new ClearCommand(dragonManager));
         //manager.registerCommand("save", new SaveCommand(dragonManager));
-        //manager.registerCommand("execute_script", new ExecuteSciptCommand(manager));
+        manager.registerCommand("execute_script", new ExecuteSciptCommand());
         //manager.registerCommand("exit", new ExitCommand());
         manager.registerCommand("add_if_min", new AddIfMinCommand(dragonManager));
         manager.registerCommand("remove_greater", new RemoveGreaterCommand(dragonManager));

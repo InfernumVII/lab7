@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import collection.Dragon;
 import utility.DragonCSVParser;
@@ -92,13 +93,9 @@ public class DragonManager {
      * @param id ID дракона.
      * @return {@code true}, если дракон с таким ID существует, иначе {@code false}.
      */
-    public boolean setHaveId(int id){
-        for (Dragon dragon : dragonSet) {
-            if (dragon.getId() == id){
-                return true;
-            }
-        }
-        return false;
+    public boolean setHaveId(int id) {
+        return dragonSet.stream()
+                .anyMatch(dragon -> dragon.getId() == id);
     }
 
     /**
@@ -108,13 +105,11 @@ public class DragonManager {
      * @return объект дракона, если он найден, иначе {@code null}.
      * @throws Exception 
      */
-    public Dragon returnDragonById(int id) throws Exception{
-        for (Dragon dragon : dragonSet) {
-            if (dragon.getId() == id){
-                return dragon;
-            }
-        }
-        throw new Exception("Дракона с данным ID не найдено.");
+    public Dragon returnDragonById(int id) throws Exception {
+        return dragonSet.stream()
+                .filter(dragon -> dragon.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new Exception("Дракона с данным ID не найдено."));
     }
     
     /**
@@ -131,10 +126,10 @@ public class DragonManager {
      *
      * @return отсортированный список драконов.
      */
-    public List<Dragon> getSortedDragons(){
-        List<Dragon> dragonList = new ArrayList<>(dragonSet);
-        Collections.sort(dragonList);
-        return dragonList;
+    public List<Dragon> getSortedDragons() {
+        return dragonSet.stream()
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     /**

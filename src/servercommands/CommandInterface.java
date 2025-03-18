@@ -1,4 +1,4 @@
-package commands;
+package servercommands;
 /**
  * Интерфейс, представляющий команду, которую можно выполнить.
  * Каждая команда должна реализовывать методы этого интерфейса.
@@ -9,7 +9,7 @@ public interface CommandInterface {
      *
      * @param arg аргумент команды (может быть пустым, если команда не требует аргументов).
      */
-    void execute(String arg);
+    String execute(Object arg);
 
     /**
      * Возвращает описание команды.

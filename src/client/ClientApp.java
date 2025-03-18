@@ -10,10 +10,10 @@ import client.commands.ExitCommand;
 import client.commands.RemoveGreaterCommand;
 import client.commands.UpdateCommand;
 import client.managers.CommandManager;
-import temp.Command;
-import temp.Answer;
-import temp.Settings;
-import temp.UdpNetwork;
+import network.Answer;
+import network.Command;
+import network.Settings;
+import network.UdpNetwork;
 
 public class ClientApp extends UdpNetwork {
     private Scanner scanner;

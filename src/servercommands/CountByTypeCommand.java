@@ -1,4 +1,6 @@
-package commands;
+package servercommands;
+import java.util.StringJoiner;
+
 import collection.Dragon;
 import collection.DragonType;
 import managers.DragonManager;
@@ -38,18 +40,25 @@ public class CountByTypeCommand implements CommandInterface {
      * @param arg аргумент команды (тип дракона).
      */
     @Override
-    public void execute(String arg){
-        /*
-        int count = 0;
-        if (ArgHandler.checkArgForEnumString(arg, DragonType.values())){
-            DragonType dragonType = DragonType.valueOf(arg);
-            for (Dragon dragon : dragonManager.getSortedDragons()) {
-                if (dragon.getType() == dragonType){
-                    count += 1;
+    public String execute(Object argument){
+        try {
+            String arg = (String) argument;
+            StringJoiner stringJoiner = new StringJoiner("\n");
+            int count = 0;
+            if (ArgHandler.checkArgForEnumString(arg, DragonType.values())){
+                DragonType dragonType = DragonType.valueOf(arg);
+                for (Dragon dragon : dragonManager.getSortedDragons()) {
+                    if (dragon.getType() == dragonType){
+                        count += 1;
+                    }
                 }
+                stringJoiner.add(String.format("Количество драконов с данным типом: %d", count));
             }
-            ConsoleInputHandler.printIfInputIsIn(String.format("Количество драконов с данным типом: %d", count));
-        }*/
+            return stringJoiner.toString();
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        
     }
 
     /**
