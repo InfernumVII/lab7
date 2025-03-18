@@ -84,9 +84,7 @@ public class ServerApp extends UdpNetwork {
         manager.registerCommand("update", new UpdateCommand(dragonManager));
         manager.registerCommand("remove_by_id", new RemoveByIdCommand(dragonManager));
         manager.registerCommand("clear", new ClearCommand(dragonManager));
-        //manager.registerCommand("save", new SaveCommand(dragonManager));
         manager.registerCommand("execute_script", new ExecuteSciptCommand());
-        //manager.registerCommand("exit", new ExitCommand());
         manager.registerCommand("add_if_min", new AddIfMinCommand(dragonManager));
         manager.registerCommand("remove_greater", new RemoveGreaterCommand(dragonManager));
         manager.registerCommand("history", new HistoryCommand(manager));
