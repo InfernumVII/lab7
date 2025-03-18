@@ -15,10 +15,12 @@ import utility.ConsoleInputHandler;
 public class RemoveGreaterCommand implements Command {
 
     private Scanner scanner;
+    private boolean showOutput;
 
 
-    public RemoveGreaterCommand(Scanner scanner){
+    public RemoveGreaterCommand(Scanner scanner, boolean showOutput){
         this.scanner = scanner;
+        this.showOutput = showOutput;
     }
 
     /**
@@ -39,7 +41,7 @@ public class RemoveGreaterCommand implements Command {
     @Override
     public Object execute(String arg){
         System.out.println("Введите координаты элемента: ");
-        ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler(scanner);
+        ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler(scanner, showOutput);
         long x = consoleInputHandler.promptForLong("Введите координату x:", false, -420, Long.MAX_VALUE);
         long y = consoleInputHandler.promptForLong("Введите координату y:", false, Long.MIN_VALUE, 699);
         

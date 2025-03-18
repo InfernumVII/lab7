@@ -51,10 +51,10 @@ public class ClientApp extends UdpNetwork {
         
     }
     public void start(boolean condition, boolean showPrints){
-        getCommandManager().registerCommand("add", new AddCommand(getScanner()));
-        getCommandManager().registerCommand("update", new UpdateCommand(getScanner()));
-        getCommandManager().registerCommand("add_if_min", new AddIfMinCommand(getScanner()));
-        getCommandManager().registerCommand("remove_greater", new RemoveGreaterCommand(getScanner()));
+        getCommandManager().registerCommand("add", new AddCommand(getScanner(), showPrints));
+        getCommandManager().registerCommand("update", new UpdateCommand(getScanner(), showPrints));
+        getCommandManager().registerCommand("add_if_min", new AddIfMinCommand(getScanner(), showPrints));
+        getCommandManager().registerCommand("remove_greater", new RemoveGreaterCommand(getScanner(), showPrints));
         getCommandManager().registerCommand("execute_script", new ExecuteSciptCommand(this));
         getCommandManager().registerCommand("exit", new ExitCommand());
 

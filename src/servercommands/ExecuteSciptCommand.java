@@ -22,7 +22,7 @@ public class ExecuteSciptCommand implements CommandInterface {
      */
     @Override
     public boolean isHasArgs(){
-        return false;
+        return true;
     }
 
     /**

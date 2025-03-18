@@ -21,10 +21,12 @@ import utility.ConsoleInputHandler;
  */
 public class UpdateCommand implements Command {
     private Scanner scanner;
+    private boolean showOutput;
 
 
-    public UpdateCommand(Scanner scanner){
+    public UpdateCommand(Scanner scanner, boolean showOutput){
         this.scanner = scanner;
+        this.showOutput = showOutput;
     }
 
     /**
@@ -47,7 +49,7 @@ public class UpdateCommand implements Command {
         try {
             if (ArgHandler.checkArgForInt(arg)){
                 int id = Integer.parseInt(arg);
-                ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler(scanner);
+                ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler(scanner, showOutput);
                     
                 System.out.println(String.format("Начинаем изменение дракона с ID-%d", id));
     

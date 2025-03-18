@@ -14,10 +14,12 @@ import utility.ConsoleInputHandler;
 
 public class AddIfMinCommand implements Command {
 
-    Scanner scanner;
+    private Scanner scanner;
+    private boolean showOutput;
 
-    public AddIfMinCommand(Scanner scanner){
+    public AddIfMinCommand(Scanner scanner, boolean showOutput){
         this.scanner = scanner;
+        this.showOutput = showOutput;
     }
 
     @Override
@@ -27,7 +29,7 @@ public class AddIfMinCommand implements Command {
 
     @Override
     public Object execute(String arg) {
-        ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler(scanner);
+        ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler(scanner, showOutput);
         Builder dragonBuilder = new Dragon.Builder()
                     .withName(consoleInputHandler.promtForString("Введите имя дракона:", false))
                     .withCoordinates(new Coordinates(consoleInputHandler.promptForLong("Введите координату x:", false, -420, Long.MAX_VALUE),

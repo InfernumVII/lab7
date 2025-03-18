@@ -11,14 +11,16 @@ import managers.CommandManager;
  */
 public class ConsoleInputHandler {
     private Scanner scanner;
+    private boolean showOutput;
 
     /**
      * Конструктор для инициализации объекта.
      *
      * @param commandManager объект {@link CommandManager}, используемый для управления командами и их составными.
      */
-    public ConsoleInputHandler(Scanner scanner) {
+    public ConsoleInputHandler(Scanner scanner, boolean showOutput) {
         this.scanner = scanner;
+        this.showOutput = showOutput;
     }
     
 
@@ -33,10 +35,10 @@ public class ConsoleInputHandler {
      */
     public String promtForString(String prompt, boolean allowNull){
         while (true){
-            System.out.println(prompt);
+            if (showOutput == true) { System.out.println(prompt); }
             String in = scanner.nextLine();
             if (!allowNull && in.isEmpty()) {
-                System.out.println("Значение поля не может быть пустым.");
+                if (showOutput == true) { System.out.println("Значение поля не может быть пустым."); }
                 continue;
             }
             return in;
@@ -56,13 +58,13 @@ public class ConsoleInputHandler {
      */
     public long promptForLong(String prompt, boolean allowNull, long min, long max){
         while (true) {
-            System.out.println(String.format(prompt, min, max));
+            if (showOutput == true) { System.out.println(String.format(prompt, min, max)); }
             String inString = scanner.nextLine();
             if (inString.isEmpty()) {
                 if (allowNull) {
                     return 0; 
                 } else {
-                    System.out.println("Значение поля не может быть пустым.");
+                    if (showOutput == true) { System.out.println("Значение поля не может быть пустым."); }
                     continue;
                 }
             }
@@ -70,12 +72,12 @@ public class ConsoleInputHandler {
                 long in = Long.parseLong(inString);
 
                 if (in <= min || in > max) {
-                    System.out.printf("Число должно быть между %s и %s.\n", min, max);
+                    if (showOutput == true) { System.out.printf("Число должно быть между %s и %s.\n", min, max); }
                 } else {
                     return in; 
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Поле должно быть числом.");
+                if (showOutput == true) { System.out.println("Поле должно быть числом."); }
             }
         }
     }
@@ -91,13 +93,13 @@ public class ConsoleInputHandler {
      */
     public Float promptForFloat(String prompt, boolean allowNull, Float min, Float max){
         while (true) {
-            System.out.println(prompt);
+            if (showOutput == true) { System.out.println(prompt); }
             String inString = scanner.nextLine();
             if (inString.isEmpty()) {
                 if (allowNull) {
                     return 0f; 
                 } else {
-                    System.out.println("Значение поля не может быть пустым.");
+                    if (showOutput == true) { System.out.println("Значение поля не может быть пустым."); }
                     continue;
                 }
             }
@@ -105,12 +107,12 @@ public class ConsoleInputHandler {
                 Float in = Float.parseFloat(inString);
 
                 if (in <= min || in > max) {
-                    System.out.printf("Число должно быть между %s и %s.\n", min, max);
+                    if (showOutput == true) { System.out.printf("Число должно быть между %s и %s.\n", min, max); }
                 } else {
                     return in; 
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Поле должно быть числом.");
+                if (showOutput == true) { System.out.println("Поле должно быть числом."); }   
             }
         }
     }
@@ -129,13 +131,13 @@ public class ConsoleInputHandler {
     public <E extends Enum<E>> E promptForEnum(String prompt, E[] enums, boolean allowNull){
         String joinedEnums = Arrays.toString(enums);
         while (true) {
-            System.out.println(String.format(prompt, joinedEnums));
+            if (showOutput == true) { System.out.println(String.format(prompt, joinedEnums)); }
             String in = scanner.nextLine();
             if (in.isEmpty()){
                 if (allowNull){
                     return enums[0];
                 } else {
-                    System.out.println("Значение поля не может быть пустым.");
+                    if (showOutput == true) { System.out.println("Значение поля не может быть пустым."); }
                     continue;
                 }
             }
@@ -146,7 +148,7 @@ public class ConsoleInputHandler {
                 }
             }
             if (isInEnums == false){
-                System.out.println(String.format("Поле должно быть одним из вариантов: (%s)", joinedEnums));
+                if (showOutput == true) { System.out.println(String.format("Поле должно быть одним из вариантов: (%s)", joinedEnums)); }
                 continue;
             }
             
