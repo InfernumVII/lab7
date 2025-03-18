@@ -40,8 +40,9 @@ public class CountByTypeCommand implements CommandInterface {
      * @param arg аргумент команды (тип дракона).
      */
     @Override
-    public String execute(String arg){
+    public String execute(Object argument){
         try {
+            String arg = (String) argument;
             StringJoiner stringJoiner = new StringJoiner("\n");
             int count = 0;
             if (ArgHandler.checkArgForEnumString(arg, DragonType.values())){

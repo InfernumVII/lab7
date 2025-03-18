@@ -11,34 +11,19 @@ import managers.CommandManager;
  */
 public class ConsoleInputHandler {
     private Scanner scanner;
-    public static boolean inputIsIn = true;
 
     /**
      * Конструктор для инициализации объекта.
      *
      * @param commandManager объект {@link CommandManager}, используемый для управления командами и их составными.
      */
-    public ConsoleInputHandler(CommandManager commandManager) {
-        this.scanner = commandManager.getScanner();
-        this.inputIsIn = commandManager.isInputIsIn();
+    public ConsoleInputHandler(Scanner scanner) {
+        this.scanner = scanner;
     }
     
-    public static void update(boolean in){
-        ConsoleInputHandler.inputIsIn = in;
-    }
 
-    /**
-     * Выводит переданное сообщение в консоль, если флаг inputIsIn установлен в true.
-     * Используется для вывода при вводе команд через отличные от (System.in) стримы.
-     *
-     * @param in строка, которая будет выведена в консоль, если inputIsIn == true.
-     */
-    public static <T> void printIfInputIsIn(T in){
-        if (inputIsIn){
-            System.out.println(in);
-        }
-        
-    }
+    
+    
     /**
      * Запрашивает у пользователя строковое значение.
      *
@@ -48,7 +33,7 @@ public class ConsoleInputHandler {
      */
     public String promtForString(String prompt, boolean allowNull){
         while (true){
-            ConsoleInputHandler.printIfInputIsIn(prompt);
+            System.out.println(prompt);
             String in = scanner.nextLine();
             if (!allowNull && in.isEmpty()) {
                 System.out.println("Значение поля не может быть пустым.");
@@ -71,7 +56,7 @@ public class ConsoleInputHandler {
      */
     public long promptForLong(String prompt, boolean allowNull, long min, long max){
         while (true) {
-            ConsoleInputHandler.printIfInputIsIn(String.format(prompt, min, max));
+            System.out.println(String.format(prompt, min, max));
             String inString = scanner.nextLine();
             if (inString.isEmpty()) {
                 if (allowNull) {
@@ -106,7 +91,7 @@ public class ConsoleInputHandler {
      */
     public Float promptForFloat(String prompt, boolean allowNull, Float min, Float max){
         while (true) {
-            ConsoleInputHandler.printIfInputIsIn(prompt);
+            System.out.println(prompt);
             String inString = scanner.nextLine();
             if (inString.isEmpty()) {
                 if (allowNull) {
@@ -144,7 +129,7 @@ public class ConsoleInputHandler {
     public <E extends Enum<E>> E promptForEnum(String prompt, E[] enums, boolean allowNull){
         String joinedEnums = Arrays.toString(enums);
         while (true) {
-            ConsoleInputHandler.printIfInputIsIn(String.format(prompt, joinedEnums));
+            System.out.println(String.format(prompt, joinedEnums));
             String in = scanner.nextLine();
             if (in.isEmpty()){
                 if (allowNull){

@@ -39,8 +39,9 @@ public class FilterByCharacterCommmand implements CommandInterface {
      * @param arg аргумент команды (характер дракона).
      */
     @Override
-    public String execute(String arg){
+    public String execute(Object argument){
         try {
+            String arg = (String) argument;
             StringJoiner stringJoiner = new StringJoiner("\n");
             if (ArgHandler.checkArgForEnumString(arg, DragonCharacter.values())){
                 stringJoiner.add("Драконы с таким же характером: ");

@@ -34,7 +34,7 @@ public class ClearCommand implements CommandInterface{
      * @param arg аргумент команды (в данной команде не используется).
      */
     @Override
-    public String execute(String arg){
+    public String execute(Object arg){
         dragonManager.clearDragonSet();
         return "Драконы были очищены!";
     }

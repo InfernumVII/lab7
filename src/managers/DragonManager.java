@@ -106,15 +106,15 @@ public class DragonManager {
      *
      * @param id ID дракона.
      * @return объект дракона, если он найден, иначе {@code null}.
+     * @throws Exception 
      */
-    public Dragon returnDragonById(int id){
+    public Dragon returnDragonById(int id) throws Exception{
         for (Dragon dragon : dragonSet) {
             if (dragon.getId() == id){
                 return dragon;
             }
         }
-        System.out.println("Дракона с данным ID не найдено.");
-        return null;
+        throw new Exception("Дракона с данным ID не найдено.");
     }
     
     /**

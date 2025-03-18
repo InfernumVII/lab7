@@ -38,8 +38,9 @@ public class RemoveByIdCommand implements CommandInterface {
      * @param arg строка, содержащая ID дракона.
      */
     @Override
-    public String execute(String arg){
+    public String execute(Object argument){
         try {
+            String arg = (String) argument;
             if (ArgHandler.checkArgForInt(arg)){
                 int id = Integer.parseInt(arg);
                 Dragon dragon = dragonManager.returnDragonById(id);

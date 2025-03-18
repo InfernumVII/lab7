@@ -36,7 +36,7 @@ public class InfoCommand implements CommandInterface {
      * @param arg аргумент команды (в данной команде не используется).
      */
     @Override
-    public String execute(String arg){
+    public String execute(Object arg){
         StringJoiner stringJoiner = new StringJoiner("\n");
         stringJoiner.add("Тип коллекции: " + dragonManager.getTypeName());
         stringJoiner.add("Дата инициализации: " + dragonManager.getInitializationDate());

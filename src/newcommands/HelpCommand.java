@@ -38,7 +38,7 @@ public class HelpCommand implements CommandInterface {
      * @param arg аргумент команды (в данной команде не используется).
      */
     @Override
-    public String execute(String arg){
+    public String execute(Object arg){
         StringJoiner stringJoiner = new StringJoiner("\n");
         Map<String, CommandInterface> commands = commandManager.getCommands();
         stringJoiner.add("Справка по командам: ");

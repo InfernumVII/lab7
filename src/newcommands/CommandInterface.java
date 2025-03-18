@@ -9,7 +9,7 @@ public interface CommandInterface {
      *
      * @param arg аргумент команды (может быть пустым, если команда не требует аргументов).
      */
-    String execute(String arg);
+    String execute(Object arg);
 
     /**
      * Возвращает описание команды.

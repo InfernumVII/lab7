@@ -73,7 +73,7 @@ public class CommandManager {
      * @param name имя команды.
      * @param arg аргумент команды (может быть null).
      */
-    public String executeCommand(String name, String arg){
+    public String executeCommand(String name, Object arg){
         String answer;
         CommandInterface command = commands.get(name);
         if (command != null) {
