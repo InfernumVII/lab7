@@ -1,4 +1,6 @@
-package commands;
+package newcommands;
+import java.util.StringJoiner;
+
 import collection.Dragon;
 import collection.DragonCharacter;
 import managers.DragonManager;
@@ -37,17 +39,22 @@ public class FilterByCharacterCommmand implements CommandInterface {
      * @param arg аргумент команды (характер дракона).
      */
     @Override
-    public void execute(String arg){
-        /*
-        if (ArgHandler.checkArgForEnumString(arg, DragonCharacter.values())){
-            ConsoleInputHandler.printIfInputIsIn("Драконы с таким же характером: ");
-            DragonCharacter dragonCharacter = DragonCharacter.valueOf(arg);
-            for (Dragon dragon : dragonManager.getSortedDragons()) {
-                if (dragon.getCharacter() == dragonCharacter){
-                    ConsoleInputHandler.printIfInputIsIn(dragon);
+    public String execute(String arg){
+        try {
+            StringJoiner stringJoiner = new StringJoiner("\n");
+            if (ArgHandler.checkArgForEnumString(arg, DragonCharacter.values())){
+                stringJoiner.add("Драконы с таким же характером: ");
+                DragonCharacter dragonCharacter = DragonCharacter.valueOf(arg);
+                for (Dragon dragon : dragonManager.getSortedDragons()) {
+                    if (dragon.getCharacter() == dragonCharacter){
+                        stringJoiner.add(dragon.toString());
+                    }
                 }
             }
-        }*/
+            return stringJoiner.toString();
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 
     /**

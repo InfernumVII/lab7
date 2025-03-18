@@ -16,20 +16,22 @@ public class ArgHandler {
      * @param max максимальное допустимое значение (включительно).
      * @return {@code true}, если аргумент является целым числом в заданном диапазоне, иначе {@code false}.
      */
-    public static boolean checkArgForInt(String arg, int min, int max){
+    public static boolean checkArgForInt(String arg, int min, int max) throws Exception{
         try {
             int in = Integer.parseInt(arg);
 
             if (in <= min || in > max) {
-                System.out.printf("Число должно быть между %s и %s.\n", min, max);
+                throw new Exception(String.format("Число должно быть между %s и %s.\n", min, max));
+                //System.out.printf("Число должно быть между %s и %s.\n", min, max);
             } else {
                 return true;
             }
         } catch (NumberFormatException e) {
-            System.out.println("Аргумент должен быть числом.");
+            throw new Exception("Аргумент должен быть числом.");
+            //System.out.println("Аргумент должен быть числом.");
             
         }
-        return false;
+
     }
 
     /**
@@ -38,7 +40,7 @@ public class ArgHandler {
      * @param arg строка, содержащая аргумент.
      * @return {@code true}, если аргумент является целым числом, иначе {@code false}.
      */
-    public static boolean checkArgForInt(String arg){
+    public static boolean checkArgForInt(String arg) throws Exception{
         return checkArgForInt(arg, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
@@ -52,7 +54,7 @@ public class ArgHandler {
      * @param enums массив значений перечисления.
      * @return {@code true}, если аргумент соответствует одному из значений перечисления, иначе {@code false}.
      */
-    public static <E extends Enum<E>> boolean checkArgForEnumString(String arg, E[] enums){
+    public static <E extends Enum<E>> boolean checkArgForEnumString(String arg, E[] enums) throws Exception{
         String joinedEnums = Arrays.toString(enums);
         boolean isInEnums = false;
         for (E enu : enums) {
@@ -61,8 +63,9 @@ public class ArgHandler {
             }
         }
         if (isInEnums == false){
-            System.out.println(String.format("Аргумент должен быть одним из вариантов: (%s)", joinedEnums));
-            return false;
+            throw new Exception(String.format("Аргумент должен быть одним из вариантов: (%s)", joinedEnums));
+            //System.out.println(String.format("Аргумент должен быть одним из вариантов: (%s)", joinedEnums));
+            //return false;
         }
         return true;
         

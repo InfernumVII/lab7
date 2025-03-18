@@ -8,25 +8,13 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.util.List;
 
-import commands.AddCommand;
-import commands.AddIfMinCommand;
-import commands.ClearCommand;
-import commands.CountByTypeCommand;
-import commands.ExecuteSciptCommand;
-import commands.ExitCommand;
-import commands.FilterByCharacterCommmand;
-import commands.FilterLessThanHeadCommand;
-import commands.HelpCommand;
-import commands.HistoryCommand;
-import commands.InfoCommand;
-import commands.RemoveByIdCommand;
-import commands.RemoveGreaterCommand;
-import commands.SaveCommand;
-import commands.ShowCommand;
-import commands.UpdateCommand;
+import clientCommands.records.PromtForStringCommandArgs;
+import newcommands.*;
 import managers.CommandManager;
 import managers.DragonManager;
 import temp.Command;
+import temp.Answer;
+import temp.ClientCommand;
 import temp.Settings;
 import temp.UdpNetwork;
 import utility.CSV;
@@ -46,7 +34,7 @@ public class ServerApp extends UdpNetwork {
     
     public static void main(String[] args) {
         Settings settings = new ServerSettings();
-        UdpNetwork server = new ServerApp(settings);
+        ServerApp server = new ServerApp(settings);
 
         DragonManager dragonManager = new DragonManager();
         /* 
@@ -63,7 +51,7 @@ public class ServerApp extends UdpNetwork {
 
 
         CommandManager manager = new CommandManager();
-        ServerApp.initCommands(manager, dragonManager);
+        ServerApp.initCommands(manager, dragonManager, server);
 
         
 
@@ -72,8 +60,10 @@ public class ServerApp extends UdpNetwork {
             try {
                 Command command = server.handleCommand();
                 System.out.println(command);
-                manager.executeCommand(command.command(), command.argument());
-
+                //Answer answer = new Answer(null, new ClientCommand("promtForString", new PromtForStringCommandArgs("Введите имя дракона:", false)));
+                //server.sendObject(answer);
+                Answer answer = new Answer(manager.executeCommand(command.command(), command.argument()), null);
+                server.sendObject(answer, server.getLastSender());
                 
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -86,13 +76,22 @@ public class ServerApp extends UdpNetwork {
 
     
 
+    public String sendRequestToClientWithAnswer(Answer answer){
+        try {
+            sendObject(answer, getLastSender());
+            Answer answer2 = handleAnswer();
+            return answer2.answer();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        
+    }
 
-
-    private static void initCommands(CommandManager manager, DragonManager dragonManager){
+    private static void initCommands(CommandManager manager, DragonManager dragonManager, ServerApp server){
         manager.registerCommand("help", new HelpCommand(manager));
         manager.registerCommand("info", new InfoCommand(dragonManager));
         manager.registerCommand("show", new ShowCommand(dragonManager));
-        //manager.registerCommand("add", new AddCommand(manager, dragonManager));
+        manager.registerCommand("add", new AddCommand(manager, dragonManager, server));
         //manager.registerCommand("update", new UpdateCommand(dragonManager, manager));
         manager.registerCommand("remove_by_id", new RemoveByIdCommand(dragonManager));
         manager.registerCommand("clear", new ClearCommand(dragonManager));
@@ -102,8 +101,8 @@ public class ServerApp extends UdpNetwork {
         //manager.registerCommand("add_if_min", new AddIfMinCommand(manager, dragonManager));
         //manager.registerCommand("remove_greater", new RemoveGreaterCommand(dragonManager, manager));
         manager.registerCommand("history", new HistoryCommand(manager));
-        //manager.registerCommand("count_by_type", new CountByTypeCommand(dragonManager));
-        //manager.registerCommand("filter_by_character", new FilterByCharacterCommmand(dragonManager));
+        manager.registerCommand("count_by_type", new CountByTypeCommand(dragonManager));
+        manager.registerCommand("filter_by_character", new FilterByCharacterCommmand(dragonManager));
         //manager.registerCommand("filter_less_than_head", new FilterLessThanHeadCommand(dragonManager));
     }
 

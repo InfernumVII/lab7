@@ -48,6 +48,7 @@ public class UpdateCommand implements CommandInterface {
      */
     @Override
     public void execute(String arg){
+        /*
         if (ArgHandler.checkArgForInt(arg)){
             int id = Integer.parseInt(arg);
             Dragon dragon = dragonManager.returnDragonById(id);
@@ -74,7 +75,7 @@ public class UpdateCommand implements CommandInterface {
 
                 ConsoleInputHandler.printIfInputIsIn(String.format("Дракон с ID-%d успешно обновлён!", id));
             }
-        }
+        }*/
     }
 
     /**

@@ -1,4 +1,6 @@
-package commands;
+package newcommands;
+import java.util.StringJoiner;
+
 import collection.Dragon;
 import managers.DragonManager;
 import utility.ArgHandler;
@@ -36,16 +38,20 @@ public class RemoveByIdCommand implements CommandInterface {
      * @param arg строка, содержащая ID дракона.
      */
     @Override
-    public void execute(String arg){
-        /* 
-        if (ArgHandler.checkArgForInt(arg)){
-            int id = Integer.parseInt(arg);
-            Dragon dragon = dragonManager.returnDragonById(id);
-            if (dragon != null){
-                dragonManager.removeDragon(dragon);
-                ConsoleInputHandler.printIfInputIsIn("Дракон удалён.");
+    public String execute(String arg){
+        try {
+            if (ArgHandler.checkArgForInt(arg)){
+                int id = Integer.parseInt(arg);
+                Dragon dragon = dragonManager.returnDragonById(id);
+                if (dragon != null){
+                    dragonManager.removeDragon(dragon);
+                    return "Дракон удалён.";
+                }
             }
-        }*/
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        return null;
     }
 
     /**

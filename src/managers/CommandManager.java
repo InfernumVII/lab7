@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import commands.CommandInterface;
+import newcommands.CommandInterface;
 
 
 /**
@@ -73,22 +73,24 @@ public class CommandManager {
      * @param name имя команды.
      * @param arg аргумент команды (может быть null).
      */
-    public void executeCommand(String name, String arg){
+    public String executeCommand(String name, String arg){
+        String answer;
         CommandInterface command = commands.get(name);
         if (command != null) {
             if (command.isHasArgs() == true && arg == null){
-                System.out.println("У команды должны быть аргументы.");
+                return "У команды должны быть аргументы.";
             }
             else if (command.isHasArgs() == false && arg != null){
-                System.out.println("У команды не может быть аргументов.");
+                return "У команды не может быть аргументов.";
             } else {
-                command.execute(arg);
+                answer = command.execute(arg);
                 storeCommand(name);
             }
             
         } else {
-            System.out.println("Неизвестная команда: " + name);
+            return "Неизвестная команда: " + name;
         }
+        return answer;
     }
 
     /**
