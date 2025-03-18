@@ -5,13 +5,9 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.channels.DatagramChannel;
+import java.util.HashMap;
 import java.util.Scanner;
 
-import clientCommands.PromptForEnumCommand;
-import clientCommands.PromptForFloatCommand;
-import clientCommands.PromptForLongCommand;
-import clientCommands.PromtForStringCommand;
-import managers.ClientCommandManager;
 import managers.CommandManager;
 import managers.DragonManager;
 import newcommands.HelpCommand;
@@ -41,27 +37,18 @@ public class ClientApp extends UdpNetwork {
     public static void main(String[] args) {
         Settings settings = new ClientSettings();
         ClientApp client = new ClientApp(settings);
-        ClientCommandManager clientCommandManager = new ClientCommandManager();
-        ClientApp.initCommands(clientCommandManager, client);
         
         while (true) {
             System.out.print("> ");
             String in = client.getScanner().nextLine().trim();
-            String[] parsedCommand = ClientCommandManager.parseCommand(in);
+            String[] parsedCommand = CommandManager.parseCommand(in);
             
             if (parsedCommand != null){
                 try {
                     client.sendObject(new Command(parsedCommand[0], parsedCommand[1]));
                     Answer serverAnswer = client.handleAnswer();
-                    if (serverAnswer.answer() != null){
-                        System.out.println(serverAnswer.answer());
-                    } else {
-                        Answer answer = new Answer(clientCommandManager.executeCommand(serverAnswer.command().command(), serverAnswer.command().args()), null);
-                        client.sendObject(answer);
-                        Answer serverAnswer2 = client.handleAnswer();
-                        Answer answer2 = new Answer(clientCommandManager.executeCommand(serverAnswer2.command().command(), serverAnswer2.command().args()), null);
-                        client.sendObject(answer2);
-                    }
+                    System.out.println(serverAnswer.answer());
+                    
                     
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -71,12 +58,7 @@ public class ClientApp extends UdpNetwork {
     }
 
 
-    private static void initCommands(ClientCommandManager manager, ClientApp clientApp){
-        manager.registerCommand("promtForString", new PromtForStringCommand(clientApp));
-        manager.registerCommand("promtForLong", new PromptForLongCommand(clientApp));
-        manager.registerCommand("promtForFloat", new PromptForFloatCommand(clientApp));
-        manager.registerCommand("promtForEnum", new PromptForEnumCommand(clientApp));
-    }
+
 
 
     

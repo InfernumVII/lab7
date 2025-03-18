@@ -8,7 +8,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.util.List;
 
-import clientCommands.records.PromtForStringCommandArgs;
 import newcommands.*;
 import managers.CommandManager;
 import managers.DragonManager;
@@ -76,22 +75,13 @@ public class ServerApp extends UdpNetwork {
 
     
 
-    public String sendRequestToClientWithAnswer(Answer answer){
-        try {
-            sendObject(answer, getLastSender());
-            Answer answer2 = handleAnswer();
-            return answer2.answer();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        
-    }
+    
 
     private static void initCommands(CommandManager manager, DragonManager dragonManager, ServerApp server){
         manager.registerCommand("help", new HelpCommand(manager));
         manager.registerCommand("info", new InfoCommand(dragonManager));
         manager.registerCommand("show", new ShowCommand(dragonManager));
-        manager.registerCommand("add", new AddCommand(manager, dragonManager, server));
+        //manager.registerCommand("add", new AddCommand(manager, dragonManager, server));
         //manager.registerCommand("update", new UpdateCommand(dragonManager, manager));
         manager.registerCommand("remove_by_id", new RemoveByIdCommand(dragonManager));
         manager.registerCommand("clear", new ClearCommand(dragonManager));
