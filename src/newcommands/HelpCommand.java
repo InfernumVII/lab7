@@ -1,5 +1,8 @@
-package commands;
+package newcommands;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
 import managers.CommandManager;
 import utility.ConsoleInputHandler;
@@ -35,19 +38,21 @@ public class HelpCommand implements CommandInterface {
      * @param arg аргумент команды (в данной команде не используется).
      */
     @Override
-    public void execute(String arg){
+    public String execute(String arg){
+        StringJoiner stringJoiner = new StringJoiner("\n");
         Map<String, CommandInterface> commands = commandManager.getCommands();
-        ConsoleInputHandler.printIfInputIsIn("Справка по командам: ");
+        stringJoiner.add("Справка по командам: ");
         for (Map.Entry<String, CommandInterface> entry : commands.entrySet()) {
             
             String commandName = entry.getKey();
             CommandInterface command = entry.getValue();
             if (command.isHasArgs()){
-                ConsoleInputHandler.printIfInputIsIn(String.format("%s %s - %s", commandName, command.stringArgument(), command.getDescription()));
+                stringJoiner.add(String.format("%s %s - %s", commandName, command.stringArgument(), command.getDescription()));
             } else {
-                ConsoleInputHandler.printIfInputIsIn(String.format("%s - %s", commandName, command.getDescription()));
+                stringJoiner.add(String.format("%s - %s", commandName, command.getDescription()));
             }
         }
+        return stringJoiner.toString();
     }
 
     /**
