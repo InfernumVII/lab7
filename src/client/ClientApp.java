@@ -7,7 +7,7 @@ import java.util.concurrent.TimeoutException;
 
 import client.commands.AddCommand;
 import client.commands.AddIfMinCommand;
-import client.commands.ExecuteSciptCommand;
+import client.commands.ExecuteScriptCommand;
 import client.commands.ExitCommand;
 import client.commands.RemoveGreaterCommand;
 import client.commands.UpdateCommand;
@@ -61,7 +61,7 @@ public class ClientApp extends UdpNetwork {
         getCommandManager().registerCommand("update", new UpdateCommand(getScanner(), showPrints));
         getCommandManager().registerCommand("add_if_min", new AddIfMinCommand(getScanner(), showPrints));
         getCommandManager().registerCommand("remove_greater", new RemoveGreaterCommand(getScanner(), showPrints));
-        getCommandManager().registerCommand("execute_script", new ExecuteSciptCommand(this));
+        getCommandManager().registerCommand("execute_script", new ExecuteScriptCommand(this));
         getCommandManager().registerCommand("exit", new ExitCommand());
 
         

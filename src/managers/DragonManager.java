@@ -42,12 +42,6 @@ public class DragonManager {
         }
     }
     
-    /**
-     * Возвращает уникальный ID для нового дракона.
-     *
-     * @param lastId последний использованный ID.
-     * @return уникальный ID.
-     */
     private int getUniqueId(int lastId){
         if (setHaveId(lastId)){
             return getUniqueId(lastId + 1);
@@ -56,22 +50,13 @@ public class DragonManager {
         }
     }
 
-    /**
-     * Возвращает имя типа коллекции.
-     *
-     * @return имя типа коллекции.
-     */
-    public String getTypeName(){
-        return dragonSet.getClass().getSimpleName();
-    }
-
-    /**
-     * Возвращает уникальный ID для нового дракона, начиная с 1.
-     *
-     * @return уникальный ID.
-     */
     public int getUniqueId(){
         return getUniqueId(1);
+    }
+
+
+    public String getTypeName(){
+        return dragonSet.getClass().getSimpleName();
     }
 
     /**

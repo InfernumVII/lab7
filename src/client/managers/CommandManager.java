@@ -48,7 +48,7 @@ public class CommandManager {
         }
         if (input.length == 2){
             commandArg = input[1];
-        } 
+        }
         return new String[]{commandName, commandArg};
     }
 }

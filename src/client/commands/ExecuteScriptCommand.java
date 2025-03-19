@@ -14,11 +14,11 @@ import utility.ConsoleInputHandler;
  * Команда для выполнения скрипта из указанного файла.
  * Реализует интерфейс {@link CommandInterface}.
  */
-public class ExecuteSciptCommand implements Command {
+public class ExecuteScriptCommand implements Command {
     private ClientApp clientApp;
     private static Set<String> executedScripts = new HashSet<>();
 
-    public ExecuteSciptCommand(ClientApp clientApp){
+    public ExecuteScriptCommand(ClientApp clientApp){
         this.clientApp = clientApp;
     }
 
