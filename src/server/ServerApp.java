@@ -16,7 +16,7 @@ import network.Settings;
 import network.UdpNetwork;
 import servercommands.*;
 import utility.CSV;
-
+//TODO: принцип единой ответственности
 public class ServerApp extends UdpNetwork {
 
     public ServerApp(Settings settings){
@@ -49,10 +49,7 @@ public class ServerApp extends UdpNetwork {
 
 
         CommandManager manager = new CommandManager();
-        ServerApp.initCommands(manager, dragonManager, server);
-
-        
-
+        server.initCommands(manager, dragonManager);
 
         while (true) { //Майнер
             try {
@@ -72,11 +69,7 @@ public class ServerApp extends UdpNetwork {
 
     
 
-    
-
-    
-
-    private static void initCommands(CommandManager manager, DragonManager dragonManager, ServerApp server){
+    private void initCommands(CommandManager manager, DragonManager dragonManager){ //TODO унести в command manager
         manager.registerCommand("help", new HelpCommand(manager));
         manager.registerCommand("info", new InfoCommand(dragonManager));
         manager.registerCommand("show", new ShowCommand(dragonManager));

@@ -25,7 +25,7 @@ public class ClientApp extends UdpNetwork {
         try {
             inetSocketAddress = getSocketAddress(settings);
             datagramChannel = createDatagramChannel();
-        } catch (Exception e) {
+        } catch (Exception e) { //TODO handle all exceptions
             throw new RuntimeException(e);
         }
         
@@ -51,6 +51,7 @@ public class ClientApp extends UdpNetwork {
         
     }
     public void start(boolean condition, boolean showPrints){
+        //TODO вынести в command manager
         getCommandManager().registerCommand("add", new AddCommand(getScanner(), showPrints));
         getCommandManager().registerCommand("update", new UpdateCommand(getScanner(), showPrints));
         getCommandManager().registerCommand("add_if_min", new AddIfMinCommand(getScanner(), showPrints));

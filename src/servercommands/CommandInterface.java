@@ -9,10 +9,10 @@ public interface CommandInterface {
      *
      * @param arg аргумент команды (может быть пустым, если команда не требует аргументов).
      */
-    String execute(Object arg);
+    String execute(Object arg); //TODO return OBJECT
 
     /**
-     * Возвращает описание команды.
+     * Возвращает описание команды. 
      *
      * @return строковое описание команды.
      */

@@ -56,7 +56,7 @@ public class ConsoleInputHandler {
      * @param max максимальное допустимое значение (включительно).
      * @return введённое пользователем целочисленное значение.
      */
-    public long promptForLong(String prompt, boolean allowNull, long min, long max){
+    public long promptForLong(String prompt, boolean allowNull, long min, long max){ //TODO add generics
         while (true) {
             if (showOutput == true) { System.out.println(String.format(prompt, min, max)); }
             String inString = scanner.nextLine();
