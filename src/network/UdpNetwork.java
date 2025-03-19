@@ -13,6 +13,9 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 import client.ClientSettings;
+import network.exceptions.TimeOutException;
+import network.models.Answer;
+import network.models.Command;
 import utility.BytesConversions;
 
 public abstract class UdpNetwork {

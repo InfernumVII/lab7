@@ -12,13 +12,12 @@ import client.commands.ExitCommand;
 import client.commands.RemoveGreaterCommand;
 import client.commands.UpdateCommand;
 import client.managers.CommandManager;
-import network.Answer;
-import network.Command;
-import network.ParseCommandException;
+import managers.exceptions.ParseCommandException;
 import network.Settings;
-import network.TimeOutException;
 import network.UdpNetwork;
-import network.ParseCommandException;
+import network.exceptions.TimeOutException;
+import network.models.Answer;
+import network.models.Command;
 
 public class ClientApp extends UdpNetwork {
     private Scanner scanner;

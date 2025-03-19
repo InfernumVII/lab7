@@ -10,10 +10,10 @@ import java.util.List;
 
 import managers.CommandManager;
 import managers.DragonManager;
-import network.Answer;
-import network.Command;
 import network.Settings;
 import network.UdpNetwork;
+import network.models.Answer;
+import network.models.Command;
 import servercommands.*;
 import utility.CSV;
 //TODO: принцип единой ответственности
@@ -38,7 +38,7 @@ public class ServerApp extends UdpNetwork {
         
         String fileName = System.getenv("DRAGON_FILE");
         if (fileName == null || fileName.isEmpty()) {
-            System.err.println("Ошибка: переменная окружения DRAGON_FILE не задана.");
+            System.out.println("Ошибка: переменная окружения DRAGON_FILE не задана.");
         } else {
             List<String[]> fileData = CSV.read(fileName);
             if (fileData != null){
@@ -55,8 +55,6 @@ public class ServerApp extends UdpNetwork {
             try {
                 Command command = server.handleCommand();
                 System.out.println(command);
-                //Answer answer = new Answer(null, new ClientCommand("promtForString", new PromtForStringCommandArgs("Введите имя дракона:", false)));
-                //server.sendObject(answer);
                 Answer answer = new Answer(manager.executeCommand(command.command(), command.arg()));
                 server.sendObject(answer, server.getLastSender());
                 

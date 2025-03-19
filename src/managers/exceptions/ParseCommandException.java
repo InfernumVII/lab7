@@ -1,4 +1,4 @@
-package network;
+package managers.exceptions;
 
 public class ParseCommandException extends Exception {
     public ParseCommandException(){
