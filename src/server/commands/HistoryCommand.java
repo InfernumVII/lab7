@@ -1,15 +1,15 @@
-package servercommands;
+package server.commands;
 import java.util.Deque;
 import java.util.StringJoiner;
 
+import client.commands.utility.ConsoleInputHandler;
 import managers.CommandManager;
-import utility.ConsoleInputHandler;
 
 /**
  * Команда для вывода последних 5 выполненных команд (без аргументов).
- * Реализует интерфейс {@link CommandInterface}.
+ * Реализует интерфейс {@link Command}.
  */
-public class HistoryCommand implements CommandInterface {
+public class HistoryCommand implements Command {
     private CommandManager commandManager;
 
     /**

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import servercommands.CommandInterface;
+import server.commands.Command;
 
 
 /**
@@ -42,7 +42,7 @@ public class CommandManager {
     public static int getHistorySize() {
         return HISTORY_SIZE;
     }
-    private Map<String, CommandInterface> commands = new HashMap<>();
+    private Map<String, Command> commands = new HashMap<>();
     private Scanner scanner;
 
 
@@ -61,9 +61,9 @@ public class CommandManager {
      * Регистрирует команду в менеджере.
      *
      * @param name имя команды.
-     * @param command объект команды, реализующий интерфейс {@link CommandInterface}.
+     * @param command объект команды, реализующий интерфейс {@link Command}.
      */
-    public void registerCommand(String name, CommandInterface command){
+    public void registerCommand(String name, Command command){
         commands.put(name, command);
     }
 
@@ -75,7 +75,7 @@ public class CommandManager {
      */
     public String executeCommand(String name, Object arg){
         String answer;
-        CommandInterface command = commands.get(name);
+        Command command = commands.get(name);
         if (command != null) {
             if (command.isHasArgs() == true && arg == null){
                 return "У команды должны быть аргументы.";
@@ -107,7 +107,7 @@ public class CommandManager {
      *
      * @return карта зарегистрированных команд.
      */
-    public Map<String, CommandInterface> getCommands() {
+    public Map<String, Command> getCommands() {
         return commands;
     }
 
@@ -116,7 +116,7 @@ public class CommandManager {
      *
      * @param commands карта зарегистрированных команд.
      */
-    public void setCommands(Map<String, CommandInterface> commands) {
+    public void setCommands(Map<String, Command> commands) {
         this.commands = commands;
     }
 

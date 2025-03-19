@@ -1,4 +1,4 @@
-package utility;
+package client.commands.utility;
 
 import java.util.Arrays;
 

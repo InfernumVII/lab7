@@ -10,12 +10,12 @@ import java.util.List;
 
 import managers.CommandManager;
 import managers.DragonManager;
+import managers.utility.CSV;
 import network.Settings;
 import network.UdpNetwork;
 import network.models.Answer;
 import network.models.Command;
-import servercommands.*;
-import utility.CSV;
+import server.commands.*;
 //TODO: принцип единой ответственности
 public class ServerApp extends UdpNetwork {
 

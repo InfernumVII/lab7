@@ -1,9 +1,9 @@
-package servercommands;
+package server.commands;
 /**
  * Интерфейс, представляющий команду, которую можно выполнить.
  * Каждая команда должна реализовывать методы этого интерфейса.
  */
-public interface CommandInterface {
+public interface Command {
     /**
      * Выполняет команду.
      *

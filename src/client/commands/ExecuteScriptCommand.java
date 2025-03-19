@@ -7,12 +7,12 @@ import java.util.Scanner;
 import java.util.Set;
 
 import client.ClientApp;
+import client.commands.utility.ConsoleInputHandler;
 import managers.CommandManager;
-import utility.ConsoleInputHandler;
 
 /**
  * Команда для выполнения скрипта из указанного файла.
- * Реализует интерфейс {@link CommandInterface}.
+ * Реализует интерфейс {@link Command}.
  */
 public class ExecuteScriptCommand implements Command {
     private ClientApp clientApp;

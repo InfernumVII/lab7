@@ -1,22 +1,22 @@
-package servercommands;
-
+package server.commands;
 import java.util.StringJoiner;
 
+import client.commands.utility.ConsoleInputHandler;
+import collection.Dragon;
 import managers.DragonManager;
-import utility.ConsoleInputHandler;
 
 /**
- * Команда для вывода информации о коллекции.
- * Реализует интерфейс {@link CommandInterface}.
+ * Команда для вывода всех элементов коллекции в строковом представлении.
+ * Реализует интерфейс {@link Command}.
  */
-public class InfoCommand implements CommandInterface {
+public class ShowCommand implements Command {
     private DragonManager dragonManager;
     /**
-     * Конструктор команды InfoCommand.
+     * Конструктор команды ShowCommand.
      *
      * @param dragonManager объект {@link DragonManager} для управления коллекцией драконов.
      */
-    public InfoCommand(DragonManager dragonManager){
+    public ShowCommand(DragonManager dragonManager) {
         this.dragonManager = dragonManager;
     }
 
@@ -31,16 +31,16 @@ public class InfoCommand implements CommandInterface {
     }
 
     /**
-     * Выполняет команду вывода информации о коллекции.
+     * Выполняет команду вывода всех элементов коллекции в строковом представлении.
      *
      * @param arg аргумент команды (в данной команде не используется).
      */
     @Override
     public String execute(Object arg){
         StringJoiner stringJoiner = new StringJoiner("\n");
-        stringJoiner.add("Тип коллекции: " + dragonManager.getTypeName());
-        stringJoiner.add("Дата инициализации: " + dragonManager.getInitializationDate());
-        stringJoiner.add("Количество элементов: " + dragonManager.getDragonSet().size());
+        for (Dragon dragon : dragonManager.getSortedDragons()) {
+            stringJoiner.add(dragon.toString());
+        }
         return stringJoiner.toString();
     }
 
@@ -51,7 +51,7 @@ public class InfoCommand implements CommandInterface {
      */
     @Override
     public String getDescription(){
-        return "вывод информации о коллекции.";
+        return "вывести в стандартный поток вывода все элементы коллекции в строковом представлении";
     }
     
 }

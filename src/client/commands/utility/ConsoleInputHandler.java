@@ -1,4 +1,4 @@
-package utility;
+package client.commands.utility;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -25,7 +25,9 @@ public class ConsoleInputHandler {
     
 
     
-    
+    public <T> void printIfShowOutput(T in){
+        System.out.println(in);
+    }
     /**
      * Запрашивает у пользователя строковое значение.
      *
@@ -33,12 +35,12 @@ public class ConsoleInputHandler {
      * @param allowNull разрешает ли метод возвращать пустую строку.
      * @return введённое пользователем строковое значение.
      */
-    public String promtForString(String prompt, boolean allowNull){
+    public String promptForString(String prompt, boolean allowNull){
         while (true){
-            if (showOutput == true) { System.out.println(prompt); }
+            printIfShowOutput(prompt);
             String in = scanner.nextLine();
             if (!allowNull && in.isEmpty()) {
-                if (showOutput == true) { System.out.println("Значение поля не может быть пустым."); }
+                printIfShowOutput("Значение поля не может быть пустым.");
                 continue;
             }
             return in;

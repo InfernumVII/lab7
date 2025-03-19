@@ -1,16 +1,16 @@
-package servercommands;
+package server.commands;
 import java.util.StringJoiner;
 
+import client.commands.utility.ArgHandler;
+import client.commands.utility.ConsoleInputHandler;
 import collection.Dragon;
 import managers.DragonManager;
-import utility.ArgHandler;
-import utility.ConsoleInputHandler;
 
 /**
  * Команда для вывода элементов коллекции, значение поля head которых меньше заданного.
- * Реализует интерфейс {@link CommandInterface}.
+ * Реализует интерфейс {@link Command}.
  */
-public class FilterLessThanHeadCommand implements CommandInterface {
+public class FilterLessThanHeadCommand implements Command {
     private DragonManager dragonManager;
 
     /**

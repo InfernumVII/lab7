@@ -1,4 +1,4 @@
-package servercommands;
+package server.commands;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -6,14 +6,14 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
+import client.commands.utility.ConsoleInputHandler;
 import managers.CommandManager;
-import utility.ConsoleInputHandler;
 
 /**
  * Команда для выполнения скрипта из указанного файла.
- * Реализует интерфейс {@link CommandInterface}.
+ * Реализует интерфейс {@link Command}.
  */
-public class ExecuteSciptCommand implements CommandInterface {
+public class ExecuteSciptCommand implements Command {
     
     /**
      * Проверяет, имеет ли команда аргументы.

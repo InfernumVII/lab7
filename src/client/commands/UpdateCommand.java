@@ -2,6 +2,8 @@ package client.commands;
 
 import java.util.Scanner;
 
+import client.commands.utility.ArgHandler;
+import client.commands.utility.ConsoleInputHandler;
 import collection.Color;
 import collection.Coordinates;
 import collection.Dragon;
@@ -11,13 +13,11 @@ import collection.DragonType;
 import commandRecords.UpdateCommandArgs;
 import managers.CommandManager;
 import managers.DragonManager;
-import utility.ArgHandler;
-import utility.ConsoleInputHandler;
 
 
 /**
  * Команда для обновления значения элемента коллекции по его ID.
- * Реализует интерфейс {@link CommandInterface}.
+ * Реализует интерфейс {@link Command}.
  */
 public class UpdateCommand implements Command {
     private Scanner scanner;
@@ -53,7 +53,7 @@ public class UpdateCommand implements Command {
                     
                 System.out.println(String.format("Начинаем изменение дракона с ID-%d", id));
     
-                String name = consoleInputHandler.promtForString("Введите имя дракона:", false);
+                String name = consoleInputHandler.promptForString("Введите имя дракона:", false);
                 //dragon.setName(name);
                 long x = consoleInputHandler.promptForLong("Введите координату x:", false, -420, Long.MAX_VALUE);
                 long y = consoleInputHandler.promptForLong("Введите координату y:", false, Long.MIN_VALUE, 699);

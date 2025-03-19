@@ -1,10 +1,9 @@
-package servercommands;
+package server.commands;
 import collection.Dragon.Builder;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.StringJoiner;
 
+import client.commands.utility.ConsoleInputHandler;
 import collection.Color;
 import collection.Coordinates;
 import collection.Dragon;
@@ -13,18 +12,17 @@ import collection.DragonHead;
 import collection.DragonType;
 import managers.CommandManager;
 import managers.DragonManager;
-import utility.ConsoleInputHandler;
 
 
 /**
  * Команда для добавления нового дракона в коллекцию.
- * Реализует интерфейс {@link CommandInterface}.
+ * Реализует интерфейс {@link Command}.
  */
-public class AddIfMinCommand implements CommandInterface {
+public class AddCommand implements Command {
     private DragonManager dragonManager;
 
 
-    public AddIfMinCommand(DragonManager dragonManager) {
+    public AddCommand(DragonManager dragonManager) {
         this.dragonManager = dragonManager;
     }
 
@@ -47,36 +45,16 @@ public class AddIfMinCommand implements CommandInterface {
      */
     @Override
     public String execute(Object arg){
-        
         StringJoiner stringJoiner = new StringJoiner("\n");
         Builder dragonBuilder = (Builder) arg;
         stringJoiner.add("Добавление нового дракона.");
-        //ConsoleInputHandler.printIfInputIsIn("Добавление нового дракона.");
         Dragon dragon = dragonBuilder
                     .withId(dragonManager.getUniqueId())
                     .withDate(LocalDate.now())
                     .build();
-        if (dragonManager.getDragonSet().isEmpty()){
-            dragonManager.addDragon(dragon);
-            stringJoiner.add("Новый дракон успешно добавлен.");
-        } else {
-            Dragon minDragon = Collections.min(dragonManager.getDragonSet(), new Comparator<Dragon>() {
-                @Override
-                public int compare(Dragon d1, Dragon d2) {
-                    int xCompare = Long.compare(d1.getCoordinates().getX(), d2.getCoordinates().getX());
-                    if (xCompare != 0) {
-                        return xCompare; 
-                    }
-                    return Long.compare(d1.getCoordinates().getY(), d2.getCoordinates().getY());
-                }
-            });
-            if (dragon.getCoordinates().getX() + dragon.getCoordinates().getY() < minDragon.getCoordinates().getX() + minDragon.getCoordinates().getY()){
-                dragonManager.addDragon(dragon);
-                stringJoiner.add("Новый дракон успешно добавлен.");
-            } else {
-                stringJoiner.add("Ваш дракон имеет большее значение, чем у минимального элемента коллекции.");
-            }
-        }
+
+        dragonManager.addDragon(dragon);
+        stringJoiner.add("Новый дракон успешно добавлен.");
         return stringJoiner.toString();
         
     }

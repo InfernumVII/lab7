@@ -6,7 +6,6 @@ import java.util.Set;
 
 import client.commands.Command;
 import managers.exceptions.ParseCommandException;
-import servercommands.CommandInterface;
 
 
 public class CommandManager {

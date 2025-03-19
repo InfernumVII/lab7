@@ -1,17 +1,17 @@
-package servercommands;
+package server.commands;
 import java.util.StringJoiner;
 
+import client.commands.utility.ArgHandler;
+import client.commands.utility.ConsoleInputHandler;
 import collection.Dragon;
 import collection.DragonCharacter;
 import managers.DragonManager;
-import utility.ArgHandler;
-import utility.ConsoleInputHandler;
 
 /**
  * Команда для вывода элементов коллекции, значение поля character которых равно заданному.
- * Реализует интерфейс {@link CommandInterface}.
+ * Реализует интерфейс {@link Command}.
  */
-public class FilterByCharacterCommmand implements CommandInterface {
+public class FilterByCharacterCommmand implements Command {
     
     private DragonManager dragonManager;
     /**

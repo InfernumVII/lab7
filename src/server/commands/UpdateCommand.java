@@ -1,7 +1,9 @@
-package servercommands;
+package server.commands;
 
 import java.util.StringJoiner;
 
+import client.commands.utility.ArgHandler;
+import client.commands.utility.ConsoleInputHandler;
 import collection.Color;
 import collection.Coordinates;
 import collection.Dragon;
@@ -11,15 +13,13 @@ import collection.DragonType;
 import commandRecords.UpdateCommandArgs;
 import managers.CommandManager;
 import managers.DragonManager;
-import utility.ArgHandler;
-import utility.ConsoleInputHandler;
 
 
 /**
  * Команда для обновления значения элемента коллекции по его ID.
- * Реализует интерфейс {@link CommandInterface}.
+ * Реализует интерфейс {@link Command}.
  */
-public class UpdateCommand implements CommandInterface {
+public class UpdateCommand implements Command {
     private DragonManager dragonManager;
 
     /**

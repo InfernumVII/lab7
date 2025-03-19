@@ -1,20 +1,20 @@
-package servercommands;
+package server.commands;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import client.commands.utility.ConsoleInputHandler;
 import collection.Dragon;
 import commandRecords.RemoveGreaterCommandArgs;
 import managers.CommandManager;
 import managers.DragonManager;
-import utility.ConsoleInputHandler;
 
 
 /**
  * Команда для удаления всех элементов коллекции, превышающих заданный по координатам.
- * Реализует интерфейс {@link CommandInterface}.
+ * Реализует интерфейс {@link Command}.
  */
-public class RemoveGreaterCommand implements CommandInterface {
+public class RemoveGreaterCommand implements Command {
 
     private DragonManager dragonManager;
 
