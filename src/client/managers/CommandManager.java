@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import client.commands.Command;
+import network.ParseCommandException;
 import servercommands.CommandInterface;
 
 
@@ -38,13 +39,12 @@ public class CommandManager {
         return null;
     }
 
-    public static String[] parseCommand(String command){
+    public static String[] parseCommand(String command) throws ParseCommandException{
         String[] input = command.split(" ");
         String commandName = input[0];
         String commandArg = null;
         if (input.length > 2){
-            System.out.println("У команды не может быть больше чем 1 аргумент.");
-            return null;
+            throw new ParseCommandException();
         }
         if (input.length == 2){
             commandArg = input[1];

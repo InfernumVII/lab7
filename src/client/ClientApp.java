@@ -1,7 +1,9 @@
 package client;
 
 
+import java.sql.Time;
 import java.util.Scanner;
+import java.util.concurrent.TimeoutException;
 
 import client.commands.AddCommand;
 import client.commands.AddIfMinCommand;
@@ -12,8 +14,11 @@ import client.commands.UpdateCommand;
 import client.managers.CommandManager;
 import network.Answer;
 import network.Command;
+import network.ParseCommandException;
 import network.Settings;
+import network.TimeOutException;
 import network.UdpNetwork;
+import network.ParseCommandException;
 
 public class ClientApp extends UdpNetwork {
     private Scanner scanner;
@@ -70,30 +75,30 @@ public class ClientApp extends UdpNetwork {
                 break;
             }
             
-            String[] parsedCommand = CommandManager.parseCommand(in);
-            String command = parsedCommand[0];
-            Object commandArgs = parsedCommand[1];
-            
-            if (parsedCommand != null){
-                try {
-                    if (commandManager.listedNames().contains(command) == true){
-                        Object answer = commandManager.executeCommand(command, (String) commandArgs);
-                        if (answer != null){
-                            commandArgs = answer;
-                        }
+            try {
+                String[] parsedCommand = CommandManager.parseCommand(in);
+                String command = parsedCommand[0];
+                Object commandArgs = parsedCommand[1];
+                if (commandManager.listedNames().contains(command) == true){
+                    Object answer = commandManager.executeCommand(command, (String) commandArgs);
+                    if (answer != null){
+                        commandArgs = answer;
                     }
-                    sendObject(new Command(command, commandArgs));
-                    Answer serverAnswer = handleAnswer();
-
-                    if (showPrints == true) { System.out.println(serverAnswer.answer()); }
-                    
-                    
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
                 }
+                sendObject(new Command(command, commandArgs));
+                Answer serverAnswer = handleAnswer(1000);
+
+                if (showPrints == true) { System.out.println(serverAnswer.answer()); }
+                
+                
+            } catch (TimeOutException | ParseCommandException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
     }
+}
 
 
 
@@ -101,4 +106,4 @@ public class ClientApp extends UdpNetwork {
 
     
 
-}
+
