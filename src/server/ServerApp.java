@@ -14,7 +14,7 @@ import managers.utility.CSV;
 import network.Settings;
 import network.UdpNetwork;
 import network.models.Answer;
-import network.models.Command;
+import network.models.NetCommand;
 import server.commands.*;
 //TODO: принцип единой ответственности
 public class ServerApp extends UdpNetwork {
@@ -53,7 +53,7 @@ public class ServerApp extends UdpNetwork {
 
         while (true) { //Майнер
             try {
-                Command command = server.handleCommand();
+                NetCommand command = server.handleCommand();
                 System.out.println(command);
                 Answer answer = new Answer(manager.executeCommand(command.command(), command.arg()));
                 server.sendObject(answer, server.getLastSender());

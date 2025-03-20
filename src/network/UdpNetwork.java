@@ -15,7 +15,7 @@ import java.util.Scanner;
 import client.ClientSettings;
 import network.exceptions.TimeOutException;
 import network.models.Answer;
-import network.models.Command;
+import network.models.NetCommand;
 import network.utility.BytesConversions;
 
 public abstract class UdpNetwork {
@@ -111,9 +111,9 @@ public abstract class UdpNetwork {
         return BytesConversions.bytesToObject(buf);
     }
 
-    public Command handleCommand() throws IOException, ClassNotFoundException, TimeOutException {
+    public NetCommand handleCommand() throws IOException, ClassNotFoundException, TimeOutException {
         Object obj = handleObject();
-        return (Command) obj;
+        return (NetCommand) obj;
     }
 
     public Answer handleAnswer(long timeout) throws IOException, ClassNotFoundException, TimeOutException{

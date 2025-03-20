@@ -3,6 +3,7 @@ package client.commands;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+import client.NetTerminal;
 import client.commands.utility.ConsoleInputHandler;
 import collection.Color;
 import collection.Coordinates;
@@ -14,12 +15,9 @@ import collection.DragonType;
 
 public class AddCommand implements Command {
 
-    private Scanner scanner;
-    private boolean showOutput;
-
-    public AddCommand(Scanner scanner, boolean showOutput){
-        this.scanner = scanner;
-        this.showOutput = showOutput;
+    private ConsoleInputHandler consoleInputHandler;
+    public AddCommand(ConsoleInputHandler consoleInputHandler){
+        this.consoleInputHandler = consoleInputHandler;
     }
 
     @Override
@@ -29,7 +27,6 @@ public class AddCommand implements Command {
 
     @Override
     public Object execute(String arg) {
-        ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler(scanner, showOutput);
         Builder dragonBuilder = new Dragon.Builder()
                     .withName(consoleInputHandler.promptForString("Введите имя дракона:", false))
                     .withCoordinates(new Coordinates(consoleInputHandler.promptForLong("Введите координату x:", false, -420, Long.MAX_VALUE),

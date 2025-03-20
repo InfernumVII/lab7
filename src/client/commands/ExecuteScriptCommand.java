@@ -2,24 +2,20 @@ package client.commands;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.temporal.Temporal;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
 import client.ClientApp;
-import client.commands.utility.ConsoleInputHandler;
-import managers.CommandManager;
+import client.NetTerminal;
 
-/**
- * Команда для выполнения скрипта из указанного файла.
- * Реализует интерфейс {@link Command}.
- */
 public class ExecuteScriptCommand implements Command {
-    private ClientApp clientApp;
+    private NetTerminal terminal;
     private static Set<String> executedScripts = new HashSet<>();
 
-    public ExecuteScriptCommand(ClientApp clientApp){
-        this.clientApp = clientApp;
+    public ExecuteScriptCommand(NetTerminal terminal){
+        this.terminal = terminal;
     }
 
 
@@ -40,11 +36,15 @@ public class ExecuteScriptCommand implements Command {
 
         System.out.println(String.format("Запуск команд из файла: %s", arg));
         try (FileInputStream file = new FileInputStream(arg)) {
-            Scanner lastScanner = clientApp.getScanner();
+            Scanner lastScanner = terminal.getScanner();
             Scanner scriptScanner = new Scanner(file);
-            clientApp.setScanner(scriptScanner);
-            clientApp.start(scriptScanner.hasNextLine(), false);
-            clientApp.setScanner(lastScanner);
+
+            terminal.setScanner(scriptScanner);
+            terminal.swapOutput();
+            terminal.start(scriptScanner.hasNextLine());
+            terminal.swapOutput();
+            terminal.setScanner(lastScanner);
+
         } catch (IOException e) {
             System.out.println("Произошла ошибка: " + e.getMessage());
         } finally {

@@ -14,12 +14,10 @@ import collection.DragonType;
 
 public class AddIfMinCommand implements Command {
 
-    private Scanner scanner;
-    private boolean showOutput;
+    private ConsoleInputHandler consoleInputHandler;
 
-    public AddIfMinCommand(Scanner scanner, boolean showOutput){
-        this.scanner = scanner;
-        this.showOutput = showOutput;
+    public AddIfMinCommand(ConsoleInputHandler consoleInputHandler){
+        this.consoleInputHandler = consoleInputHandler;
     }
 
     @Override
@@ -29,7 +27,6 @@ public class AddIfMinCommand implements Command {
 
     @Override
     public Object execute(String arg) {
-        ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler(scanner, showOutput);
         Builder dragonBuilder = new Dragon.Builder()
                     .withName(consoleInputHandler.promptForString("Введите имя дракона:", false))
                     .withCoordinates(new Coordinates(consoleInputHandler.promptForLong("Введите координату x:", false, -420, Long.MAX_VALUE),
