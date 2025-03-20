@@ -38,12 +38,11 @@ public class HelpCommand implements Command {
      * @param arg аргумент команды (в данной команде не используется).
      */
     @Override
-    public String execute(Object arg){
+    public Object execute(Object arg){
         StringJoiner stringJoiner = new StringJoiner("\n");
         Map<String, Command> commands = commandManager.getCommands();
         stringJoiner.add("Справка по командам: ");
         for (Map.Entry<String, Command> entry : commands.entrySet()) {
-            
             String commandName = entry.getKey();
             Command command = entry.getValue();
             if (command.isHasArgs()){

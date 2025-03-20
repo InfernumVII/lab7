@@ -40,18 +40,17 @@ public class CountByTypeCommand implements Command {
      * @param arg аргумент команды (тип дракона).
      */
     @Override
-    public String execute(Object argument){
+    public Object execute(Object argument){
         try {
             String arg = (String) argument;
             StringJoiner stringJoiner = new StringJoiner("\n");
-            int count = 0;
             if (ArgHandler.checkArgForEnumString(arg, DragonType.values())){
                 DragonType dragonType = DragonType.valueOf(arg);
-                for (Dragon dragon : dragonManager.getSortedDragons()) {
-                    if (dragon.getType() == dragonType){
-                        count += 1;
-                    }
-                }
+
+                long count = dragonManager.getDragonSet().stream()
+                                .filter(dragon -> dragon.getType() == dragonType)
+                                .count();
+                
                 stringJoiner.add(String.format("Количество драконов с данным типом: %d", count));
             }
             return stringJoiner.toString();

@@ -13,6 +13,7 @@ import collection.DragonType;
 import commandRecords.UpdateCommandArgs;
 import managers.CommandManager;
 import managers.DragonManager;
+import managers.exceptions.DragonFindException;
 
 
 /**
@@ -47,18 +48,17 @@ public class UpdateCommand implements Command {
      * @param arg строка, содержащая ID дракона.
      */
     @Override
-    public String execute(Object argument){
+    public Object execute(Object argument){
         UpdateCommandArgs arg = (UpdateCommandArgs) argument;
         int id = arg.id();
+
         Dragon dragon;
         try {
             dragon = dragonManager.returnDragonById(id);
-        } catch (Exception e) {
+        } catch (DragonFindException e) {
             return e.getMessage();
         }
-        StringJoiner stringJoiner = new StringJoiner("\n");
         
-        //stringJoiner.add(String.format("Начинаем изменение дракона с ID-%d и именем %s", id, dragon.getName()));
         dragon.setName(arg.name());
         dragon.setCoordinates(new Coordinates(arg.x(), arg.y()));
         dragon.setAge(arg.age());
@@ -67,26 +67,14 @@ public class UpdateCommand implements Command {
         dragon.setCharacter(arg.character());
         dragon.setHead(new DragonHead(arg.eyesCount()));
 
-        stringJoiner.add(String.format("Дракон с ID-%d успешно обновлён!", id));
-        return stringJoiner.toString();
+        return String.format("Дракон с ID-%d успешно обновлён!", id);
     }
 
-
-    /**
-     * Возвращает описание команды.
-     *
-     * @return строковое описание команды.
-     */
     @Override
     public String getDescription(){
         return "обновить значение элемента коллекции, id которого равен заданному";
     }
 
-    /**
-     * Возвращает строковое представление аргумента команды.
-     *
-     * @return строковое представление аргумента команды.
-     */
     @Override
     public String stringArgument(){
         return "id";

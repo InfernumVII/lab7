@@ -1,6 +1,7 @@
 package server.commands;
 import java.util.Deque;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 import client.commands.utility.ConsoleInputHandler;
 import managers.CommandManager;
@@ -37,12 +38,11 @@ public class HistoryCommand implements Command {
      * @param arg аргумент команды (в данной команде не используется).
      */
     @Override
-    public String execute(Object arg){
+    public Object execute(Object arg){
         StringJoiner stringJoiner = new StringJoiner("\n");
         Deque<String> history = commandManager.getHistory();
-        for (String string : history) {
-            stringJoiner.add(string);
-        }
+        history.stream()
+            .forEachOrdered(string -> stringJoiner.add(string));
         return stringJoiner.toString();
     }
 

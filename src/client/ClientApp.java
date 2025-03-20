@@ -2,8 +2,10 @@ package client;
 
 
 import java.sql.Time;
+import java.util.Collection;
 import java.util.Scanner;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Stream;
 
 import client.commands.AddCommand;
 import client.commands.AddIfMinCommand;
@@ -87,14 +89,22 @@ public class ClientApp extends UdpNetwork {
                 sendObject(new Command(command, commandArgs));
                 Answer serverAnswer = handleAnswer(1000);
 
-                if (showPrints == true) { System.out.println(serverAnswer.answer()); }
-                
+                //if (showPrints == true) { System.out.println(serverAnswer.answer()); }
+
+                if (showPrints == true) { smartPrint(serverAnswer.answer()); }
                 
             } catch (TimeOutException | ParseCommandException e) {
                 System.out.println(e.getMessage());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+    public void smartPrint(Object in){
+        if (in instanceof Collection){
+            ((Collection) in).forEach(System.out::println);
+        } else {
+            System.out.println(in);
         }
     }
 }

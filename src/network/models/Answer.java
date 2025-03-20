@@ -3,4 +3,4 @@ import java.io.Serializable;
 
 
 
-public record Answer(String answer) implements Serializable { }
+public record Answer(Object answer) implements Serializable { }

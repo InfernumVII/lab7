@@ -3,8 +3,10 @@ import java.util.StringJoiner;
 
 import client.commands.utility.ArgHandler;
 import client.commands.utility.ConsoleInputHandler;
+import client.commands.utility.exceptions.ArgumentNumberException;
 import collection.Dragon;
 import managers.DragonManager;
+import managers.exceptions.DragonFindException;
 
 /**
  * Команда для удаления элемента коллекции по его ID.
@@ -38,7 +40,7 @@ public class RemoveByIdCommand implements Command {
      * @param arg строка, содержащая ID дракона.
      */
     @Override
-    public String execute(Object argument){
+    public Object execute(Object argument){
         try {
             String arg = (String) argument;
             if (ArgHandler.checkArgForInt(arg)){
@@ -49,7 +51,7 @@ public class RemoveByIdCommand implements Command {
                     return "Дракон удалён.";
                 }
             }
-        } catch (Exception e) {
+        } catch (ArgumentNumberException | DragonFindException e) {
             return e.getMessage();
         }
         return null;

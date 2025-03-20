@@ -38,18 +38,18 @@ public class FilterLessThanHeadCommand implements Command {
      * @param arg аргумент команды (количество глаз).
      */
     @Override
-    public String execute(Object argument){
+    public Object execute(Object argument){
         String arg = (String) argument;
         StringJoiner stringJoiner = new StringJoiner("\n");
         try {
             if (ArgHandler.checkArgForFloat(arg)){
                 Float eyesCount = Float.parseFloat(arg);
                 stringJoiner.add(String.format("Драконы у которых кол-во глаз на говоле меньше чем: %s", eyesCount));
-                for (Dragon dragon: dragonManager.getSortedDragons()) {
-                    if (dragon.getHead().getEyesCount() < eyesCount){
-                        stringJoiner.add(dragon.toString());
-                    }
-                }
+
+                dragonManager.getSortedDragons().stream()
+                                .filter(dragon -> dragon.getHead().getEyesCount() < eyesCount)
+                                .map(Dragon::toString)
+                                .forEachOrdered(dragon -> stringJoiner.add(dragon));
             }
             
         } catch (Exception e) {

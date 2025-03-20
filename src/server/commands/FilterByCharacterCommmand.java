@@ -3,6 +3,7 @@ import java.util.StringJoiner;
 
 import client.commands.utility.ArgHandler;
 import client.commands.utility.ConsoleInputHandler;
+import client.commands.utility.exceptions.ArgumentEnumException;
 import collection.Dragon;
 import collection.DragonCharacter;
 import managers.DragonManager;
@@ -39,21 +40,21 @@ public class FilterByCharacterCommmand implements Command {
      * @param arg аргумент команды (характер дракона).
      */
     @Override
-    public String execute(Object argument){
+    public Object execute(Object argument){
+        String arg = (String) argument;
         try {
-            String arg = (String) argument;
             StringJoiner stringJoiner = new StringJoiner("\n");
             if (ArgHandler.checkArgForEnumString(arg, DragonCharacter.values())){
                 stringJoiner.add("Драконы с таким же характером: ");
                 DragonCharacter dragonCharacter = DragonCharacter.valueOf(arg);
-                for (Dragon dragon : dragonManager.getSortedDragons()) {
-                    if (dragon.getCharacter() == dragonCharacter){
-                        stringJoiner.add(dragon.toString());
-                    }
-                }
+
+                dragonManager.getSortedDragons().stream()
+                                .filter(dragon -> dragon.getCharacter() == dragonCharacter)
+                                .map(Dragon::toString)
+                                .forEachOrdered(dragon -> stringJoiner.add(dragon));
             }
             return stringJoiner.toString();
-        } catch (Exception e) {
+        } catch (ArgumentEnumException e) {
             return e.getMessage();
         }
     }

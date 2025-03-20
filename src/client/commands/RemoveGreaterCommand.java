@@ -23,21 +23,12 @@ public class RemoveGreaterCommand implements Command {
         this.showOutput = showOutput;
     }
 
-    /**
-     * Проверяет, имеет ли команда аргументы.
-     *
-     * @return возвращает {@code false}, так как команда не принимает аргументов.
-     */
+
     @Override
     public boolean isHasArgs(){
         return false;
     }
 
-    /**
-     * Выполняет команду удаления всех драконов, превышающих заданный по координатам.
-     *
-     * @param arg аргумент команды (в данной команде не используется).
-     */
     @Override
     public Object execute(String arg){
         System.out.println("Введите координаты элемента: ");

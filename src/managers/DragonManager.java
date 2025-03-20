@@ -1,38 +1,26 @@
 package managers;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import collection.Dragon;
+import managers.exceptions.DragonFindException;
 import managers.utility.DragonCSVParser;
 
 
-/**
- * Класс для управления коллекцией драконов.
- * Реализует добавление, удаление, поиск и сортировку драконов.
- */
 public class DragonManager {
     private LinkedHashSet<Dragon> dragonSet;
     private LocalDate initializationDate;
 
-    /**
-     * Конструктор для создания менеджера коллекции драконов.
-     * Инициализирует коллекцию и запоминает дату создания.
-     */
     public DragonManager() {
         dragonSet = new LinkedHashSet<>();
         initializationDate = LocalDate.now();
     }
 
-    /**
-     * Заполняет коллекцию драконами, полученными из парсинга CSV-файла.
-     *
-     * @param input список строк, содержащих данные о драконах.
-     */
     public void collectParsedDragons(List<String[]> input){
         for (String[] row : input) {
             Dragon dragon = DragonCSVParser.parseDragonFromRow(row);
@@ -59,85 +47,56 @@ public class DragonManager {
         return dragonSet.getClass().getSimpleName();
     }
 
-    /**
-     * Добавляет дракона в коллекцию.
-     *
-     * @param e объект дракона.
-     */
     public void addDragon(Dragon e){
-        int length = dragonSet.size();
-        dragonSet.add(e);
-        if (dragonSet.size() == length){
-            System.out.println("Такой дракон уже сущствует и не был добавлен.");
+        if (dragonSet.add(e) == false){
+            System.out.println("Такой дракон уже существует и не был добавлен.");
         }
     }
 
-    /**
-     * Проверяет, существует ли в коллекции дракон с указанным ID.
-     *
-     * @param id ID дракона.
-     * @return {@code true}, если дракон с таким ID существует, иначе {@code false}.
-     */
     public boolean setHaveId(int id) {
         return dragonSet.stream()
                 .anyMatch(dragon -> dragon.getId() == id);
     }
 
-    /**
-     * Возвращает дракона по его ID.
-     *
-     * @param id ID дракона.
-     * @return объект дракона, если он найден, иначе {@code null}.
-     * @throws Exception 
-     */
-    public Dragon returnDragonById(int id) throws Exception {
+    public Dragon returnDragonById(int id) throws DragonFindException {
         return dragonSet.stream()
                 .filter(dragon -> dragon.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new Exception("Дракона с данным ID не найдено."));
+                .orElseThrow(() -> new DragonFindException());
     }
     
-    /**
-     * Возвращает коллекцию драконов.
-     *
-     * @return коллекция драконов.
-     */
     public LinkedHashSet<Dragon> getDragonSet() {
         return dragonSet;
     }
 
-    /**
-     * Возвращает отсортированный список драконов.
-     *
-     * @return отсортированный список драконов.
-     */
     public List<Dragon> getSortedDragons() {
         return dragonSet.stream()
                 .sorted()
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Очищает коллекцию драконов.
-     */
+    public Dragon getMinDragonByXAndY(){
+        Dragon minDragon = Collections.min(getDragonSet(), new Comparator<Dragon>() {
+                @Override
+                public int compare(Dragon d1, Dragon d2) {
+                    int xCompare = Long.compare(d1.getCoordinates().getX(), d2.getCoordinates().getX());
+                    if (xCompare != 0) {
+                        return xCompare; 
+                    }
+                    return Long.compare(d1.getCoordinates().getY(), d2.getCoordinates().getY());
+                }
+            });
+        return minDragon;
+    }
+
     public void clearDragonSet(){
         dragonSet.clear();
     }
 
-    /**
-     * Удаляет указанного дракона из коллекции.
-     *
-     * @param e объект дракона.
-     */
     public void removeDragon(Dragon e){
         dragonSet.remove(e);
     }
 
-    /**
-     * Возвращает дату инициализации коллекции.
-     *
-     * @return дата инициализации коллекции.
-     */
     public LocalDate getInitializationDate() {
         return initializationDate;
     }

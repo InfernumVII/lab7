@@ -9,7 +9,7 @@ public interface Command {
      *
      * @param arg аргумент команды (может быть пустым, если команда не требует аргументов).
      */
-    String execute(Object arg); //TODO return OBJECT
+    Object execute(Object arg); //TODO return OBJECT
 
     /**
      * Возвращает описание команды. 

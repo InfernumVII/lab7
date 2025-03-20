@@ -44,7 +44,7 @@ public class AddCommand implements Command {
      * @param arg аргумент команды (в данной команде не используется).
      */
     @Override
-    public String execute(Object arg){
+    public Object execute(Object arg){
         StringJoiner stringJoiner = new StringJoiner("\n");
         Builder dragonBuilder = (Builder) arg;
         stringJoiner.add("Добавление нового дракона.");

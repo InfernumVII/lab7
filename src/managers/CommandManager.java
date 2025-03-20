@@ -73,8 +73,8 @@ public class CommandManager {
      * @param name имя команды.
      * @param arg аргумент команды (может быть null).
      */
-    public String executeCommand(String name, Object arg){
-        String answer;
+    public Object executeCommand(String name, Object arg){
+        Object answer;
         Command command = commands.get(name);
         if (command != null) {
             if (command.isHasArgs() == true && arg == null){
