@@ -6,13 +6,13 @@ import client.commands.utility.ConsoleInputHandler;
 import client.commands.utility.exceptions.ArgumentEnumException;
 import collection.Dragon;
 import collection.DragonCharacter;
-import managers.DragonManager;
+import server.managers.DragonManager;
 
 /**
  * Команда для вывода элементов коллекции, значение поля character которых равно заданному.
  * Реализует интерфейс {@link Command}.
  */
-public class FilterByCharacterCommmand implements Command {
+public class FilterByCharacterCommand implements Command {
     
     private DragonManager dragonManager;
     /**
@@ -20,7 +20,7 @@ public class FilterByCharacterCommmand implements Command {
      *
      * @param dragonManager объект {@link DragonManager} для управления коллекцией драконов.
      */
-    public FilterByCharacterCommmand(DragonManager dragonManager){
+    public FilterByCharacterCommand(DragonManager dragonManager){
         this.dragonManager = dragonManager;
     }
 

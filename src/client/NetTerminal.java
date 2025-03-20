@@ -5,18 +5,18 @@ import java.util.Collection;
 import java.util.Scanner;
 
 import client.managers.ClientCommandManager;
-import managers.exceptions.ParseCommandException;
 import network.exceptions.TimeOutException;
 import network.models.Answer;
 import network.models.NetCommand;
+import server.managers.exceptions.ParseCommandException;
 
 public class NetTerminal {
     private Scanner scanner;
     private ClientCommandManager cManager;
     private boolean outputState = true;
-    private ClientApp clientApp;
+    private ClientUdpNetwork clientApp;
 
-    public NetTerminal(ClientApp clientApp){
+    public NetTerminal(ClientUdpNetwork clientApp){
         scanner = new Scanner(System.in);
         cManager = new ClientCommandManager();
         cManager.initDefaultCommands(this);
@@ -40,16 +40,11 @@ public class NetTerminal {
         return outputState;
     }
 
-    public void start(boolean condition){
+    public void start(boolean condition) throws ClassNotFoundException, ParseCommandException, IOException, TimeOutException{
         while (condition) {
             if (outputState == true) { System.out.print("> "); }
-            String in;
-            try {
-                in = scanner.nextLine().trim();
-                handleIter(in, outputState);
-            } catch (Exception e) {
-                break;
-            }
+            String in = scanner.nextLine().trim();
+            handleIter(in, outputState);
         }
     }
 

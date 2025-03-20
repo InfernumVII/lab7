@@ -1,5 +1,8 @@
 package server.commands;
 import collection.Dragon.Builder;
+import server.managers.CommandManager;
+import server.managers.DragonManager;
+
 import java.time.LocalDate;
 import java.util.StringJoiner;
 
@@ -10,8 +13,6 @@ import collection.Dragon;
 import collection.DragonCharacter;
 import collection.DragonHead;
 import collection.DragonType;
-import managers.CommandManager;
-import managers.DragonManager;
 
 
 /**

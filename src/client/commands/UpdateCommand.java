@@ -10,7 +10,7 @@ import collection.Dragon;
 import collection.DragonCharacter;
 import collection.DragonHead;
 import collection.DragonType;
-import commandRecords.UpdateCommandArgs;
+import network.models.UpdateCommandArgs;
 
 
 public class UpdateCommand implements Command {

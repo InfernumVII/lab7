@@ -5,8 +5,8 @@ import client.commands.utility.ArgHandler;
 import client.commands.utility.ConsoleInputHandler;
 import client.commands.utility.exceptions.ArgumentNumberException;
 import collection.Dragon;
-import managers.DragonManager;
-import managers.exceptions.DragonFindException;
+import server.managers.DragonManager;
+import server.managers.exceptions.DragonFindException;
 
 /**
  * Команда для удаления элемента коллекции по его ID.

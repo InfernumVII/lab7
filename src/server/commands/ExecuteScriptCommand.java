@@ -1,6 +1,6 @@
 package server.commands;
 
-public class ExecuteSciptCommand implements Command {
+public class ExecuteScriptCommand implements Command {
     
     @Override
     public boolean isHasArgs(){

@@ -3,7 +3,7 @@ import java.util.StringJoiner;
 
 import client.commands.utility.ConsoleInputHandler;
 import collection.Dragon;
-import managers.DragonManager;
+import server.managers.DragonManager;
 
 /**
  * Команда для вывода всех элементов коллекции в строковом представлении.

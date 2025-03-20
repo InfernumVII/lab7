@@ -1,7 +1,7 @@
 package client.commands;
 
 import client.commands.utility.ConsoleInputHandler;
-import commandRecords.RemoveGreaterCommandArgs;
+import network.models.RemoveGreaterCommandArgs;
 
 
 

@@ -4,7 +4,7 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import client.commands.utility.ConsoleInputHandler;
-import managers.CommandManager;
+import server.managers.CommandManager;
 
 /**
  * Команда для вывода последних 5 выполненных команд (без аргументов).

@@ -4,7 +4,7 @@ import java.util.StringJoiner;
 import client.commands.utility.ArgHandler;
 import client.commands.utility.ConsoleInputHandler;
 import collection.Dragon;
-import managers.DragonManager;
+import server.managers.DragonManager;
 
 /**
  * Команда для вывода элементов коллекции, значение поля head которых меньше заданного.

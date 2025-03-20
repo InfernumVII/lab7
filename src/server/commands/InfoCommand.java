@@ -3,7 +3,7 @@ package server.commands;
 import java.util.StringJoiner;
 
 import client.commands.utility.ConsoleInputHandler;
-import managers.DragonManager;
+import server.managers.DragonManager;
 
 /**
  * Команда для вывода информации о коллекции.

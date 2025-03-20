@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 import client.commands.utility.ConsoleInputHandler;
-import managers.CommandManager;
+import server.managers.CommandManager;
 /**
  * Команда для вывода справки по доступным командам.
  * Реализует интерфейс {@link Command}.

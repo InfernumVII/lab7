@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-import client.ClientApp;
+import client.ClientUdpNetwork;
 import client.NetTerminal;
 
 public class ExecuteScriptCommand implements Command {
@@ -45,7 +45,7 @@ public class ExecuteScriptCommand implements Command {
             terminal.swapOutput();
             terminal.setScanner(lastScanner);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("Произошла ошибка: " + e.getMessage());
         } finally {
             executedScripts.remove(arg);

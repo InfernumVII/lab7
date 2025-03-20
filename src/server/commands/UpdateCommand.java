@@ -10,10 +10,10 @@ import collection.Dragon;
 import collection.DragonCharacter;
 import collection.DragonHead;
 import collection.DragonType;
-import commandRecords.UpdateCommandArgs;
-import managers.CommandManager;
-import managers.DragonManager;
-import managers.exceptions.DragonFindException;
+import network.models.UpdateCommandArgs;
+import server.managers.CommandManager;
+import server.managers.DragonManager;
+import server.managers.exceptions.DragonFindException;
 
 
 /**

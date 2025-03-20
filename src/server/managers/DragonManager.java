@@ -1,4 +1,4 @@
-package managers;
+package server.managers;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import collection.Dragon;
-import managers.exceptions.DragonFindException;
-import managers.utility.DragonCSVParser;
+import server.managers.exceptions.DragonFindException;
+import server.managers.utility.CSV;
+import server.managers.utility.DragonCSVParser;
 
 
 public class DragonManager {
@@ -19,6 +20,19 @@ public class DragonManager {
     public DragonManager() {
         dragonSet = new LinkedHashSet<>();
         initializationDate = LocalDate.now();
+    }
+
+    public void addDragonsFromDragonFileEnv(){
+        String fileName = System.getenv("DRAGON_FILE");
+        if (fileName == null || fileName.isEmpty()) {
+            System.out.println("Ошибка: переменная окружения DRAGON_FILE не задана.");
+        } else {
+            List<String[]> fileData = CSV.read(fileName);
+            if (fileData != null){
+                collectParsedDragons(fileData);
+                System.out.println("Коллекция успешно загружена из файла: " + fileName);
+            } 
+        }
     }
 
     public void collectParsedDragons(List<String[]> input){

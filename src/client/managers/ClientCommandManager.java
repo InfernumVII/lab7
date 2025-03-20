@@ -7,7 +7,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import client.ClientApp;
+import client.ClientUdpNetwork;
 import client.NetTerminal;
 import client.commands.AddCommand;
 import client.commands.AddIfMinCommand;
@@ -17,8 +17,8 @@ import client.commands.ExitCommand;
 import client.commands.RemoveGreaterCommand;
 import client.commands.UpdateCommand;
 import client.commands.utility.ConsoleInputHandler;
-import managers.exceptions.ParseCommandException;
 import network.models.NetCommand;
+import server.managers.exceptions.ParseCommandException;
 
 
 public class ClientCommandManager {

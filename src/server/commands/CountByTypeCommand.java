@@ -5,7 +5,7 @@ import client.commands.utility.ArgHandler;
 import client.commands.utility.ConsoleInputHandler;
 import collection.Dragon;
 import collection.DragonType;
-import managers.DragonManager;
+import server.managers.DragonManager;
 
 /**
  * Команда для подсчета количества драконов определенного типа в коллекции.

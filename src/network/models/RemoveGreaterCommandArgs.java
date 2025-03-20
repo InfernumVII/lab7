@@ -1,4 +1,4 @@
-package commandRecords;
+package network.models;
 
 import java.io.Serializable;
 

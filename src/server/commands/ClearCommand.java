@@ -1,5 +1,5 @@
 package server.commands;
-import managers.DragonManager;
+import server.managers.DragonManager;
 
 
 public class ClearCommand implements Command{
