@@ -1,9 +1,5 @@
 package client;
 
-import java.io.IOException;
-
-import javax.management.RuntimeErrorException;
-
 import network.Settings;
 import network.exceptions.TimeOutException;
 import server.managers.exceptions.ParseCommandException;
