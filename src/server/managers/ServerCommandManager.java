@@ -1,39 +1,13 @@
 package server.managers;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 
+import managers.CommandManager;
 import server.commands.*;
 
 
-/**
- * Класс для управления командами и их выполнением.
- * Реализует хранение, регистрацию, выполнение команд, а также отслеживание истории выполненных команд.
- */
-public class CommandManager {
-    private DragonManager dragonManager;
+public class ServerCommandManager extends CommandManager<Command> {
 
-    public CommandManager(DragonManager dragonManager){
-        this.dragonManager = dragonManager;
-    }
-
-    private final static int HISTORY_SIZE = 5;
-    
-    public static int getHistorySize() {
-        return HISTORY_SIZE;
-    }
-    private Map<String, Command> commands = new HashMap<>();
-
-    private Deque<String> history = new ArrayDeque<String>(HISTORY_SIZE);
-
-    public void registerCommand(String name, Command command){
-        commands.put(name, command);
-    }
-
-    public void initDefaultCommands(){
+    public void initDefaultCommands(DragonManager dragonManager){
         registerCommand("help", new HelpCommand(this));
         registerCommand("info", new InfoCommand(dragonManager));
         registerCommand("show", new ShowCommand(dragonManager));
@@ -70,26 +44,5 @@ public class CommandManager {
         return answer;
     }
 
-    public Deque<String> getHistory(){
-        return history;
-    }
 
-    public Map<String, Command> getCommands() {
-        return commands;
-    }
-
-    public void setCommands(Map<String, Command> commands) {
-        this.commands = commands;
-    }
-
-    public void setHistory(Deque<String> history) {
-        this.history = history;
-    }
-
-    private void storeCommand(String command){
-        if (history.size() >= HISTORY_SIZE) {
-            history.removeFirst(); 
-        }
-        history.addLast(command);
-    }
 }

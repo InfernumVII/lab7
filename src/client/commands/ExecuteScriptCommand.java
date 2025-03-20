@@ -26,7 +26,8 @@ public class ExecuteScriptCommand implements Command {
 
 
     @Override
-    public Object execute(String arg){
+    public Object execute(Object argument){
+        String arg = (String) argument;
         if (executedScripts.contains(arg)) {
             System.out.println("Ошибка: рекурсия обнаружена. Скрипт " + arg + " уже выполняется.");
             return null;

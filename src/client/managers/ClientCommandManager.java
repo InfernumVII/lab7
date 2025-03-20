@@ -17,21 +17,12 @@ import client.commands.ExitCommand;
 import client.commands.RemoveGreaterCommand;
 import client.commands.UpdateCommand;
 import client.commands.utility.ConsoleInputHandler;
+import managers.CommandManager;
 import network.models.NetCommand;
 import server.managers.exceptions.ParseCommandException;
 
 
-public class ClientCommandManager {
-
-    private Map<String, Command> commands = new HashMap<>();
-
-    public void registerCommand(String name, Command command){
-        commands.put(name, command);
-    }
-
-    public Set<String> listedNames(){
-        return commands.keySet();
-    }
+public class ClientCommandManager extends CommandManager<Command> {
 
     public void initDefaultCommands(NetTerminal terminal){
         ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler(terminal.getScanner(), terminal.getOutputState());
@@ -56,7 +47,8 @@ public class ClientCommandManager {
         return new NetCommand(command, commandArgs);
     }
 
-    public Object executeCommand(String name, String arg){
+    @Override
+    public Object executeCommand(String name, Object arg){
         Command command = commands.get(name);
         if (command != null) {
             if (command.isHasArgs() == true && arg == null){

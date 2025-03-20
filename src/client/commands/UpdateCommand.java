@@ -26,7 +26,8 @@ public class UpdateCommand implements Command {
     }
 
     @Override
-    public Object execute(String arg){
+    public Object execute(Object argument){
+        String arg = (String) argument;
         try {
             if (ArgHandler.checkArgForInt(arg)){
                 int id = Integer.parseInt(arg);                    

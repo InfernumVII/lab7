@@ -26,7 +26,7 @@ public class AddIfMinCommand implements Command {
     }
 
     @Override
-    public Object execute(String arg) {
+    public Object execute(Object arg) {
         Builder dragonBuilder = new Dragon.Builder()
                     .withName(consoleInputHandler.promptForString("Введите имя дракона:", false))
                     .withCoordinates(new Coordinates(consoleInputHandler.promptForLong("Введите координату x:", false, -420, Long.MAX_VALUE),

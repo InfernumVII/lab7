@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import client.commands.utility.ConsoleInputHandler;
 import collection.Dragon;
 import network.models.RemoveGreaterCommandArgs;
-import server.managers.CommandManager;
+import server.managers.ServerCommandManager;
 import server.managers.DragonManager;
 
 

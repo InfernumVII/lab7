@@ -10,7 +10,7 @@ public class ExitCommand implements Command {
     }
 
     @Override
-    public Object execute(String arg){
+    public Object execute(Object arg){
         System.exit(0);
         return null;
     }

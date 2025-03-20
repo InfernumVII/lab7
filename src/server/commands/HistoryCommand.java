@@ -4,21 +4,21 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import client.commands.utility.ConsoleInputHandler;
-import server.managers.CommandManager;
+import server.managers.ServerCommandManager;
 
 /**
  * Команда для вывода последних 5 выполненных команд (без аргументов).
  * Реализует интерфейс {@link Command}.
  */
 public class HistoryCommand implements Command {
-    private CommandManager commandManager;
+    private ServerCommandManager commandManager;
 
     /**
      * Конструктор команды HistoryCommand.
      *
-     * @param commandManager объект {@link CommandManager} для управления командами.
+     * @param commandManager объект {@link ServerCommandManager} для управления командами.
      */
-    public HistoryCommand(CommandManager commandManager) {
+    public HistoryCommand(ServerCommandManager commandManager) {
         this.commandManager = commandManager;
     }
 

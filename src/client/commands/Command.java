@@ -1,6 +1,6 @@
 package client.commands;
 
 public interface Command {
-    Object execute(String arg);
+    Object execute(Object arg);
     boolean isHasArgs();
 }

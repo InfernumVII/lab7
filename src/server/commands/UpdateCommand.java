@@ -11,7 +11,7 @@ import collection.DragonCharacter;
 import collection.DragonHead;
 import collection.DragonType;
 import network.models.UpdateCommandArgs;
-import server.managers.CommandManager;
+import server.managers.ServerCommandManager;
 import server.managers.DragonManager;
 import server.managers.exceptions.DragonFindException;
 

@@ -1,6 +1,6 @@
 package server.commands;
 import collection.Dragon.Builder;
-import server.managers.CommandManager;
+import server.managers.ServerCommandManager;
 import server.managers.DragonManager;
 
 import java.time.LocalDate;

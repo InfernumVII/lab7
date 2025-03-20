@@ -2,7 +2,7 @@ package client.commands.utility;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import server.managers.CommandManager;
+import server.managers.ServerCommandManager;
 
 
 /**
@@ -16,7 +16,7 @@ public class ConsoleInputHandler {
     /**
      * Конструктор для инициализации объекта.
      *
-     * @param commandManager объект {@link CommandManager}, используемый для управления командами и их составными.
+     * @param commandManager объект {@link ServerCommandManager}, используемый для управления командами и их составными.
      */
     public ConsoleInputHandler(Scanner scanner, boolean showOutput) {
         this.scanner = scanner;

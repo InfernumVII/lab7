@@ -5,20 +5,20 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 import client.commands.utility.ConsoleInputHandler;
-import server.managers.CommandManager;
+import server.managers.ServerCommandManager;
 /**
  * Команда для вывода справки по доступным командам.
  * Реализует интерфейс {@link Command}.
  */
 public class HelpCommand implements Command {
-    private CommandManager commandManager;
+    private ServerCommandManager commandManager;
 
     /**
      * Конструктор команды HelpCommand.
      *
-     * @param commandManager объект {@link CommandManager} для управления командами.
+     * @param commandManager объект {@link ServerCommandManager} для управления командами.
      */
-    public HelpCommand(CommandManager commandManager){
+    public HelpCommand(ServerCommandManager commandManager){
         this.commandManager = commandManager;
     }
 
