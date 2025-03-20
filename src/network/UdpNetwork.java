@@ -55,7 +55,7 @@ public abstract class UdpNetwork {
     }
     public void send(byte[] bytes, InetSocketAddress inetSocketAddress) throws IOException{
         ByteBuffer buffer = ByteBuffer.wrap(bytes);
-        datagramChannel.send(buffer, inetSocketAddress); //TODO добавить проверку что данные были отправлены
+        datagramChannel.send(buffer, inetSocketAddress);
     }
 
     public void sendObject(Object object) throws IOException{
