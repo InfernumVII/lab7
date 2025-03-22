@@ -20,6 +20,7 @@ public class DragonManager {
     public DragonManager() {
         dragonSet = new LinkedHashSet<>();
         initializationDate = LocalDate.now();
+        addDragonsFromDragonFileEnv();
     }
 
     public void addDragonsFromDragonFileEnv(){

@@ -13,7 +13,7 @@ import server.managers.ServerCommandManager;
 public class ServerUdpNetwork extends UdpNetwork {
     private DragonManager dManager;
     private ServerCommandManager serverCommandManager;
-
+    
     public ServerUdpNetwork(Settings settings) throws IOException{
         inetSocketAddress = getSocketAddress(settings);
         datagramChannel = createDatagramChannel(inetSocketAddress);
