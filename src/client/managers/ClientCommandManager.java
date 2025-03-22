@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import client.ClientTerminal;
 import client.ClientUdpNetwork;
 import client.NetTerminal;
 import client.commands.AddCommand;
@@ -24,7 +25,7 @@ import server.managers.exceptions.ParseCommandException;
 
 public class ClientCommandManager extends CommandManager<Command> {
 
-    public void initDefaultCommands(NetTerminal terminal){
+    public void initDefaultCommands(ClientTerminal terminal){
         ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler(terminal.getScanner(), terminal.getOutputState());
         registerCommand("add", new AddCommand(consoleInputHandler));
         registerCommand("update", new UpdateCommand(consoleInputHandler));
@@ -34,16 +35,21 @@ public class ClientCommandManager extends CommandManager<Command> {
         registerCommand("exit", new ExitCommand());
     }
 
-    public NetCommand getCommandFromRawInput(String in) throws ParseCommandException{
-        String[] parsedCommand = ClientCommandManager.parseCommand(in);
-        String command = parsedCommand[0];
-        Object commandArgs = parsedCommand[1];
+    private Object makeArgsIfCommandIsLocal(String command, Object commandArgs){
         if (listedNames().contains(command) == true){
             Object answer = executeCommand(command, (String) commandArgs);
             if (answer != null){
                 commandArgs = answer;
             }
         }
+        return commandArgs;
+    }
+
+    public NetCommand getCommandFromRawInput(String in) throws ParseCommandException{
+        String[] parsedCommand = parseCommand(in);
+        String command = parsedCommand[0];
+        Object commandArgs = parsedCommand[1];
+        commandArgs = makeArgsIfCommandIsLocal(command, commandArgs);
         return new NetCommand(command, commandArgs);
     }
 
@@ -61,18 +67,5 @@ public class ClientCommandManager extends CommandManager<Command> {
             }
         }
         return null;
-    }
-
-    public static String[] parseCommand(String command) throws ParseCommandException{
-        String[] input = command.split(" ");
-        String commandName = input[0];
-        String commandArg = null;
-        if (input.length > 2){
-            throw new ParseCommandException();
-        }
-        if (input.length == 2){
-            commandArg = input[1];
-        }
-        return new String[]{commandName, commandArg};
     }
 }

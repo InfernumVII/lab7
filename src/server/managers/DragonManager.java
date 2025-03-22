@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import collection.Dragon;
+import server.managers.exceptions.DragonFileExistException;
 import server.managers.exceptions.DragonFindException;
 import server.managers.utility.CSV;
 import server.managers.utility.DragonCSVParser;
@@ -16,22 +17,32 @@ import server.managers.utility.DragonCSVParser;
 public class DragonManager {
     private LinkedHashSet<Dragon> dragonSet;
     private LocalDate initializationDate;
+    private String dragonFilePath;
 
     public DragonManager() {
+        dragonFilePath = System.getenv("DRAGON_FILE");
+        if (dragonFilePath == null || dragonFilePath.isEmpty()) {
+            throw new DragonFileExistException();
+        }
         dragonSet = new LinkedHashSet<>();
         initializationDate = LocalDate.now();
     }
 
     public void addDragonsFromDragonFileEnv(){
-        String fileName = System.getenv("DRAGON_FILE");
-        if (fileName == null || fileName.isEmpty()) {
-            System.out.println("Ошибка: переменная окружения DRAGON_FILE не задана.");
-        } else {
-            List<String[]> fileData = CSV.read(fileName);
-            if (fileData != null){
-                collectParsedDragons(fileData);
-                System.out.println("Коллекция успешно загружена из файла: " + fileName);
-            } 
+        List<String[]> fileData = CSV.read(dragonFilePath);
+        if (fileData != null){
+            collectParsedDragons(fileData);
+            System.out.println("Коллекция успешно загружена из файла: " + dragonFilePath);
+        }
+    }
+
+    public void saveDragonsToCSV(){
+        CSV.writeOneLine(dragonFilePath, new String[]{"id", "name", "coordinates", "creationDate", "age", "color", "type", "character", "head"});
+        for (Dragon dragon : getSortedDragons()) {
+            String[] row = DragonCSVParser.parseRowFromDragon(dragon);
+            if (row != null) {
+                CSV.writeOneLine(dragonFilePath, row, true);
+            }
         }
     }
 

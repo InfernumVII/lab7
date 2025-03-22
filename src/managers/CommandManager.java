@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import server.managers.exceptions.ParseCommandException;
+
 public abstract class CommandManager<V> {
     private final static int HISTORY_SIZE = 5;
     private Deque<String> history = new ArrayDeque<String>(HISTORY_SIZE);
@@ -33,5 +35,23 @@ public abstract class CommandManager<V> {
             history.removeFirst(); 
         }
         history.addLast(command);
+    }
+
+    public void executeCommandFromRawInput(String in) throws ParseCommandException{
+        String[] parsedCommand = parseCommand(in);
+        executeCommand(parsedCommand[0], parsedCommand[1]);
+    }
+
+    public String[] parseCommand(String command) throws ParseCommandException{
+        String[] input = command.split(" ");
+        String commandName = input[0];
+        String commandArg = null;
+        if (input.length > 2){
+            throw new ParseCommandException();
+        }
+        if (input.length == 2){
+            commandArg = input[1];
+        }
+        return new String[]{commandName, commandArg};
     }
 }

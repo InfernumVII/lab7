@@ -1,5 +1,8 @@
 package client;
 
+import java.io.IOException;
+
+import client.managers.ClientCommandManager;
 import network.Settings;
 import network.UdpNetwork;
 import network.exceptions.TimeOutException;
@@ -7,16 +10,15 @@ import server.managers.exceptions.ParseCommandException;
 
 public class ClientMain {
     public static void main(String[] args) {
+        Settings settings = new ClientSettings();
+        ClientUdpNetwork client;
         try {
-            Settings settings = new ClientSettings();
-            //TODO починить наследование UdpNetwork client = new ClientUdpNetwork(settings);
-            ClientUdpNetwork client = new ClientUdpNetwork(settings);
-            NetTerminal terminal = new NetTerminal(client);
-            terminal.start(true);
-        } catch (ClassNotFoundException | ParseCommandException | TimeOutException e) {
-            System.out.println(e.getMessage());
-        } catch (Exception e){
+            client = new ClientUdpNetwork(settings);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        ClientTerminal clientTerminal = new ClientTerminal(client);
+        clientTerminal.startLoop();
+        
     }
 }

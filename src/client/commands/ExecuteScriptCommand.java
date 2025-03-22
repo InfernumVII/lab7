@@ -7,14 +7,15 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
+import client.ClientTerminal;
 import client.ClientUdpNetwork;
 import client.NetTerminal;
 
 public class ExecuteScriptCommand implements Command {
-    private NetTerminal terminal;
+    private ClientTerminal terminal;
     private static Set<String> executedScripts = new HashSet<>();
 
-    public ExecuteScriptCommand(NetTerminal terminal){
+    public ExecuteScriptCommand(ClientTerminal terminal){
         this.terminal = terminal;
     }
 

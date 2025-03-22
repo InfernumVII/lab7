@@ -10,6 +10,32 @@ import network.models.Answer;
 import network.models.NetCommand;
 import server.managers.exceptions.ParseCommandException;
 
+
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+//LEGACY
+
 public class NetTerminal {
     private Scanner scanner;
     private ClientCommandManager cManager;
@@ -56,7 +82,7 @@ public class NetTerminal {
 
     public void smartPrint(Object in){
         if (in instanceof Collection){
-            ((Collection) in).forEach(System.out::println);
+            ((Collection) in).stream().forEachOrdered(System.out::println);
         } else {
             System.out.println(in);
         }
