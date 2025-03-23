@@ -21,21 +21,20 @@ public class ClientTerminal extends TerminalWithCommandManager<ClientCommandMana
     }
     
     public void startLoop(){
-        start(true, t -> {
-            try {
-                handleIter(t);
-            } catch (ParseCommandException | TimeOutException e) {
-                printIfOutputStateTrue(e.getMessage());
-            } catch (IOException | ClassNotFoundException e){
-                throw new RuntimeException(e);
-            }
-        });
+        start(this::handleIter);
     }
 
-    public void handleIter(String in) throws ParseCommandException, ClassNotFoundException, IOException, TimeOutException{
-        NetCommand netCommand = cManager.getCommandFromRawInput(in);
-        Answer answer = cUdpNetwork.sendAndGetAnswer(netCommand);
-        if (outputState == true) { smartPrint(answer.answer()); }
+    public void handleIter(String in){
+        try {
+            NetCommand netCommand = cManager.getCommandFromRawInput(in);
+            Answer answer = cUdpNetwork.sendAndGetAnswer(netCommand);
+            smartPrint(answer.answer());
+        } catch (TimeOutException | ParseCommandException e) {
+            System.err.println(e.getMessage());
+        } catch (IOException | ClassNotFoundException e){
+            throw new RuntimeException(e);
+        }
+        
     }
 
     public void smartPrint(Object in){

@@ -1,6 +1,7 @@
 package temp;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.function.Consumer;
@@ -12,7 +13,7 @@ import server.managers.exceptions.ParseCommandException;
 public class TerminalWithCommandManager<T extends CommandManager<?>> {
     private Scanner scanner;
     protected T cManager;
-    protected boolean outputState = true;
+    private final PrintStream nullPStream = new PrintStream(OutputStream.nullOutputStream());
     private final PrintStream defaultPStream = System.out;
     private final InputStream dInputStream = System.in;
     
@@ -20,6 +21,10 @@ public class TerminalWithCommandManager<T extends CommandManager<?>> {
     public TerminalWithCommandManager(T cManager){
         scanner = new Scanner(dInputStream);
         this.cManager = cManager;
+    }
+
+    public T getCommandManager() {
+        return cManager;
     }
 
     
@@ -31,32 +36,28 @@ public class TerminalWithCommandManager<T extends CommandManager<?>> {
         return scanner;
     }
 
-    public void swapOutput(){
-        outputState = !outputState;
-    }
-    
-    public boolean getOutputState(){
-        return outputState;
+    public void setOutputToNull(){
+        System.setOut(nullPStream);
     }
 
-    public void printIfOutputStateTrue(Object in){
-        if (outputState == true) { System.out.print(in.toString()); }
+    public void setOutputToDefault(){
+        System.setOut(defaultPStream);
     }
 
-    public void start(boolean condition, Consumer<String> afterFunction){
-        while (condition) {
-            printIfOutputStateTrue("> ");
-            String in = scanner.nextLine().trim();
-            afterFunction.accept(in);
+    public void start(Consumer<String> afterFunction){
+        while (true) {
+            System.out.print("> ");
+            afterFunction.accept(scanner.nextLine().trim());
         }
+        
     }
 
-    public void start(boolean condition){
-        start(condition, in -> {
+    public void start(){
+        start(in -> {
             try {
                 cManager.executeCommandFromRawInput(in);
             } catch (ParseCommandException e) {
-                printIfOutputStateTrue(e.getMessage());
+                System.err.println(e.getMessage());
             }
         });
     }

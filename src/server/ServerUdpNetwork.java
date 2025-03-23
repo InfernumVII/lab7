@@ -19,6 +19,9 @@ public class ServerUdpNetwork extends UdpNetwork {
     public ServerUdpNetwork(Settings settings) throws IOException{
         inetSocketAddress = getSocketAddress(settings);
         datagramChannel = createDatagramChannel(inetSocketAddress);
+
+        initCommandManager();
+        dManager.addDragonsFromDragonFileEnv();
     }
 
     public void initCommandManager() throws DragonFileExistException{
@@ -31,7 +34,7 @@ public class ServerUdpNetwork extends UdpNetwork {
         return dManager;
     }
 
-    public void start(boolean condition) throws ClassNotFoundException, IOException, TimeOutException{
+    public void start(boolean condition) throws ClassNotFoundException, IOException {
         System.out.println("Сервер запущен");
         while (condition) {
             NetCommand command = handleCommand();

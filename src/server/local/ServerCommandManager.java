@@ -16,7 +16,7 @@ public class ServerCommandManager extends CommandManager<Command> {
     public Object executeCommand(String name, Object arg) {
         Command command = commands.get(name);
         if (command == null){
-            System.out.println("Неизвестная команда: " + name);
+            System.err.println("Неизвестная команда: " + name);
         } else {
             command.execute();
         }

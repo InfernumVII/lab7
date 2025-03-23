@@ -71,7 +71,7 @@ public abstract class UdpNetwork {
         
     }
 
-    public byte[] receive(int len) throws IOException, TimeOutException{
+    public byte[] receive(int len) throws IOException {
         byte[] buf = new byte[len];
         ByteBuffer byteBuffer = ByteBuffer.wrap(buf);
         selector.select(); // Блокировка до получения данных
@@ -90,33 +90,33 @@ public abstract class UdpNetwork {
         return buf;
     }
 
-    public byte[] handleLen() throws IOException, TimeOutException {
+    public byte[] handleLen() throws IOException {
         return receive(4);
     }
     public byte[] handleLen(long timeout) throws IOException, TimeOutException {
         return receive(4, timeout);
     }
     
-    public Object handleObject() throws IOException, ClassNotFoundException, TimeOutException {
+    public Object handleObject() throws IOException, ClassNotFoundException {
         byte[] lenBytes = handleLen();
         int length = BytesConversions.bytesToInt(lenBytes); //https://ru.stackoverflow.com/questions/817289/Как-узнать-длину-пакета-по-datagramchannel (Другой - это сначала передать int или long, содержащий размер передаваемых данных, а потом передать столько данных.)
         byte[] buf = receive(length);
         return BytesConversions.bytesToObject(buf);
     }
 
-    public Object handleObject(long timeout) throws IOException, ClassNotFoundException, TimeOutException {
+    public Object handleObject(long timeout) throws IOException, TimeOutException, ClassNotFoundException {
         byte[] lenBytes = handleLen(timeout);
         int length = BytesConversions.bytesToInt(lenBytes); //https://ru.stackoverflow.com/questions/817289/Как-узнать-длину-пакета-по-datagramchannel (Другой - это сначала передать int или long, содержащий размер передаваемых данных, а потом передать столько данных.)
         byte[] buf = receive(length, timeout);
         return BytesConversions.bytesToObject(buf);
     }
 
-    public NetCommand handleCommand() throws IOException, ClassNotFoundException, TimeOutException {
+    public NetCommand handleCommand() throws IOException, ClassNotFoundException {
         Object obj = handleObject();
         return (NetCommand) obj;
     }
 
-    public Answer handleAnswer(long timeout) throws IOException, ClassNotFoundException, TimeOutException{
+    public Answer handleAnswer(long timeout) throws IOException, TimeOutException, ClassNotFoundException{
         Object obj = handleObject(timeout);
         return (Answer) obj;
     }

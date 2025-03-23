@@ -1,6 +1,7 @@
 package client.commands;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.temporal.Temporal;
 import java.util.HashSet;
@@ -30,27 +31,26 @@ public class ExecuteScriptCommand implements Command {
     public Object execute(Object argument){
         String arg = (String) argument;
         if (executedScripts.contains(arg)) {
-            System.out.println("Ошибка: рекурсия обнаружена. Скрипт " + arg + " уже выполняется.");
+            System.err.println("Ошибка: рекурсия обнаружена. Скрипт " + arg + " уже выполняется.");
             return null;
         }
             
         executedScripts.add(arg);
 
         System.out.println(String.format("Запуск команд из файла: %s", arg));
+
+        Scanner scriptScanner = null;
         try (FileInputStream file = new FileInputStream(arg)) {
-            Scanner lastScanner = terminal.getScanner();
-            Scanner scriptScanner = new Scanner(file);
-
-            terminal.setScanner(scriptScanner);
-            terminal.swapOutput();
-            terminal.start(scriptScanner.hasNextLine());
-            terminal.swapOutput();
-            terminal.setScanner(lastScanner);
-
-        } catch (Exception e) {
-            System.out.println("Произошла ошибка: " + e.getMessage());
+            scriptScanner = new Scanner(file);
+            terminal.setOutputToNull();
+            scriptScanner.forEachRemaining(terminal::handleIter);
+            terminal.setOutputToDefault();
+            System.out.println("Все команды выполнены");
+        } catch (IOException e) {
+            System.err.println("Произошла ошибка: " + e.getMessage());
         } finally {
             executedScripts.remove(arg);
+            scriptScanner.close();
         }
         return null;
         
