@@ -26,6 +26,7 @@ import server.managers.exceptions.ParseCommandException;
 public class ClientCommandManager extends CommandManager<Command> {
 
     public void initDefaultCommands(ClientTerminal terminal){
+        commands.clear();
         ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler(terminal.getScanner());
         registerCommand("add", new AddCommand(consoleInputHandler));
         registerCommand("update", new UpdateCommand(consoleInputHandler));

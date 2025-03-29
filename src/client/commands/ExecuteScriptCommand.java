@@ -42,9 +42,17 @@ public class ExecuteScriptCommand implements Command {
         Scanner scriptScanner = null;
         try (FileInputStream file = new FileInputStream(arg)) {
             scriptScanner = new Scanner(file);
+            Scanner scannerBefore = terminal.getScanner();
+            terminal.setScanner(scriptScanner);
+            terminal.getCommandManager().initDefaultCommands(terminal);
             terminal.setOutputToNull();
-            scriptScanner.forEachRemaining(terminal::handleIter);
+            terminal.startLoop();
             terminal.setOutputToDefault();
+            terminal.setScanner(scannerBefore);
+            terminal.getCommandManager().initDefaultCommands(terminal);
+            
+            //scriptScanner.forEachRemaining(terminal::handleIter);
+            //
             System.out.println("Все команды выполнены");
         } catch (IOException e) {
             System.err.println("Произошла ошибка: " + e.getMessage());
