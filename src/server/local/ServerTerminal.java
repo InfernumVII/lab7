@@ -1,9 +1,9 @@
 package server.local;
 
+import manager.TerminalWithCommandManager;
 import managers.CommandManager;
 import server.local.commands.Command;
 import server.managers.DragonManager;
-import temp.TerminalWithCommandManager;
 
 public class ServerTerminal extends TerminalWithCommandManager<ServerCommandManager> {
     public ServerTerminal(DragonManager dragonManager) {

@@ -5,12 +5,12 @@ import java.util.Collection;
 
 import client.commands.Command;
 import client.managers.ClientCommandManager;
+import manager.TerminalWithCommandManager;
 import managers.CommandManager;
 import network.exceptions.TimeOutException;
 import network.models.Answer;
 import network.models.NetCommand;
 import server.managers.exceptions.ParseCommandException;
-import temp.TerminalWithCommandManager;
 
 public class ClientTerminal extends TerminalWithCommandManager<ClientCommandManager> {
     private ClientUdpNetwork cUdpNetwork;
