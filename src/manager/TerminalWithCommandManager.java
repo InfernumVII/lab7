@@ -1,8 +1,10 @@
 package manager;
 
+import java.io.EOFException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -47,7 +49,13 @@ public class TerminalWithCommandManager<T extends CommandManager<?>> {
     public void start(Consumer<String> afterFunction){
         while (true) {
             System.out.print("> ");
-            afterFunction.accept(scanner.nextLine().trim());
+            String in;
+            try {
+                in = scanner.nextLine().trim();
+            } catch (NoSuchElementException | IllegalStateException e) {
+                break;
+            }
+            afterFunction.accept(in);
         }
         
     }

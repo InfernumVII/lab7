@@ -54,7 +54,7 @@ public class ConsoleInputHandler {
      * @param max максимальное допустимое значение (включительно).
      * @return введённое пользователем целочисленное значение.
      */
-    public long promptForLong(String prompt, boolean allowNull, long min, long max){ //TODO add generics
+    public long promptForLong(String prompt, boolean allowNull, long min, long max){ 
         while (true) {
             System.out.println(String.format(prompt, min, max));
             String inString = scanner.nextLine();
@@ -90,7 +90,7 @@ public class ConsoleInputHandler {
      */
     public Float promptForFloat(String prompt, boolean allowNull, Float min, Float max){
         while (true) {
-            System.err.println(prompt);
+            System.out.println(prompt);
             String inString = scanner.nextLine();
             if (inString.isEmpty()) {
                 if (allowNull) {
@@ -128,7 +128,7 @@ public class ConsoleInputHandler {
     public <E extends Enum<E>> E promptForEnum(String prompt, E[] enums, boolean allowNull){
         String joinedEnums = Arrays.toString(enums);
         while (true) {
-            System.err.println(String.format(prompt, joinedEnums));
+            System.out.println(String.format(prompt, joinedEnums));
             String in = scanner.nextLine();
             if (in.isEmpty()){
                 if (allowNull){
