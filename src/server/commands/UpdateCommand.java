@@ -7,6 +7,7 @@ import client.commands.utility.ConsoleInputHandler;
 import collection.Color;
 import collection.Coordinates;
 import collection.Dragon;
+import collection.Dragon.Builder;
 import collection.DragonCharacter;
 import collection.DragonHead;
 import collection.DragonType;
@@ -49,8 +50,8 @@ public class UpdateCommand implements Command {
      */
     @Override
     public Object execute(Object argument){
-        UpdateCommandArgs arg = (UpdateCommandArgs) argument;
-        int id = arg.id();
+        Dragon arg = (Dragon) argument;
+        int id = arg.getId();
 
         Dragon dragon;
         try {
@@ -59,13 +60,13 @@ public class UpdateCommand implements Command {
             return e.getMessage();
         }
         
-        dragon.setName(arg.name());
-        dragon.setCoordinates(new Coordinates(arg.x(), arg.y()));
-        dragon.setAge(arg.age());
-        dragon.setColor(arg.color());
-        dragon.setType(arg.type());
-        dragon.setCharacter(arg.character());
-        dragon.setHead(new DragonHead(arg.eyesCount()));
+        dragon.setName(arg.getName());
+        dragon.setCoordinates(arg.getCoordinates());
+        dragon.setAge(arg.getAge());
+        dragon.setColor(arg.getColor());
+        dragon.setType(arg.getType());
+        dragon.setCharacter(arg.getCharacter());
+        dragon.setHead(arg.getHead());
 
         return String.format("Дракон с ID-%d успешно обновлён!", id);
     }

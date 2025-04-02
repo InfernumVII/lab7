@@ -2,6 +2,8 @@ package collection;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import client.commands.utility.ConsoleInputHandler;
+
 /**
  * Класс, представляющий сущность дракона.
  * Реализует интерфейс {@link Comparable<Dragon>} для сортировки по ID.
