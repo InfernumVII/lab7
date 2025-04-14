@@ -30,7 +30,9 @@ public class RemoveGreaterCommand implements Command {
     }
 
     @Override
-    public Object execute(Object arg){
+    public Object execute(Object arg, String authKey){
+        if (!ServerCommandManager.getAuthInstance().keyIsExists(authKey))
+            return "Ошибка авторизации";
         RemoveGreaterCommandArgs args = (RemoveGreaterCommandArgs) arg;
         long x = args.x();
         long y = args.y();

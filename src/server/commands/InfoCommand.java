@@ -4,6 +4,7 @@ import java.util.StringJoiner;
 
 import client.commands.utility.ConsoleInputHandler;
 import server.managers.DragonManager;
+import server.managers.ServerCommandManager;
 
 /**
  * Команда для вывода информации о коллекции.
@@ -36,7 +37,9 @@ public class InfoCommand implements Command {
      * @param arg аргумент команды (в данной команде не используется).
      */
     @Override
-    public Object execute(Object arg){
+    public Object execute(Object arg, String authKey){
+        if (!ServerCommandManager.getAuthInstance().keyIsExists(authKey))
+            return "Ошибка авторизации";
         StringJoiner stringJoiner = new StringJoiner("\n");
         stringJoiner.add("Тип коллекции: " + dragonManager.getTypeName());
         stringJoiner.add("Дата инициализации: " + dragonManager.getInitializationDate());

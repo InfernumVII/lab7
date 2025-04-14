@@ -38,7 +38,9 @@ public class HistoryCommand implements Command {
      * @param arg аргумент команды (в данной команде не используется).
      */
     @Override
-    public Object execute(Object arg){
+    public Object execute(Object arg, String authKey){
+        if (!ServerCommandManager.getAuthInstance().keyIsExists(authKey))
+            return "Ошибка авторизации";
         StringJoiner stringJoiner = new StringJoiner("\n");
         Deque<String> history = commandManager.getHistory();
         history.stream()

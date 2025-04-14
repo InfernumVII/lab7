@@ -1,5 +1,6 @@
 package server.commands;
 import server.managers.DragonManager;
+import server.managers.ServerCommandManager;
 
 
 public class ClearCommand implements Command{
@@ -15,7 +16,9 @@ public class ClearCommand implements Command{
     }
 
     @Override
-    public Object execute(Object arg){
+    public Object execute(Object arg, String authKey){
+        if (!ServerCommandManager.getAuthInstance().keyIsExists(authKey))
+            return "Ошибка авторизации";
         dragonManager.clearDragonSet();
         return "Драконы были очищены!";
     }

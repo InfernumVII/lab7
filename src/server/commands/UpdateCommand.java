@@ -49,7 +49,9 @@ public class UpdateCommand implements Command {
      * @param arg строка, содержащая ID дракона.
      */
     @Override
-    public Object execute(Object argument){
+    public Object execute(Object argument, String authKey){
+        if (!ServerCommandManager.getAuthInstance().keyIsExists(authKey))
+            return "Ошибка авторизации";
         Dragon arg = (Dragon) argument;
         int id = arg.getId();
 

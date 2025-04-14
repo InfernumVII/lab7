@@ -2,10 +2,14 @@ package server.managers;
 
 
 import managers.CommandManager;
+import server.ServerMain;
 import server.commands.*;
+import server.psql.auth.Auth;
+import server.psql.auth.Pair;
 
 
 public class ServerCommandManager extends CommandManager<Command> {
+    private static Auth authInstance = new Auth(ServerMain.getManagerInsance().getConnection());
 
     public void initDefaultCommands(DragonManager dragonManager){
         registerCommand("help", new HelpCommand(this));
@@ -22,11 +26,16 @@ public class ServerCommandManager extends CommandManager<Command> {
         registerCommand("count_by_type", new CountByTypeCommand(dragonManager));
         registerCommand("filter_by_character", new FilterByCharacterCommand(dragonManager));
         registerCommand("filter_less_than_head", new FilterLessThanHeadCommand(dragonManager));
+        registerCommand("auth", new AuthCommand());
     }
 
-    public Object executeCommand(String name, Object arg){
+    public Object executeCommand(String name, Object args){
         Object answer;
         Command command = commands.get(name);
+        Object arg = ((Pair<String, Object>) args).getValue2();
+        String authKey = ((Pair<String, Object>) args).getValue1();
+        System.out.println(arg);
+        System.out.println(authKey);
         if (command != null) {
             if (command.isHasArgs() == true && arg == null){
                 return "У команды должны быть аргументы.";
@@ -34,7 +43,7 @@ public class ServerCommandManager extends CommandManager<Command> {
             else if (command.isHasArgs() == false && arg != null){
                 return "У команды не может быть аргументов.";
             } else {
-                answer = command.execute(arg);
+                answer = command.execute(arg, authKey);
                 storeCommand(name);
             }
             
@@ -42,6 +51,10 @@ public class ServerCommandManager extends CommandManager<Command> {
             return "Неизвестная команда: " + name;
         }
         return answer;
+    }
+
+    public static Auth getAuthInstance() {
+        return authInstance;
     }
 
 

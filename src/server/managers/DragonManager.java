@@ -5,54 +5,29 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
+
 
 import collection.Dragon;
-import server.managers.exceptions.DragonFileExistException;
 import server.managers.exceptions.DragonFindException;
 import server.managers.utility.CSV;
 import server.managers.utility.DragonCSVParser;
 
 
 public class DragonManager {
-    private LinkedHashSet<Dragon> dragonSet;
+    private Set<Dragon> dragonSet;
     private LocalDate initializationDate;
-    private String dragonFilePath;
-
+    
     public DragonManager() {
-        dragonFilePath = System.getenv("DRAGON_FILE");
-        if (dragonFilePath == null || dragonFilePath.isEmpty()) {
-            throw new DragonFileExistException();
-        }
-        dragonSet = new LinkedHashSet<>();
+        dragonSet = Collections.synchronizedSet(new LinkedHashSet<>());
         initializationDate = LocalDate.now();
-    }
-
-    public void addDragonsFromDragonFileEnv(){
-        List<String[]> fileData = CSV.read(dragonFilePath);
-        if (fileData != null){
-            collectParsedDragons(fileData);
-            System.out.println("Коллекция успешно загружена из файла: " + dragonFilePath);
-        }
-    }
-
-    public void saveDragonsToCSV(){
-        CSV.writeOneLine(dragonFilePath, new String[]{"id", "name", "coordinates", "creationDate", "age", "color", "type", "character", "head"});
-        for (Dragon dragon : getSortedDragons()) {
-            String[] row = DragonCSVParser.parseRowFromDragon(dragon);
-            if (row != null) {
-                CSV.writeOneLine(dragonFilePath, row, true);
-            }
-        }
-    }
-
-    public void collectParsedDragons(List<String[]> input){
-        for (String[] row : input) {
-            Dragon dragon = DragonCSVParser.parseDragonFromRow(row);
-            if (dragon != null) {
-                dragonSet.add(dragon);
-            }
-        }
     }
     
     private int getUniqueId(int lastId){
@@ -72,35 +47,35 @@ public class DragonManager {
         return dragonSet.getClass().getSimpleName();
     }
 
-    public void addDragon(Dragon e){
+    public synchronized void addDragon(Dragon e){
         if (dragonSet.add(e) == false){
             System.out.println("Такой дракон уже существует и не был добавлен.");
         }
     }
 
-    public boolean setHaveId(int id) {
+    public synchronized boolean setHaveId(int id) {
         return dragonSet.stream()
                 .anyMatch(dragon -> dragon.getId() == id);
     }
 
-    public Dragon returnDragonById(int id) throws DragonFindException {
+    public synchronized Dragon returnDragonById(int id) throws DragonFindException {
         return dragonSet.stream()
                 .filter(dragon -> dragon.getId() == id)
                 .findFirst()
                 .orElseThrow(() -> new DragonFindException());
     }
     
-    public LinkedHashSet<Dragon> getDragonSet() {
+    public synchronized Set<Dragon> getDragonSet() {
         return dragonSet;
     }
 
-    public List<Dragon> getSortedDragons() {
+    public synchronized List<Dragon> getSortedDragons() {
         return dragonSet.stream()
                 .sorted()
                 .collect(Collectors.toList());
     }
 
-    public Dragon getMinDragonByXAndY(){
+    public synchronized Dragon getMinDragonByXAndY(){
         Dragon minDragon = Collections.min(getDragonSet(), new Comparator<Dragon>() {
                 @Override
                 public int compare(Dragon d1, Dragon d2) {
@@ -114,11 +89,11 @@ public class DragonManager {
         return minDragon;
     }
 
-    public void clearDragonSet(){
+    public synchronized void clearDragonSet(){
         dragonSet.clear();
     }
 
-    public void removeDragon(Dragon e){
+    public synchronized void removeDragon(Dragon e){
         dragonSet.remove(e);
     }
 

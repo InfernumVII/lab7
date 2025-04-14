@@ -2,7 +2,7 @@ package network;
 public abstract class Settings {
     private String ip;
     private int port;
-    private final String ipDefault = "localhost";
+    private final String ipDefault = "0.0.0.0";
     private final int portDefault = 1111;
 
 

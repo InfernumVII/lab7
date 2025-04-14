@@ -6,6 +6,7 @@ import client.commands.utility.ConsoleInputHandler;
 import client.commands.utility.exceptions.ArgumentNumberException;
 import collection.Dragon;
 import server.managers.DragonManager;
+import server.managers.ServerCommandManager;
 import server.managers.exceptions.DragonFindException;
 
 /**
@@ -40,7 +41,9 @@ public class RemoveByIdCommand implements Command {
      * @param arg строка, содержащая ID дракона.
      */
     @Override
-    public Object execute(Object argument){
+    public Object execute(Object argument, String authKey){
+        if (!ServerCommandManager.getAuthInstance().keyIsExists(authKey))
+            return "Ошибка авторизации";
         try {
             String arg = (String) argument;
             if (ArgHandler.checkArgForInt(arg)){

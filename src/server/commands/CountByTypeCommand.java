@@ -6,6 +6,7 @@ import client.commands.utility.ConsoleInputHandler;
 import collection.Dragon;
 import collection.DragonType;
 import server.managers.DragonManager;
+import server.managers.ServerCommandManager;
 
 /**
  * Команда для подсчета количества драконов определенного типа в коллекции.
@@ -40,7 +41,9 @@ public class CountByTypeCommand implements Command {
      * @param arg аргумент команды (тип дракона).
      */
     @Override
-    public Object execute(Object argument){
+    public Object execute(Object argument, String authKey){
+        if (!ServerCommandManager.getAuthInstance().keyIsExists(authKey))
+            return "Ошибка авторизации";
         try {
             String arg = (String) argument;
             StringJoiner stringJoiner = new StringJoiner("\n");

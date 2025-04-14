@@ -37,7 +37,7 @@ public class ClientCommandManager extends CommandManager<Command> {
     }
 
     private Object makeArgsIfCommandIsLocal(String command, Object commandArgs){
-        if (listedNames().contains(command) == true){
+        if (listedNames().contains(command)){
             Object answer = executeCommand(command, (String) commandArgs);
             if (answer != null){
                 commandArgs = answer;

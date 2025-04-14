@@ -38,14 +38,10 @@ public class AddCommand implements Command {
     }
 
 
-    /**
-     * Выполняет команду добавления нового дракона в коллекцию.
-     * Запрашивает у пользователя данные для создания нового объекта {@link Dragon}.
-     *
-     * @param arg аргумент команды (в данной команде не используется).
-     */
     @Override
-    public Object execute(Object arg){
+    public Object execute(Object arg, String authKey){
+        if (!ServerCommandManager.getAuthInstance().keyIsExists(authKey))
+            return "Ошибка авторизации";
         StringJoiner stringJoiner = new StringJoiner("\n");
         Builder dragonBuilder = (Builder) arg;
         stringJoiner.add("Добавление нового дракона.");

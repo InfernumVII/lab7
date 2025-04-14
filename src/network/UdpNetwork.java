@@ -16,6 +16,7 @@ import client.ClientSettings;
 import network.exceptions.TimeOutException;
 import network.models.Answer;
 import network.models.NetCommand;
+import network.models.NetCommandAuth;
 import network.utility.BytesConversions;
 
 public abstract class UdpNetwork {
@@ -111,9 +112,9 @@ public abstract class UdpNetwork {
         return BytesConversions.bytesToObject(buf);
     }
 
-    public NetCommand handleCommand() throws IOException, ClassNotFoundException {
+    public NetCommandAuth handleCommand() throws IOException, ClassNotFoundException {
         Object obj = handleObject();
-        return (NetCommand) obj;
+        return (NetCommandAuth) obj;
     }
 
     public Answer handleAnswer(long timeout) throws IOException, TimeOutException, ClassNotFoundException{

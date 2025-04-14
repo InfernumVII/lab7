@@ -7,6 +7,7 @@ import client.commands.utility.exceptions.ArgumentEnumException;
 import collection.Dragon;
 import collection.DragonCharacter;
 import server.managers.DragonManager;
+import server.managers.ServerCommandManager;
 
 /**
  * Команда для вывода элементов коллекции, значение поля character которых равно заданному.
@@ -40,7 +41,9 @@ public class FilterByCharacterCommand implements Command {
      * @param arg аргумент команды (характер дракона).
      */
     @Override
-    public Object execute(Object argument){
+    public Object execute(Object argument, String authKey){
+        if (!ServerCommandManager.getAuthInstance().keyIsExists(authKey))
+            return "Ошибка авторизации";
         String arg = (String) argument;
         try {
             StringJoiner stringJoiner = new StringJoiner("\n");

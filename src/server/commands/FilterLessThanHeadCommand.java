@@ -5,6 +5,7 @@ import client.commands.utility.ArgHandler;
 import client.commands.utility.ConsoleInputHandler;
 import collection.Dragon;
 import server.managers.DragonManager;
+import server.managers.ServerCommandManager;
 
 /**
  * Команда для вывода элементов коллекции, значение поля head которых меньше заданного.
@@ -38,7 +39,9 @@ public class FilterLessThanHeadCommand implements Command {
      * @param arg аргумент команды (количество глаз).
      */
     @Override
-    public Object execute(Object argument){
+    public Object execute(Object argument, String authKey){
+        if (!ServerCommandManager.getAuthInstance().keyIsExists(authKey))
+            return "Ошибка авторизации";
         String arg = (String) argument;
         StringJoiner stringJoiner = new StringJoiner("\n");
         try {
