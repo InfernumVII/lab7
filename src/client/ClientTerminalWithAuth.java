@@ -47,22 +47,5 @@ public class ClientTerminalWithAuth extends ClientTerminal {
         
     }
 
-    /*
-    public void registerUser(){
-        RegistrationCommand rCommand = new RegistrationCommand();
-        String authKey = (String) rCommand.execute("");
-    }*/
-
-    public static void main(String[] args) {
-        Settings settings = new ClientSettings();
-        ClientUdpNetwork client;
-        try {
-            client = new ClientUdpNetwork(settings);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        ClientTerminalWithAuth clientTerminalWithAuth = new ClientTerminalWithAuth(client);
-        clientTerminalWithAuth.startLoop();
-    }
     
 }

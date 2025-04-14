@@ -17,7 +17,7 @@ public class ClientMain {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        ClientTerminal clientTerminal = new ClientTerminal(client);
+        ClientTerminal clientTerminal = new ClientTerminalWithAuth(client);
         clientTerminal.startLoop();
         
     }
