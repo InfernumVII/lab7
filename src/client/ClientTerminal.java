@@ -13,7 +13,7 @@ import network.models.NetCommand;
 import server.managers.exceptions.ParseCommandException;
 
 public class ClientTerminal extends TerminalWithCommandManager<ClientCommandManager> {
-    private ClientUdpNetwork cUdpNetwork;
+    protected ClientUdpNetwork cUdpNetwork;
     public ClientTerminal(ClientUdpNetwork cUdpNetwork) {
         super(new ClientCommandManager());
         this.cUdpNetwork = cUdpNetwork;

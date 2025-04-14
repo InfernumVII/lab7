@@ -15,7 +15,7 @@ public class ClientUdpNetwork extends UdpNetwork {
         datagramChannel = createDatagramChannel();
     }
 
-    public Answer sendAndGetAnswer(NetCommand command) throws IOException, TimeOutException, ClassNotFoundException {
+    public Answer sendAndGetAnswer(Object command) throws IOException, TimeOutException, ClassNotFoundException {
         sendObject(command);
         return handleAnswer(1000);
     }
