@@ -42,7 +42,7 @@ public class FilterByCharacterCommand implements Command {
      */
     @Override
     public Object execute(Object argument, String authKey){
-        if (!ServerCommandManager.getAuthInstance().keyIsExists(authKey))
+        if (!ServerCommandManager.getAuthInstance().passwordIsExist(authKey))
             return "Ошибка авторизации";
         String arg = (String) argument;
         try {

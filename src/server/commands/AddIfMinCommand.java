@@ -35,7 +35,7 @@ public class AddIfMinCommand implements Command {
 
     @Override
     public Object execute(Object arg, String authKey){
-        if (!ServerCommandManager.getAuthInstance().keyIsExists(authKey))
+        if (!ServerCommandManager.getAuthInstance().passwordIsExist(authKey))
             return "Ошибка авторизации";
         StringJoiner stringJoiner = new StringJoiner("\n");
         stringJoiner.add("Добавление нового дракона.");

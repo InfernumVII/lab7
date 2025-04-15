@@ -5,16 +5,22 @@ import server.psql.auth.Auth;
 
 public class AuthCommand implements Command {
 	@Override
-	public Object execute(Object arg, String authKey) {
-		String validkeyMess = "Авторизация успешна";
+	public Object execute(Object argument, String authKey) {
+		String username = (String) argument;
 		Auth auth = ServerCommandManager.getAuthInstance();
-		if (auth.keyIsExists(authKey)){
-			return validkeyMess;
+		if (auth.userIsExists(username)) {
+			if (auth.passwordCheck(username, authKey)) {
+				return "Авторизация успешна";
+			} else {
+				return "Неправильный логин или пароль";
+			}
 		} else {
-			if (auth.insertKey(authKey))
-				return validkeyMess;
+			if (auth.insertUser(username, authKey)) {
+				return "Пользователь зарегистрирован";
+			} else {
+				return "Ошибка авторизации";
+			}
 		}
-		return "Ошибка авторизации";
 		
 	}
 

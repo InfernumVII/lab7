@@ -8,59 +8,77 @@ import java.sql.Statement;
 import java.util.Map;
 
 import server.psql.PSQL;
-import server.psql.exceptions.KeyNotFound;
+import server.psql.exceptions.UserNotFound;
 
 public class Auth extends PSQL {
 
     public Auth(Connection connection) {
         super(connection);
     }
-    
-    public Key getKey(String key) throws KeyNotFound{
-        try {
-            PreparedStatement pStatement = cPreparedStatement("SELECT * FROM auth WHERE key = ?");
-            pStatement.setString(1, key);
-            ResultSet resultSet = pStatement.executeQuery();
 
+
+    public User getUser(String username) throws UserNotFound{
+        try {
+            PreparedStatement pStatement = cPreparedStatement("SELECT id, password FROM auth WHERE username = ?");
+            pStatement.setString(1, username);
+            ResultSet resultSet = pStatement.executeQuery();
             if (resultSet.next()){
-                int id = resultSet.getInt("id");
-                String keyGet = resultSet.getString("key");
-                return new Key(id, keyGet);
+                return new User(resultSet.getInt("id"), username, resultSet.getString("password"));
             } else {
-                throw new KeyNotFound();
+                throw new UserNotFound();
             }
         } catch (SQLException e){
+            System.out.println(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
-        
-        
-        
     }
 
-    public boolean keyIsExists(String key){
+    public boolean userIsExists(String username){
+        System.out.println(3);
         try {
-            getKey(key);
-        } catch (KeyNotFound e) {
+            getUser(username);
+            System.out.println(4);
+        } catch (UserNotFound e) {
             return false;
         }
         return true;
     }
-
-    public boolean insertKey(String key){
-        try {
-            PreparedStatement pStatement = cPreparedStatement("INSERT INTO auth (key) values (?)");
-            pStatement.setString(1, key);
-            int rowsInserted = pStatement.executeUpdate();
-            if (rowsInserted > 0){
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            return false;
-        }
-        
-    }
     
+    public boolean passwordIsExist(String password){
+        try {
+			PreparedStatement pStatement = cPreparedStatement("SELECT 1 FROM auth WHERE password = ?");
+            pStatement.setString(1, password);
+            ResultSet resultSet = pStatement.executeQuery();
+            return resultSet.next();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+            return false;
+		}
+    }
 
+    public boolean passwordCheck(String username, String password){
+        try {
+			User user = getUser(username);
+            if (user.getPassword().equals(password))
+                return true;
+            return false;
+		} catch (UserNotFound e) {
+			return false;
+		}
+    }
+
+    public boolean insertUser(String username, String password){
+        try {
+            PreparedStatement pStatement = cPreparedStatement("INSERT INTO auth (username, password) values (?, ?)");
+            pStatement.setString(1, username);
+			pStatement.setString(2, password);
+            int rowsInserted = pStatement.executeUpdate();
+            if (rowsInserted > 0)
+                return true;
+            return false;
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+            return false;
+		}
+    }
 }
