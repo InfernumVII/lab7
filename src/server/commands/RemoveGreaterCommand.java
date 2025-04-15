@@ -40,6 +40,9 @@ public class RemoveGreaterCommand implements Command {
         List<String> results = dragonManager.getSortedDragons().stream()
             .filter(dragon -> x + y > dragon.getCoordinates().getX() + dragon.getCoordinates().getY())
             .map(dragon -> {
+                if (!dragonManager.preRemoveDragon(dragon, authKey)){
+                    return "Ошибка удаления"; 
+                }
                 dragonManager.removeDragon(dragon);
                 return String.format("Дракон с именем %s и айди %d был удалён", dragon.getName(), dragon.getId());
             })

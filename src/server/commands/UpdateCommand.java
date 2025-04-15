@@ -15,6 +15,7 @@ import network.models.UpdateCommandArgs;
 import server.managers.ServerCommandManager;
 import server.managers.DragonManager;
 import server.managers.exceptions.DragonFindException;
+import server.psql.auth.Pair;
 
 
 /**
@@ -58,8 +59,12 @@ public class UpdateCommand implements Command {
         Dragon dragon;
         try {
             dragon = dragonManager.returnDragonById(id);
+            System.out.println(dragon);
         } catch (DragonFindException e) {
             return e.getMessage();
+        }
+        if (!dragonManager.preRemoveDragon(dragon, authKey)){
+            return "Ошибка обновления";
         }
         
         dragon.setName(arg.getName());
@@ -69,6 +74,12 @@ public class UpdateCommand implements Command {
         dragon.setType(arg.getType());
         dragon.setCharacter(arg.getCharacter());
         dragon.setHead(arg.getHead());
+
+        Pair<Integer,Integer> pair = dragonManager.preAddDragon(dragon, authKey);
+        if (pair.getValue1() == -1 | pair.getValue2() == -1){
+            return "Ошибка при обновлении дракона";
+        }
+        
 
         return String.format("Дракон с ID-%d успешно обновлён!", id);
     }

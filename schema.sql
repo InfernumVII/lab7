@@ -1,4 +1,8 @@
-CREATE TABLE auth (id SERIAL PRIMARY KEY, username varchar(40) UNIQUE, password varchar(40));
+CREATE TABLE auth (
+    id SERIAL PRIMARY KEY,
+    username varchar(40) UNIQUE, 
+    password varchar(40)
+);
 
 CREATE SEQUENCE dragon_id_seq START 1 INCREMENT 1;
 
@@ -11,6 +15,12 @@ CREATE TABLE dragon_heads (
     eyes_count FLOAT
 );
 
+CREATE TABLE coordinates (
+    coord_id SERIAL PRIMARY KEY,
+    x BIGINT NOT NULL CHECK (x > -420),
+    y BIGINT NOT NULL CHECK (y <= 699)
+);
+
 CREATE TABLE dragons (
     id INTEGER PRIMARY KEY DEFAULT nextval('dragon_id_seq'),
     name VARCHAR(255) NOT NULL CHECK (name <> ''),
@@ -19,8 +29,12 @@ CREATE TABLE dragons (
     color color_enum NOT NULL,
     type dragon_type_enum NOT NULL,
     character dragon_character_enum NOT NULL,
-    
-    -- Ссылки на связанные таблицы с каскадным удалением
     coord_id INTEGER REFERENCES coordinates(coord_id) ON DELETE CASCADE,
     head_id INTEGER REFERENCES dragon_heads(head_id) ON DELETE CASCADE
+);
+
+CREATE TABLE owner_table (
+    auth_id INTEGER REFERENCES auth(id),
+    dragon_id INTEGER REFERENCES dragons(id) ON DELETE CASCADE,
+    PRIMARY KEY (auth_id, dragon_id)
 );

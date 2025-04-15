@@ -1,6 +1,7 @@
 package server.commands;
 import collection.Dragon.Builder;
 import server.managers.ServerCommandManager;
+import server.psql.auth.Pair;
 import server.managers.DragonManager;
 
 import java.time.LocalDate;
@@ -42,16 +43,28 @@ public class AddIfMinCommand implements Command {
 
         Builder dragonBuilder = (Builder) arg;
         Dragon dragon = dragonBuilder
-                    .withId(dragonManager.getUniqueId())
+                    .withId(1)
                     .withDate(LocalDate.now())
                     .build();
             
         if (dragonManager.getDragonSet().isEmpty()){
+            Pair<Integer,Integer> pair = dragonManager.preAddDragon(dragon, authKey);
+            if (pair.getValue1() == -1 | pair.getValue2() == -1){
+                return "Ошибка при добавлении дракона";
+            }
+            dragon.setId(pair.getValue1());
+            dragon.setOwnerId(pair.getValue2());
             dragonManager.addDragon(dragon);
             stringJoiner.add("Новый дракон успешно добавлен.");
         } else {
             Dragon minDragon = dragonManager.getMinDragonByXAndY();
             if (dragon.getCoordinates().getX() + dragon.getCoordinates().getY() < minDragon.getCoordinates().getX() + minDragon.getCoordinates().getY()){
+                Pair<Integer,Integer> pair = dragonManager.preAddDragon(dragon, authKey);
+                if (pair.getValue1() == -1 | pair.getValue2() == -1){
+                    return "Ошибка при добавлении дракона";
+                }
+                dragon.setId(pair.getValue1());
+                dragon.setOwnerId(pair.getValue2());
                 dragonManager.addDragon(dragon);
                 stringJoiner.add("Новый дракон успешно добавлен.");
             } else {

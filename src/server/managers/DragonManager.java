@@ -16,41 +16,42 @@ import java.util.concurrent.ForkJoinPool;
 
 
 import collection.Dragon;
+import server.ServerMain;
 import server.managers.exceptions.DragonFindException;
 import server.managers.utility.CSV;
 import server.managers.utility.DragonCSVParser;
+import server.psql.auth.Pair;
+import server.psql.dragon.DragonDB;
 
 
 public class DragonManager {
     private Set<Dragon> dragonSet;
     private LocalDate initializationDate;
+    private static DragonDB dragonDBInstance = new DragonDB(ServerMain.getManagerInsance().getConnection());
     
     public DragonManager() {
         dragonSet = Collections.synchronizedSet(new LinkedHashSet<>());
         initializationDate = LocalDate.now();
+        loadFromDatabase();
+    }
+
+    private void loadFromDatabase() {
+        List<Dragon> dbDragons = dragonDBInstance.getAllDragons();
+        dragonSet.addAll(dbDragons);
+        System.out.println("Загружено " + dbDragons.size() + " драконов из БД");
     }
     
-    private int getUniqueId(int lastId){
-        if (setHaveId(lastId)){
-            return getUniqueId(lastId + 1);
-        } else {
-            return lastId;
-        }
-    }
-
-    public int getUniqueId(){
-        return getUniqueId(1);
-    }
-
 
     public String getTypeName(){
         return dragonSet.getClass().getSimpleName();
     }
 
+    public Pair<Integer, Integer> preAddDragon(Dragon e, String authKey){
+        return dragonDBInstance.insertDragon(e, authKey);
+    }
+
     public synchronized void addDragon(Dragon e){
-        if (dragonSet.add(e) == false){
-            System.out.println("Такой дракон уже существует и не был добавлен.");
-        }
+        dragonSet.add(e);
     }
 
     public synchronized boolean setHaveId(int id) {
@@ -89,8 +90,18 @@ public class DragonManager {
         return minDragon;
     }
 
-    public synchronized void clearDragonSet(){
-        dragonSet.clear();
+    public boolean preClearDragonSet(String authKey){
+        return dragonDBInstance.deleteDragonsWithAuth(authKey);
+    }
+
+    public synchronized void clearDragonSet(int userId){
+        dragonSet.stream()
+            .filter(dragon -> dragon.getOwnerId() == userId)
+            .forEach(this::removeDragon);
+    }
+
+    public boolean preRemoveDragon(Dragon e, String authKey){
+        return dragonDBInstance.deleteDragonByIdAndAuth(e.getId(), authKey);
     }
 
     public synchronized void removeDragon(Dragon e){

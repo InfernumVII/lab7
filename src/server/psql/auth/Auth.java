@@ -33,6 +33,22 @@ public class Auth extends PSQL {
         }
     }
 
+    public User getUserByAuthKey(String password) throws UserNotFound{
+        try {
+            PreparedStatement pStatement = cPreparedStatement("SELECT id, username FROM auth WHERE password = ?");
+            pStatement.setString(1, password);
+            ResultSet resultSet = pStatement.executeQuery();
+            if (resultSet.next()){
+                return new User(resultSet.getInt("id"), resultSet.getString("username"), password);
+            } else {
+                throw new UserNotFound();
+            }
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
     public boolean userIsExists(String username){
         System.out.println(3);
         try {

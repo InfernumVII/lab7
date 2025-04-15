@@ -1,6 +1,8 @@
 package server.commands;
 import server.managers.DragonManager;
 import server.managers.ServerCommandManager;
+import server.psql.auth.User;
+import server.psql.exceptions.UserNotFound;
 
 
 public class ClearCommand implements Command{
@@ -17,10 +19,15 @@ public class ClearCommand implements Command{
 
     @Override
     public Object execute(Object arg, String authKey){
-        if (!ServerCommandManager.getAuthInstance().passwordIsExist(authKey))
+        try {
+            User user = ServerCommandManager.getAuthInstance().getUserByAuthKey(authKey);
+            if (!dragonManager.preClearDragonSet(authKey))
+                return "Нет драконов для очистки";
+            dragonManager.clearDragonSet(user.getId());
+            return "Драконы были очищены!";
+        } catch (UserNotFound e) {
             return "Ошибка авторизации";
-        dragonManager.clearDragonSet();
-        return "Драконы были очищены!";
+        }
     }
 
     @Override

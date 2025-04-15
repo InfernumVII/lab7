@@ -38,7 +38,7 @@ public class UpdateCommand implements Command {
                 Dragon dragon = new DefaultDragon(consoleInputHandler).get().withId(id).build();
                 
 
-                System.out.println(String.format("Дракон с ID-%d успешно обновлён!", id));
+                //System.out.println(String.format("Дракон с ID-%d успешно обновлён!", id));
 
                 return dragon;
                 //return new UpdateCommandArgs(id, name, x, y, age, color, type, character, eyesCount);

@@ -20,6 +20,7 @@ public class Dragon implements Comparable<Dragon>, Serializable {
     private DragonType type; //Поле не может быть null
     private DragonCharacter character; //Поле не может быть null
     private DragonHead head;
+    private int ownerId;
 
 
     public Dragon(Builder builder) {
@@ -32,6 +33,7 @@ public class Dragon implements Comparable<Dragon>, Serializable {
         this.type = builder.type;
         this.character = builder.character;
         this.head = builder.head;
+        this.ownerId = builder.ownerId;
     }
 
     /**
@@ -49,6 +51,8 @@ public class Dragon implements Comparable<Dragon>, Serializable {
         private DragonType type; //Поле не может быть null
         private DragonCharacter character; //Поле не может быть null
         private DragonHead head;
+        private int ownerId;
+
 
         /**
          * Устанавливает ID дракона.
@@ -56,6 +60,10 @@ public class Dragon implements Comparable<Dragon>, Serializable {
          * @param id ID дракона.
          * @return текущий объект Builder.
          */
+        public Builder withOwnerId(int ownerId){
+            this.ownerId = ownerId;
+            return this;
+        }
         public Builder withId(Integer id){
             this.id = id;
             return this;
@@ -204,8 +212,8 @@ public class Dragon implements Comparable<Dragon>, Serializable {
      */
     @Override
     public String toString() {
-        return String.format("Dragon{id=%d, name='%s', coordinates=%s, creationDate=%s, age=%d, color=%s, type=%s, character=%s, head=%s}",
-                id, name, coordinates, creationDate, age, color, type, character, head);
+        return String.format("Dragon{id=%d, name='%s', coordinates=%s, creationDate=%s, age=%d, color=%s, type=%s, character=%s, head=%s, owner_id=%d}",
+                id, name, coordinates, creationDate, age, color, type, character, head, ownerId);
     }
     
     /**
@@ -234,6 +242,7 @@ public class Dragon implements Comparable<Dragon>, Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+    
 
     /**
      * Устанавливает имя дракона.
@@ -368,6 +377,14 @@ public class Dragon implements Comparable<Dragon>, Serializable {
      */
     public void setHead(DragonHead head) {
         this.head = head;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public int getOwnerId(){
+        return ownerId;
     }
     
 

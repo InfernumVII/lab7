@@ -50,6 +50,9 @@ public class RemoveByIdCommand implements Command {
                 int id = Integer.parseInt(arg);
                 Dragon dragon = dragonManager.returnDragonById(id);
                 if (dragon != null){
+                    if (!dragonManager.preRemoveDragon(dragon, authKey)){
+                        return "Ошибка удаления";
+                    }
                     dragonManager.removeDragon(dragon);
                     return "Дракон удалён.";
                 }
