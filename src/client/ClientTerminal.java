@@ -23,7 +23,7 @@ public class ClientTerminal extends TerminalWithCommandManager<ClientCommandMana
     public void startLoop(){
         start(this::handleIter);
     }
-
+    //todo удалить 
     public void handleIter(String in){
         try {
             NetCommand netCommand = cManager.getCommandFromRawInput(in);

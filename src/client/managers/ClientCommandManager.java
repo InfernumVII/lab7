@@ -9,7 +9,6 @@ import java.util.function.Predicate;
 
 import client.ClientTerminal;
 import client.ClientUdpNetwork;
-import client.NetTerminal;
 import client.commands.AddCommand;
 import client.commands.AddIfMinCommand;
 import client.commands.Command;

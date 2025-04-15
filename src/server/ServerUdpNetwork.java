@@ -23,8 +23,8 @@ public class ServerUdpNetwork extends UdpNetwork {
 
     ExecutorService responseSender;
     ForkJoinPool commandProcessor;
-    
-    public ServerUdpNetwork(Settings settings) throws IOException{
+
+    public ServerUdpNetwork(Settings settings) throws IOException {
         inetSocketAddress = getSocketAddress(settings);
         datagramChannel = createDatagramChannel(inetSocketAddress);
 
@@ -34,13 +34,13 @@ public class ServerUdpNetwork extends UdpNetwork {
         initCommandManager();
     }
 
-    public void initCommandManager(){
+    public void initCommandManager() {
         dManager = new DragonManager();
         serverCommandManager = new ServerCommandManager();
         serverCommandManager.initDefaultCommands(dManager);
     }
 
-    public DragonManager getDragonManager(){
+    public DragonManager getDragonManager() {
         return dManager;
     }
 
@@ -53,7 +53,8 @@ public class ServerUdpNetwork extends UdpNetwork {
 
             new Thread(() -> {
                 commandProcessor.submit(() -> {
-                    Answer answer = new Answer(serverCommandManager.executeCommand(command.command(), new Pair<String,Object>(command.authKey(), command.arg())));
+                    Answer answer = new Answer(serverCommandManager.executeCommand(command.command(),
+                            new Pair<String, Object>(command.authKey(), command.arg())));
                     responseSender.submit(() -> {
                         try {
                             sendObject(answer, lastSender);
@@ -61,9 +62,9 @@ public class ServerUdpNetwork extends UdpNetwork {
                             throw new RuntimeException(e);
                         }
                     });
-                }); 
+                });
             }).start();
-            
+
         }
     }
 }

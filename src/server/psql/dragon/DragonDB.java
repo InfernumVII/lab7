@@ -93,7 +93,7 @@ public class DragonDB extends PSQL {
         }
         return dragons;
     }
-
+    //todo сделать перегрузку
     public boolean deleteDragonByIdAndAuth(int dragonId, String authKey){
         try {
             User user = ServerCommandManager.getAuthInstance().getUserByAuthKey(authKey);
@@ -148,7 +148,7 @@ WHERE dragons.id = owner_table.dragon_id
     }
 
     public int createOwner(int id, String authKey){
-        try {
+        try { //todo зач несколько раз в try catch  оборачивать
             User user = ServerCommandManager.getAuthInstance().getUserByAuthKey(authKey);
             int user_id = user.getId();
             try {

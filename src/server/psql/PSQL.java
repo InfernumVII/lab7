@@ -20,7 +20,7 @@ public class PSQL {
             throw new RuntimeException(e.getMessage());
         }
     }
-
+    //todo rename
     protected PreparedStatement cPreparedStatement(String query){
         try {
             return getConnection().prepareStatement(query);

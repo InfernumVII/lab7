@@ -212,7 +212,7 @@ public class Dragon implements Comparable<Dragon>, Serializable {
      */
     @Override
     public String toString() {
-        return String.format("Dragon{id=%d, name='%s', coordinates=%s, creationDate=%s, age=%d, color=%s, type=%s, character=%s, head=%s, owner_id=%d}",
+        return String.format("Dragon{id=%d, name='%s', coordinates=%s, creationDate=%s, age=%d, color=%s, type=%s, character=%s, head=%s}",
                 id, name, coordinates, creationDate, age, color, type, character, head, ownerId);
     }
     

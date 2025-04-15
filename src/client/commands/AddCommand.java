@@ -3,7 +3,7 @@ package client.commands;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-import client.NetTerminal;
+
 import client.commands.utility.ConsoleInputHandler;
 import collection.Color;
 import collection.Coordinates;

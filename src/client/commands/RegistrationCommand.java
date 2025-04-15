@@ -10,12 +10,16 @@ public class RegistrationCommand implements Command {
 	
 	@Override
 	public Object execute(Object arg) {
+		//TOOD авторизация/регистрация
 		Console cnsl = System.console();
         String str = cnsl.readLine("Enter username: "); 
         char[] ch = cnsl.readPassword("Enter password: ");
-		String username = SHA1.getSHA1String(new String(str));
-		authKey = SHA1.getSHA1String(String.format("%s:%s", str, new String(ch)));
+		String username = SHA1.getSHA1String(new String(str)); //TODO не хешировать
+		authKey = SHA1.getSHA1String(String.format("%s:%s", str, new String(ch))); //TODO хешировать на сервере
+		//TODO посолить поперчить
         return username;
+		//Запретить второй auth ()
+		//TODO пофиксить аргументы
 	}
 
 	public String getAuthKey(){

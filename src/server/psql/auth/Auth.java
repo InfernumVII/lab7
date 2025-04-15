@@ -28,7 +28,7 @@ public class Auth extends PSQL {
                 throw new UserNotFound();
             }
         } catch (SQLException e){
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -44,7 +44,7 @@ public class Auth extends PSQL {
                 throw new UserNotFound();
             }
         } catch (SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage()); //serr
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -75,9 +75,8 @@ public class Auth extends PSQL {
     public boolean passwordCheck(String username, String password){
         try {
 			User user = getUser(username);
-            if (user.getPassword().equals(password))
-                return true;
-            return false;
+            return user.getPassword().equals(password);
+            
 		} catch (UserNotFound e) {
 			return false;
 		}
@@ -89,7 +88,7 @@ public class Auth extends PSQL {
             pStatement.setString(1, username);
 			pStatement.setString(2, password);
             int rowsInserted = pStatement.executeUpdate();
-            if (rowsInserted > 0)
+            if (rowsInserted > 0) //todo refac
                 return true;
             return false;
 		} catch (SQLException e) {

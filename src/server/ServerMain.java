@@ -9,13 +9,13 @@ import server.psql.Manager;
 import server.psql.exceptions.BlankCreds;
 
 public class ServerMain {
-    private static Manager managerInstance = initPSQLManager();;
+    private static Manager managerInstance = initPSQLManager();
     private static Manager initPSQLManager(){
         server.psql.Settings settings;
         try {
             settings = new server.psql.Settings.Builder()
                     .getUserAndPasswordFromHome()
-                    .withDbName("studs").build();
+                    .withDbName("studs").build(); 
         } catch (BlankCreds e) {
             throw new RuntimeException(e);
         }
@@ -25,7 +25,6 @@ public class ServerMain {
         return managerInstance;
     }
     public static void main(String[] args) {
-
         try {
             Settings settings = new ServerSettings();
             ServerUdpNetwork server = new ServerUdpNetwork(settings);

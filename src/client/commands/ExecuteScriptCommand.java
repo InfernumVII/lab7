@@ -10,7 +10,6 @@ import java.util.Set;
 
 import client.ClientTerminal;
 import client.ClientUdpNetwork;
-import client.NetTerminal;
 
 public class ExecuteScriptCommand implements Command {
     private ClientTerminal terminal;

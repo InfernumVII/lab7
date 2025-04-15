@@ -74,7 +74,7 @@ public class ConsoleInputHandler {
                     return in; 
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Поле должно быть числом.");
+                System.err.println("Поле должно быть числом."); //TODO Пофиксить
             }
         }
     }

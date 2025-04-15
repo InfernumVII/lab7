@@ -52,7 +52,7 @@ public class AddCommand implements Command {
                     .build();
         Pair<Integer,Integer> pair = dragonManager.preAddDragon(dragon, authKey);
         if (pair.getValue1() == -1 | pair.getValue2() == -1){
-            return "Ошибка при добавлении дракона";
+            return "Ошибка при добавлении дракона"; //todo DRY
         }
         dragon.setId(pair.getValue1());
         dragon.setOwnerId(pair.getValue2());
