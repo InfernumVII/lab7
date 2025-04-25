@@ -148,23 +148,19 @@ WHERE dragons.id = owner_table.dragon_id
     }
 
     public int createOwner(int id, String authKey){
-        try { //todo зач несколько раз в try catch  оборачивать
+        try {
             User user = ServerCommandManager.getAuthInstance().getUserByAuthKey(authKey);
             int user_id = user.getId();
-            try {
-                PreparedStatement ownerStmt  = cPreparedStatement("INSERT INTO owner_table (auth_id, dragon_id) VALUES (?, ?)");
-                ownerStmt.setInt(1, user_id);
-                ownerStmt.setInt(2, id);
+            PreparedStatement ownerStmt  = cPreparedStatement("INSERT INTO owner_table (auth_id, dragon_id) VALUES (?, ?)");
+            ownerStmt.setInt(1, user_id);
+            ownerStmt.setInt(2, id);
 
-                int update = ownerStmt.executeUpdate();
-                if (update > 0)
-                    return user_id;
-                return -1;
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
-                return -1;
-            }
-        } catch (UserNotFound e) {
+            int update = ownerStmt.executeUpdate();
+            if (update > 0)
+                return user_id;
+            return -1;
+        } catch (UserNotFound | SQLException e) {
+            System.err.println(e.getMessage());
             return -1;
         }
     }
