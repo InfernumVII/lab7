@@ -1,7 +1,13 @@
 CREATE TABLE auth (
     id SERIAL PRIMARY KEY,
-    username varchar(40) UNIQUE, 
-    password varchar(40)
+    login varchar(20) UNIQUE CHECK (
+        length(login) >= 4 AND 
+        length(login) <= 20
+    ), 
+    password varchar(100) CHECK (
+        length(password) >= 4 AND 
+        length(password) <= 100
+    )
 );
 
 CREATE SEQUENCE dragon_id_seq START 1 INCREMENT 1;
