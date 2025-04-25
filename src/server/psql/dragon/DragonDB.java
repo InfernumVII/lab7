@@ -136,15 +136,6 @@ public class DragonDB extends PSQL {
             return false;
         }
         
-        /*
-         DELETE FROM dragons
-USING owner_table
-WHERE dragons.id = owner_table.dragon_id
-  AND dragons.id = 1
-  AND owner_table.auth_id = 1;
-         */
-
-
     }
 
     public int createOwner(int id, String authKey){
