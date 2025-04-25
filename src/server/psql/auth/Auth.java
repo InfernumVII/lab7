@@ -88,9 +88,7 @@ public class Auth extends PSQL {
             pStatement.setString(1, username);
 			pStatement.setString(2, password);
             int rowsInserted = pStatement.executeUpdate();
-            if (rowsInserted > 0) //todo refac
-                return true;
-            return false;
+            return rowsInserted > 0;
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
             return false;
