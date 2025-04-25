@@ -66,6 +66,10 @@ public class ConsoleInputHandler {
                     continue;
             }
             try {
+                if (!inString.matches("\\d+")){
+                    System.err.println("Поле должно быть целочисленным числом");
+                    continue;
+                }
                 long in = Long.parseLong(inString);
 
                 if (in <= min || in > max) {
@@ -74,7 +78,7 @@ public class ConsoleInputHandler {
                     return in; 
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Поле должно быть числом."); //TODO Пофиксить
+                System.err.printf("Число должно быть между %s и %s.\n", min, max); //TODO Пофиксить
             }
         }
     }
