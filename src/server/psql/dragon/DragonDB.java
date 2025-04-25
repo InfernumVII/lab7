@@ -27,7 +27,7 @@ public class DragonDB extends PSQL {
 
     public int insertCords(Coordinates dCoordinates){
         try {
-            PreparedStatement coordStmt  = cPreparedStatement("INSERT INTO coordinates (x, y) VALUES (?, ?) RETURNING coord_id");
+            PreparedStatement coordStmt  = createPreparedStatement("INSERT INTO coordinates (x, y) VALUES (?, ?) RETURNING coord_id");
             coordStmt.setLong(1, dCoordinates.getX());
             coordStmt.setLong(2, dCoordinates.getY());
             ResultSet cordSet = coordStmt.executeQuery();
@@ -42,7 +42,7 @@ public class DragonDB extends PSQL {
     }
     public int insertHead(DragonHead DragonHead){
         try {
-            PreparedStatement headStmt  = cPreparedStatement("INSERT INTO dragon_heads (eyes_count) VALUES (?) RETURNING head_id");
+            PreparedStatement headStmt  = createPreparedStatement("INSERT INTO dragon_heads (eyes_count) VALUES (?) RETURNING head_id");
             headStmt.setFloat(1, DragonHead.getEyesCount());
             ResultSet headSet = headStmt.executeQuery();
             if (headSet.next())
@@ -65,7 +65,7 @@ public class DragonDB extends PSQL {
                        + "JOIN dragon_heads h ON d.head_id = h.head_id "
                        + "JOIN owner_table o ON d.id = o.dragon_id";
 
-            PreparedStatement stmt = cPreparedStatement(sql);
+            PreparedStatement stmt = createPreparedStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -100,7 +100,7 @@ public class DragonDB extends PSQL {
             int user_id = user.getId();
 
             try {
-                PreparedStatement pStatement = cPreparedStatement("DELETE FROM dragons USING owner_table WHERE dragons.id = owner_table.dragon_id AND owner_table.auth_id = ? AND dragons.id = ?");
+                PreparedStatement pStatement = createPreparedStatement("DELETE FROM dragons USING owner_table WHERE dragons.id = owner_table.dragon_id AND owner_table.auth_id = ? AND dragons.id = ?");
                 pStatement.setInt(1, user_id);
                 pStatement.setInt(2, dragonId);
                 int editedRows = pStatement.executeUpdate();
@@ -122,7 +122,7 @@ public class DragonDB extends PSQL {
             int user_id = user.getId();
 
             try {
-                PreparedStatement pStatement = cPreparedStatement("DELETE FROM dragons USING owner_table WHERE dragons.id = owner_table.dragon_id AND owner_table.auth_id = ?");
+                PreparedStatement pStatement = createPreparedStatement("DELETE FROM dragons USING owner_table WHERE dragons.id = owner_table.dragon_id AND owner_table.auth_id = ?");
                 pStatement.setInt(1, user_id);
                 int editedRows = pStatement.executeUpdate();
                 if (editedRows > 0)
@@ -151,7 +151,7 @@ WHERE dragons.id = owner_table.dragon_id
         try {
             User user = ServerCommandManager.getAuthInstance().getUserByAuthKey(authKey);
             int user_id = user.getId();
-            PreparedStatement ownerStmt  = cPreparedStatement("INSERT INTO owner_table (auth_id, dragon_id) VALUES (?, ?)");
+            PreparedStatement ownerStmt  = createPreparedStatement("INSERT INTO owner_table (auth_id, dragon_id) VALUES (?, ?)");
             ownerStmt.setInt(1, user_id);
             ownerStmt.setInt(2, id);
 
@@ -175,7 +175,7 @@ WHERE dragons.id = owner_table.dragon_id
                 return new Pair<Integer,Integer>(-1, -1);
             String dragonSql = "INSERT INTO dragons (id, name, creation_date, age, color, type, character, coord_id, head_id) " +
                                "VALUES (nextval('dragon_id_seq'), ?, ?, ?, ?::color_enum, ?::dragon_type_enum, ?::dragon_character_enum, ?, ?) RETURNING id";
-            PreparedStatement dPreparedStatement = cPreparedStatement(dragonSql);
+            PreparedStatement dPreparedStatement = createPreparedStatement(dragonSql);
             dPreparedStatement.setString(1, dragon.getName());
             dPreparedStatement.setDate(2, Date.valueOf(dragon.getCreationDate()));
             dPreparedStatement.setLong(3, dragon.getAge());

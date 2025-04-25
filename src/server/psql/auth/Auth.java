@@ -19,7 +19,7 @@ public class Auth extends PSQL {
 
     public User getUser(String username) throws UserNotFound{
         try {
-            PreparedStatement pStatement = cPreparedStatement("SELECT id, password FROM auth WHERE username = ?");
+            PreparedStatement pStatement = createPreparedStatement("SELECT id, password FROM auth WHERE username = ?");
             pStatement.setString(1, username);
             ResultSet resultSet = pStatement.executeQuery();
             if (resultSet.next()){
@@ -35,7 +35,7 @@ public class Auth extends PSQL {
 
     public User getUserByAuthKey(String password) throws UserNotFound{
         try {
-            PreparedStatement pStatement = cPreparedStatement("SELECT id, username FROM auth WHERE password = ?");
+            PreparedStatement pStatement = createPreparedStatement("SELECT id, username FROM auth WHERE password = ?");
             pStatement.setString(1, password);
             ResultSet resultSet = pStatement.executeQuery();
             if (resultSet.next()){
@@ -62,7 +62,7 @@ public class Auth extends PSQL {
     
     public boolean passwordIsExist(String password){
         try {
-			PreparedStatement pStatement = cPreparedStatement("SELECT 1 FROM auth WHERE password = ?");
+			PreparedStatement pStatement = createPreparedStatement("SELECT 1 FROM auth WHERE password = ?");
             pStatement.setString(1, password);
             ResultSet resultSet = pStatement.executeQuery();
             return resultSet.next();
@@ -84,7 +84,7 @@ public class Auth extends PSQL {
 
     public boolean insertUser(String username, String password){
         try {
-            PreparedStatement pStatement = cPreparedStatement("INSERT INTO auth (username, password) values (?, ?)");
+            PreparedStatement pStatement = createPreparedStatement("INSERT INTO auth (username, password) values (?, ?)");
             pStatement.setString(1, username);
 			pStatement.setString(2, password);
             int rowsInserted = pStatement.executeUpdate();
