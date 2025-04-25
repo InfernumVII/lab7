@@ -10,7 +10,6 @@ import java.util.function.Predicate;
 import client.ClientTerminal;
 import client.ClientUdpNetwork;
 import client.commands.AddCommand;
-import client.commands.AddIfMinCommand;
 import client.commands.Command;
 import client.commands.ExecuteScriptCommand;
 import client.commands.ExitCommand;
@@ -29,7 +28,7 @@ public class ClientCommandManager extends CommandManager<Command> {
         ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler(terminal.getScanner());
         registerCommand("add", new AddCommand(consoleInputHandler));
         registerCommand("update", new UpdateCommand(consoleInputHandler));
-        registerCommand("add_if_min", new AddIfMinCommand(consoleInputHandler));
+        registerCommand("add_if_min", new AddCommand(consoleInputHandler));
         registerCommand("remove_greater", new RemoveGreaterCommand(consoleInputHandler));
         registerCommand("execute_script", new ExecuteScriptCommand(terminal));
         registerCommand("exit", new ExitCommand());
