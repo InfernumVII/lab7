@@ -101,7 +101,7 @@ public class DragonManager {
     }
 
     public boolean preRemoveDragon(Dragon e, String authKey){
-        return dragonDBInstance.deleteDragonByIdAndAuth(e.getId(), authKey);
+        return dragonDBInstance.deleteDragonsWithAuth(authKey, e.getId());
     }
 
     public synchronized void removeDragon(Dragon e){
