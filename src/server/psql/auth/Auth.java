@@ -17,13 +17,13 @@ public class Auth extends PSQL {
     }
 
 
-    public User getUser(String username) throws UserNotFound{
+    public User getUser(String login) throws UserNotFound{
         try {
-            PreparedStatement pStatement = createPreparedStatement("SELECT id, password FROM auth WHERE username = ?");
-            pStatement.setString(1, username);
+            PreparedStatement pStatement = createPreparedStatement("SELECT id, password FROM auth WHERE login = ?");
+            pStatement.setString(1, login);
             ResultSet resultSet = pStatement.executeQuery();
             if (resultSet.next()){
-                return new User(resultSet.getInt("id"), username, resultSet.getString("password"));
+                return new User(resultSet.getInt("id"), login, resultSet.getString("password"));
             } else {
                 throw new UserNotFound();
             }
@@ -35,11 +35,11 @@ public class Auth extends PSQL {
 
     public User getUserByAuthKey(String password) throws UserNotFound{
         try {
-            PreparedStatement pStatement = createPreparedStatement("SELECT id, username FROM auth WHERE password = ?");
+            PreparedStatement pStatement = createPreparedStatement("SELECT id, login FROM auth WHERE password = ?");
             pStatement.setString(1, password);
             ResultSet resultSet = pStatement.executeQuery();
             if (resultSet.next()){
-                return new User(resultSet.getInt("id"), resultSet.getString("username"), password);
+                return new User(resultSet.getInt("id"), resultSet.getString("login"), password);
             } else {
                 throw new UserNotFound();
             }
@@ -49,10 +49,10 @@ public class Auth extends PSQL {
         }
     }
 
-    public boolean userIsExists(String username){
+    public boolean userIsExists(String login){
         System.out.println(3);
         try {
-            getUser(username);
+            getUser(login);
             System.out.println(4);
         } catch (UserNotFound e) {
             return false;
@@ -72,9 +72,9 @@ public class Auth extends PSQL {
 		}
     }
 
-    public boolean passwordCheck(String username, String password){
+    public boolean passwordCheck(String login, String password){
         try {
-			User user = getUser(username);
+			User user = getUser(login);
             return user.getPassword().equals(password);
             
 		} catch (UserNotFound e) {
@@ -82,10 +82,10 @@ public class Auth extends PSQL {
 		}
     }
 
-    public boolean insertUser(String username, String password){
+    public boolean insertUser(String login, String password){
         try {
-            PreparedStatement pStatement = createPreparedStatement("INSERT INTO auth (username, password) values (?, ?)");
-            pStatement.setString(1, username);
+            PreparedStatement pStatement = createPreparedStatement("INSERT INTO auth (login, password) values (?, ?)");
+            pStatement.setString(1, login);
 			pStatement.setString(2, password);
             int rowsInserted = pStatement.executeUpdate();
             return rowsInserted > 0;
