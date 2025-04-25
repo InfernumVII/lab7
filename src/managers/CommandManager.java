@@ -5,6 +5,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import server.managers.exceptions.ParseCommandException;
 
@@ -43,7 +44,7 @@ public abstract class CommandManager<V> {
     }
 
     public String[] parseCommand(String command) throws ParseCommandException{
-        String[] input = command.split(" ");
+        String[] input = deleteBlankArguments(command.split(" "));
         String commandName = input[0];
         String commandArg = null;
         if (input.length > 2){
@@ -53,5 +54,8 @@ public abstract class CommandManager<V> {
             commandArg = input[1];
         }
         return new String[]{commandName, commandArg};
+    }
+    private String[] deleteBlankArguments(String[] splitted){
+        return Stream.of(splitted).filter(st -> !st.trim().isBlank()).toArray(String[]::new);
     }
 }

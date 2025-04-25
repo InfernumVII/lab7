@@ -19,7 +19,7 @@ public class RegistrationCommand implements Command {
 		//TODO посолить поперчить
         return username;
 		//Запретить второй auth ()
-		//TODO пофиксить аргументы
+		
 	}
 
 	public String getAuthKey(){
