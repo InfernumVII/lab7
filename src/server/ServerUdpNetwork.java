@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
 
+import collection.User;
 import network.Settings;
 import network.UdpNetwork;
 import network.exceptions.TimeOutException;
@@ -54,7 +55,7 @@ public class ServerUdpNetwork extends UdpNetwork {
             new Thread(() -> {
                 commandProcessor.submit(() -> {
                     Answer answer = new Answer(serverCommandManager.executeCommand(command.command(),
-                            new Pair<String, Object>(command.authKey(), command.arg())));
+                            new Pair<User, Object>(command.user(), command.arg())));
                     responseSender.submit(() -> {
                         try {
                             sendObject(answer, lastSender);

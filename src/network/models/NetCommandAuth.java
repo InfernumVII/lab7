@@ -2,4 +2,6 @@ package network.models;
 
 import java.io.Serializable;
 
-public record NetCommandAuth(String command, Object arg, String authKey) implements Serializable { }
+import collection.User;
+
+public record NetCommandAuth(String command, Object arg, User user) implements Serializable { }

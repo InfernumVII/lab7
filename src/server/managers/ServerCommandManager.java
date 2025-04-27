@@ -1,6 +1,7 @@
 package server.managers;
 
 
+import collection.User;
 import managers.CommandManager;
 import server.ServerMain;
 import server.commands.*;
@@ -32,8 +33,8 @@ public class ServerCommandManager extends CommandManager<Command> {
     public Object executeCommand(String name, Object args){
         Object answer;
         Command command = commands.get(name);
-        Object arg = ((Pair<String, Object>) args).getValue2();
-        String authKey = ((Pair<String, Object>) args).getValue1();
+        Object arg = ((Pair<User, Object>) args).getValue2();
+        User authKey = ((Pair<User, Object>) args).getValue1();
         System.out.println(arg);
         System.out.println(authKey);
         if (command != null) {

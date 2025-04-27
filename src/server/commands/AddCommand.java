@@ -14,6 +14,7 @@ import collection.Dragon;
 import collection.DragonCharacter;
 import collection.DragonHead;
 import collection.DragonType;
+import collection.User;
 
 
 /**
@@ -40,7 +41,7 @@ public class AddCommand implements Command {
 
 
     @Override
-    public Object execute(Object arg, String authKey){
+    public Object execute(Object arg, User user){
         if (!ServerCommandManager.getAuthInstance().passwordIsExist(authKey))
             return "Ошибка авторизации";
         StringJoiner stringJoiner = new StringJoiner("\n");

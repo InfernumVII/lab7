@@ -1,5 +1,6 @@
 package server.psql.auth;
 
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import server.psql.PSQL;
 import server.psql.exceptions.UserNotFound;
 
 public class Auth extends PSQL {
+    private static final SecureRandom secureRandom = new SecureRandom();
 
     public Auth(Connection connection) {
         super(connection);
@@ -44,7 +46,7 @@ public class Auth extends PSQL {
                 throw new UserNotFound();
             }
         } catch (SQLException e){
-            System.out.println(e.getMessage()); //serr
+            System.err.println(e.getMessage()); //serr
             throw new RuntimeException(e.getMessage());
         }
     }

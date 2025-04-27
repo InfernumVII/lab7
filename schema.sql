@@ -7,7 +7,8 @@ CREATE TABLE auth (
     password varchar(100) CHECK (
         length(password) >= 4 AND 
         length(password) <= 100
-    )
+    ),
+    salt BYTEA CHECK (octet_length(salt) = 16)
 );
 
 CREATE SEQUENCE dragon_id_seq START 1 INCREMENT 1;

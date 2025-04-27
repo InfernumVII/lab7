@@ -3,10 +3,11 @@ package client.commands;
 import java.io.Console;
 import java.math.BigInteger;
 
+import collection.User;
 import network.utility.SHA1;
 
 public class RegistrationCommand implements Command {
-	private String authKey;
+	private User user;
 	
 	@Override
 	public Object execute(Object arg) {
@@ -21,9 +22,10 @@ public class RegistrationCommand implements Command {
 			passwordChars = console.readPassword("Введите пароль: ");
 		} while (!validatePassword(passwordChars));
 		//String username = SHA1.getSHA1String(new String(login)); 
-		authKey = SHA1.getSHA1String(String.format("%s:%s", login, new String(passwordChars))); //TODO хешировать на сервере
+		//authKey = SHA1.getSHA1String(String.format("%s:%s", login, new String(passwordChars))); //TODO хешировать на сервере
 		//TODO посолить поперчить
-        return login;
+		user = new User(login, new String(passwordChars));
+        return user;
 		//Запретить второй auth ()
 		
 	}
@@ -56,8 +58,8 @@ public class RegistrationCommand implements Command {
 		return true;
 	}
 
-	public String getAuthKey(){
-		return authKey;
+	public User getUser(){
+		return user;
 	}
 
 	@Override

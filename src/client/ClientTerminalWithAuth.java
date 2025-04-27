@@ -36,7 +36,7 @@ public class ClientTerminalWithAuth extends ClientTerminal {
     public void handleIter(String in){
         try {
             NetCommand netCommand = cManager.getCommandFromRawInput(in);
-            NetCommandAuth netCommandAuth = new NetCommandAuth(netCommand.command(), netCommand.arg(), registrationCommand.getAuthKey());
+            NetCommandAuth netCommandAuth = new NetCommandAuth(netCommand.command(), netCommand.arg(), registrationCommand.getUser());
             Answer answer = cUdpNetwork.sendAndGetAnswer(netCommandAuth);
             smartPrint(answer.answer());
         } catch (TimeOutException | ParseCommandException e) {
