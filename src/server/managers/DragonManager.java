@@ -16,6 +16,7 @@ import java.util.concurrent.ForkJoinPool;
 
 
 import collection.Dragon;
+import collection.User;
 import server.ServerMain;
 import server.managers.exceptions.DragonFindException;
 import server.managers.utility.CSV;
@@ -46,8 +47,8 @@ public class DragonManager {
         return dragonSet.getClass().getSimpleName();
     }
 
-    public Pair<Integer, Integer> preAddDragon(Dragon e, String authKey){
-        return dragonDBInstance.insertDragon(e, authKey);
+    public Pair<Integer, Integer> preAddDragon(Dragon e, User user){
+        return dragonDBInstance.insertDragon(e, user);
     }
 
     public synchronized void addDragon(Dragon e){
@@ -90,18 +91,19 @@ public class DragonManager {
         return minDragon;
     }
 
-    public boolean preClearDragonSet(String authKey){
-        return dragonDBInstance.deleteDragonsWithAuth(authKey);
+    public boolean preClearDragonSet(User user){
+        return dragonDBInstance.deleteDragonsWithAuth(user);
     }
 
-    public synchronized void clearDragonSet(int userId){
+    public synchronized void clearDragonSet(User user){
+        int userId = ServerCommandManager.getAuthInstance().findUserId(user);
         dragonSet.stream()
             .filter(dragon -> dragon.getOwnerId() == userId)
             .forEach(this::removeDragon);
     }
 
-    public boolean preRemoveDragon(Dragon e, String authKey){
-        return dragonDBInstance.deleteDragonsWithAuth(authKey, e.getId());
+    public boolean preRemoveDragon(Dragon e, User user){
+        return dragonDBInstance.deleteDragonsWithAuth(user, e.getId());
     }
 
     public synchronized void removeDragon(Dragon e){

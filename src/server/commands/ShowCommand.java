@@ -3,6 +3,7 @@ import java.util.StringJoiner;
 
 import client.commands.utility.ConsoleInputHandler;
 import collection.Dragon;
+import collection.User;
 import server.managers.DragonManager;
 import server.managers.ServerCommandManager;
 
@@ -23,8 +24,8 @@ public class ShowCommand implements Command {
     }
 
     @Override
-    public Object execute(Object arg, String authKey){
-        if (!ServerCommandManager.getAuthInstance().passwordIsExist(authKey))
+    public Object execute(Object arg, User user){
+        if (!ServerCommandManager.getAuthInstance().checkUserCreds(user))
             return "Ошибка авторизации";
         return dragonManager.getSortedDragons();
     }

@@ -4,6 +4,7 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import client.commands.utility.ConsoleInputHandler;
+import collection.User;
 import server.managers.ServerCommandManager;
 
 /**
@@ -38,8 +39,8 @@ public class HistoryCommand implements Command {
      * @param arg аргумент команды (в данной команде не используется).
      */
     @Override
-    public Object execute(Object arg, String authKey){
-        if (!ServerCommandManager.getAuthInstance().passwordIsExist(authKey))
+    public Object execute(Object arg, User user){
+        if (!ServerCommandManager.getAuthInstance().checkUserCreds(user))
             return "Ошибка авторизации";
         StringJoiner stringJoiner = new StringJoiner("\n");
         Deque<String> history = commandManager.getHistory();

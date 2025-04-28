@@ -5,6 +5,7 @@ import client.commands.utility.ArgHandler;
 import client.commands.utility.ConsoleInputHandler;
 import client.commands.utility.exceptions.ArgumentNumberException;
 import collection.Dragon;
+import collection.User;
 import server.managers.DragonManager;
 import server.managers.ServerCommandManager;
 import server.managers.exceptions.DragonFindException;
@@ -41,8 +42,8 @@ public class RemoveByIdCommand implements Command {
      * @param arg строка, содержащая ID дракона.
      */
     @Override
-    public Object execute(Object argument, String authKey){
-        if (!ServerCommandManager.getAuthInstance().passwordIsExist(authKey))
+    public Object execute(Object argument, User user){
+        if (!ServerCommandManager.getAuthInstance().checkUserCreds(user))
             return "Ошибка авторизации";
         try {
             String arg = (String) argument;
@@ -50,7 +51,7 @@ public class RemoveByIdCommand implements Command {
                 int id = Integer.parseInt(arg);
                 Dragon dragon = dragonManager.returnDragonById(id);
                 if (dragon != null){
-                    if (!dragonManager.preRemoveDragon(dragon, authKey)){
+                    if (!dragonManager.preRemoveDragon(dragon, user)){
                         return "Ошибка удаления";
                     }
                     dragonManager.removeDragon(dragon);

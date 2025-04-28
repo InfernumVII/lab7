@@ -5,6 +5,7 @@ import client.commands.utility.ArgHandler;
 import client.commands.utility.ConsoleInputHandler;
 import collection.Dragon;
 import collection.DragonType;
+import collection.User;
 import server.managers.DragonManager;
 import server.managers.ServerCommandManager;
 
@@ -41,8 +42,8 @@ public class CountByTypeCommand implements Command {
      * @param arg аргумент команды (тип дракона).
      */
     @Override
-    public Object execute(Object argument, String authKey){
-        if (!ServerCommandManager.getAuthInstance().passwordIsExist(authKey))
+    public Object execute(Object argument, User user){
+        if (!ServerCommandManager.getAuthInstance().checkUserCreds(user))
             return "Ошибка авторизации";
         try {
             String arg = (String) argument;

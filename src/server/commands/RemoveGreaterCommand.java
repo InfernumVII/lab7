@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import client.commands.utility.ConsoleInputHandler;
 import collection.Dragon;
+import collection.User;
 import network.models.RemoveGreaterCommandArgs;
 import server.managers.ServerCommandManager;
 import server.managers.DragonManager;
@@ -30,8 +31,8 @@ public class RemoveGreaterCommand implements Command {
     }
 
     @Override
-    public Object execute(Object arg, String authKey){
-        if (!ServerCommandManager.getAuthInstance().passwordIsExist(authKey))
+    public Object execute(Object arg, User user){
+        if (!ServerCommandManager.getAuthInstance().checkUserCreds(user))
             return "Ошибка авторизации";
         RemoveGreaterCommandArgs args = (RemoveGreaterCommandArgs) arg;
         long x = args.x();
@@ -40,7 +41,7 @@ public class RemoveGreaterCommand implements Command {
         List<String> results = dragonManager.getSortedDragons().stream()
             .filter(dragon -> x + y > dragon.getCoordinates().getX() + dragon.getCoordinates().getY())
             .map(dragon -> {
-                if (!dragonManager.preRemoveDragon(dragon, authKey)){
+                if (!dragonManager.preRemoveDragon(dragon, user)){
                     return "Ошибка удаления"; 
                 }
                 dragonManager.removeDragon(dragon);

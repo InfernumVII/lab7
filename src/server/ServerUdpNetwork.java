@@ -54,6 +54,7 @@ public class ServerUdpNetwork extends UdpNetwork {
 
             new Thread(() -> {
                 commandProcessor.submit(() -> {
+                    System.out.println(command.user());
                     Answer answer = new Answer(serverCommandManager.executeCommand(command.command(),
                             new Pair<User, Object>(command.user(), command.arg())));
                     responseSender.submit(() -> {

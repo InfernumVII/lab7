@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 import client.commands.utility.ConsoleInputHandler;
+import collection.User;
 import server.managers.ServerCommandManager;
 /**
  * Команда для вывода справки по доступным командам.
@@ -38,8 +39,9 @@ public class HelpCommand implements Command {
      * @param arg аргумент команды (в данной команде не используется).
      */
     @Override
-    public Object execute(Object arg, String authKey){
-        if (!ServerCommandManager.getAuthInstance().passwordIsExist(authKey))
+    public Object execute(Object arg, User user){
+        //TODO add ishideencommand check
+        if (!ServerCommandManager.getAuthInstance().checkUserCreds(user))
             return "Ошибка авторизации";
         StringJoiner stringJoiner = new StringJoiner("\n");
         Map<String, Command> commands = commandManager.getCommands();

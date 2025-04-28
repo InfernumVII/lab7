@@ -29,7 +29,7 @@ public class ServerMain {
             Settings settings = new ServerSettings();
             ServerUdpNetwork server = new ServerUdpNetwork(settings);
             ServerTerminal sTerminal = new ServerTerminal(server.getDragonManager());
-            Runtime.getRuntime().addShutdownHook(new ServerShutDownThread(sTerminal.getCommandManager())); // https://stackoverflow.com/questions/5124439/java-console-program-and-ctrl-c
+            //Runtime.getRuntime().addShutdownHook(new ServerShutDownThread(sTerminal.getCommandManager())); // https://stackoverflow.com/questions/5124439/java-console-program-and-ctrl-c
             ServerTerminalThread sTerminalThread = new ServerTerminalThread(sTerminal);
             
             sTerminalThread.start();

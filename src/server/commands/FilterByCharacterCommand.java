@@ -6,6 +6,7 @@ import client.commands.utility.ConsoleInputHandler;
 import client.commands.utility.exceptions.ArgumentEnumException;
 import collection.Dragon;
 import collection.DragonCharacter;
+import collection.User;
 import server.managers.DragonManager;
 import server.managers.ServerCommandManager;
 
@@ -41,8 +42,8 @@ public class FilterByCharacterCommand implements Command {
      * @param arg аргумент команды (характер дракона).
      */
     @Override
-    public Object execute(Object argument, String authKey){
-        if (!ServerCommandManager.getAuthInstance().passwordIsExist(authKey))
+    public Object execute(Object argument, User user){
+        if (!ServerCommandManager.getAuthInstance().checkUserCreds(user))
             return "Ошибка авторизации";
         String arg = (String) argument;
         try {

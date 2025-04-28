@@ -14,10 +14,10 @@ import collection.Dragon;
 import collection.DragonCharacter;
 import collection.DragonHead;
 import collection.DragonType;
+import collection.User;
 import server.managers.ServerCommandManager;
 import server.psql.PSQL;
 import server.psql.auth.Pair;
-import server.psql.auth.User;
 import server.psql.exceptions.UserNotFound;
 
 public class DragonDB extends PSQL {
@@ -94,24 +94,23 @@ public class DragonDB extends PSQL {
         return dragons;
     }
 
-    public boolean deleteDragons(String authKey, PreparedStatement preparedStatement){
+    public boolean deleteDragons(User user, PreparedStatement preparedStatement){
         try {
-            User user = ServerCommandManager.getAuthInstance().getUserByAuthKey(authKey);
-            int user_id = user.getId();
+            int user_id = ServerCommandManager.getAuthInstance().findUserId(user);
             preparedStatement.setInt(1, user_id);
             int editedRows = preparedStatement.executeUpdate();
             return editedRows > 0;
-        } catch (SQLException | UserNotFound e) {
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
             return false;
         }
     }
     
-    public boolean deleteDragonsWithAuth(String authKey, int dragonId){
+    public boolean deleteDragonsWithAuth(User user, int dragonId){
         try {
             PreparedStatement pStatement = createPreparedStatement("DELETE FROM dragons USING owner_table WHERE dragons.id = owner_table.dragon_id AND owner_table.auth_id = ? AND dragons.id = ?");
             pStatement.setInt(2, dragonId);
-            return deleteDragons(authKey, pStatement);
+            return deleteDragons(user, pStatement);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             return false;
@@ -119,15 +118,14 @@ public class DragonDB extends PSQL {
         
     }
 
-    public boolean deleteDragonsWithAuth(String authKey){
+    public boolean deleteDragonsWithAuth(User user){
         PreparedStatement pStatement = createPreparedStatement("DELETE FROM dragons USING owner_table WHERE dragons.id = owner_table.dragon_id AND owner_table.auth_id = ?");
-        return deleteDragons(authKey, pStatement);
+        return deleteDragons(user, pStatement);
     }
 
-    public int createOwner(int id, String authKey){
+    public int createOwner(int id, User user){
         try {
-            User user = ServerCommandManager.getAuthInstance().getUserByAuthKey(authKey);
-            int user_id = user.getId();
+            int user_id = ServerCommandManager.getAuthInstance().findUserId(user);
             PreparedStatement ownerStmt  = createPreparedStatement("INSERT INTO owner_table (auth_id, dragon_id) VALUES (?, ?)");
             ownerStmt.setInt(1, user_id);
             ownerStmt.setInt(2, id);
@@ -136,13 +134,13 @@ public class DragonDB extends PSQL {
             if (update > 0)
                 return user_id;
             return -1;
-        } catch (UserNotFound | SQLException e) {
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
             return -1;
         }
     }
 
-    public Pair<Integer, Integer> insertDragon(Dragon dragon, String authKey){ //should return id
+    public Pair<Integer, Integer> insertDragon(Dragon dragon, User user){ //should return id
         try {
             int coordId = insertCords(dragon.getCoordinates());
             if (coordId == -1)
@@ -164,7 +162,7 @@ public class DragonDB extends PSQL {
             ResultSet dSet = dPreparedStatement.executeQuery();
             if (dSet.next()){
                 int dragonId = dSet.getInt("id");
-                int user_id = createOwner(dragonId, authKey);
+                int user_id = createOwner(dragonId, user);
                 return new Pair<Integer, Integer>(dragonId, user_id);
             }
             return new Pair<Integer,Integer>(-1, -1);

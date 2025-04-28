@@ -27,6 +27,7 @@ public class ServerCommandManager extends CommandManager<Command> {
         registerCommand("count_by_type", new CountByTypeCommand(dragonManager));
         registerCommand("filter_by_character", new FilterByCharacterCommand(dragonManager));
         registerCommand("filter_less_than_head", new FilterLessThanHeadCommand(dragonManager));
+        registerCommand("reg", new RegistrationCommand());
         registerCommand("auth", new AuthCommand());
     }
 
@@ -34,9 +35,9 @@ public class ServerCommandManager extends CommandManager<Command> {
         Object answer;
         Command command = commands.get(name);
         Object arg = ((Pair<User, Object>) args).getValue2();
-        User authKey = ((Pair<User, Object>) args).getValue1();
-        System.out.println(arg);
-        System.out.println(authKey);
+        User user = ((Pair<User, Object>) args).getValue1();
+        //System.out.println(arg);
+        //System.out.println(authKey);
         if (command != null) {
             if (command.isHasArgs() == true && arg == null){
                 return "У команды должны быть аргументы.";
@@ -44,7 +45,7 @@ public class ServerCommandManager extends CommandManager<Command> {
             else if (command.isHasArgs() == false && arg != null){
                 return "У команды не может быть аргументов.";
             } else {
-                answer = command.execute(arg, authKey);
+                answer = command.execute(arg, user);
                 storeCommand(name);
             }
             

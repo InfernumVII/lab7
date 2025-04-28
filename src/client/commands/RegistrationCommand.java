@@ -8,11 +8,10 @@ import network.utility.SHA1;
 
 public class RegistrationCommand implements Command {
 	private User user;
+	private final static Console console = System.console();
 	
 	@Override
 	public Object execute(Object arg) {
-		//TOOD авторизация/регистрация
-		Console console = System.console();
 		String login;
 		do {
 			login = console.readLine("Введите логин: "); 
@@ -21,13 +20,8 @@ public class RegistrationCommand implements Command {
 		do {
 			passwordChars = console.readPassword("Введите пароль: ");
 		} while (!validatePassword(passwordChars));
-		//String username = SHA1.getSHA1String(new String(login)); 
-		//authKey = SHA1.getSHA1String(String.format("%s:%s", login, new String(passwordChars))); //TODO хешировать на сервере
-		//TODO посолить поперчить
 		user = new User(login, new String(passwordChars));
         return user;
-		//Запретить второй auth ()
-		
 	}
 
 	private boolean validateLogin(String username){

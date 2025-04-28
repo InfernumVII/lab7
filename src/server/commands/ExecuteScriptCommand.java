@@ -1,5 +1,6 @@
 package server.commands;
 
+import collection.User;
 import server.managers.ServerCommandManager;
 
 public class ExecuteScriptCommand implements Command {
@@ -10,8 +11,8 @@ public class ExecuteScriptCommand implements Command {
     }
 
     @Override
-    public Object execute(Object arg, String authKey){
-        if (!ServerCommandManager.getAuthInstance().passwordIsExist(authKey))
+    public Object execute(Object arg, User user){
+        if (!ServerCommandManager.getAuthInstance().checkUserCreds(user))
             return "Ошибка авторизации";
         return "Команды успешно выполнены";
     }

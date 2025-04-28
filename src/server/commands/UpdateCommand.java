@@ -11,6 +11,7 @@ import collection.Dragon.Builder;
 import collection.DragonCharacter;
 import collection.DragonHead;
 import collection.DragonType;
+import collection.User;
 import network.models.UpdateCommandArgs;
 import server.managers.ServerCommandManager;
 import server.managers.DragonManager;
@@ -50,8 +51,8 @@ public class UpdateCommand implements Command {
      * @param arg строка, содержащая ID дракона.
      */
     @Override
-    public Object execute(Object argument, String authKey){
-        if (!ServerCommandManager.getAuthInstance().passwordIsExist(authKey))
+    public Object execute(Object argument, User user){
+        if (!ServerCommandManager.getAuthInstance().checkUserCreds(user))
             return "Ошибка авторизации";
         Dragon arg = (Dragon) argument;
         int id = arg.getId();
@@ -63,7 +64,7 @@ public class UpdateCommand implements Command {
         } catch (DragonFindException e) {
             return e.getMessage();
         }
-        if (!dragonManager.preRemoveDragon(dragon, authKey)){
+        if (!dragonManager.preRemoveDragon(dragon, user)){
             return "Ошибка обновления";
         }
         
@@ -75,7 +76,7 @@ public class UpdateCommand implements Command {
         dragon.setCharacter(arg.getCharacter());
         dragon.setHead(arg.getHead());
 
-        Pair<Integer,Integer> pair = dragonManager.preAddDragon(dragon, authKey);
+        Pair<Integer,Integer> pair = dragonManager.preAddDragon(dragon, user);
         if (pair.getValue1() == -1 | pair.getValue2() == -1){
             return "Ошибка при обновлении дракона";
         }

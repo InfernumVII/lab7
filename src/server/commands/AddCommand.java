@@ -42,7 +42,7 @@ public class AddCommand implements Command {
 
     @Override
     public Object execute(Object arg, User user){
-        if (!ServerCommandManager.getAuthInstance().passwordIsExist(authKey))
+        if (!ServerCommandManager.getAuthInstance().checkUserCreds(user))
             return "Ошибка авторизации";
         StringJoiner stringJoiner = new StringJoiner("\n");
         Builder dragonBuilder = (Builder) arg;
@@ -51,7 +51,7 @@ public class AddCommand implements Command {
                     .withId(1)
                     .withDate(LocalDate.now())
                     .build();
-        Pair<Integer,Integer> pair = dragonManager.preAddDragon(dragon, authKey);
+        Pair<Integer,Integer> pair = dragonManager.preAddDragon(dragon, user);
         if (pair.getValue1() == -1 | pair.getValue2() == -1){
             return "Ошибка при добавлении дракона"; //todo DRY
         }

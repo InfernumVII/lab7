@@ -16,6 +16,7 @@ import collection.Dragon;
 import collection.DragonCharacter;
 import collection.DragonHead;
 import collection.DragonType;
+import collection.User;
 
 
 /**
@@ -35,8 +36,8 @@ public class AddIfMinCommand implements Command {
     }
 
     @Override
-    public Object execute(Object arg, String authKey){
-        if (!ServerCommandManager.getAuthInstance().passwordIsExist(authKey))
+    public Object execute(Object arg, User user){
+        if (!ServerCommandManager.getAuthInstance().checkUserCreds(user))
             return "Ошибка авторизации";
         StringJoiner stringJoiner = new StringJoiner("\n");
         stringJoiner.add("Добавление нового дракона.");
@@ -48,7 +49,7 @@ public class AddIfMinCommand implements Command {
                     .build();
             
         if (dragonManager.getDragonSet().isEmpty()){
-            Pair<Integer,Integer> pair = dragonManager.preAddDragon(dragon, authKey);
+            Pair<Integer,Integer> pair = dragonManager.preAddDragon(dragon, user);
             if (pair.getValue1() == -1 | pair.getValue2() == -1){
                 return "Ошибка при добавлении дракона";
             }
@@ -59,7 +60,7 @@ public class AddIfMinCommand implements Command {
         } else {
             Dragon minDragon = dragonManager.getMinDragonByXAndY();
             if (dragon.getCoordinates().getX() + dragon.getCoordinates().getY() < minDragon.getCoordinates().getX() + minDragon.getCoordinates().getY()){
-                Pair<Integer,Integer> pair = dragonManager.preAddDragon(dragon, authKey);
+                Pair<Integer,Integer> pair = dragonManager.preAddDragon(dragon, user);
                 if (pair.getValue1() == -1 | pair.getValue2() == -1){
                     return "Ошибка при добавлении дракона";
                 }
