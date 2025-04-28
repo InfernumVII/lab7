@@ -78,7 +78,7 @@ public class ConsoleInputHandler {
                     return in; 
                 }
             } catch (NumberFormatException e) {
-                System.err.printf("Число должно быть между %s и %s.\n", min, max); //TODO Пофиксить
+                System.err.printf("Число должно быть между %s и %s.\n", min, max);
             }
         }
     }
