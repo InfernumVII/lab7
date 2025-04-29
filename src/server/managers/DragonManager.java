@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -29,14 +30,13 @@ public class DragonManager {
     private Set<Dragon> dragonSet;
     private LocalDate initializationDate;
     private static DragonDB dragonDBInstance = new DragonDB(ServerMain.getManagerInsance().getConnection());
-    
     public DragonManager() {
         dragonSet = Collections.synchronizedSet(new LinkedHashSet<>());
         initializationDate = LocalDate.now();
-        loadFromDatabase();
+        loadFromDatabase(); 
     }
 
-    private void loadFromDatabase() {
+    private synchronized void loadFromDatabase() {
         List<Dragon> dbDragons = dragonDBInstance.getAllDragons();
         dragonSet.addAll(dbDragons);
         System.out.println("Загружено " + dbDragons.size() + " драконов из БД");
@@ -47,7 +47,7 @@ public class DragonManager {
         return dragonSet.getClass().getSimpleName();
     }
 
-    public Pair<Integer, Integer> preAddDragon(Dragon e, User user){
+    public synchronized Pair<Integer, Integer> preAddDragon(Dragon e, User user){
         return dragonDBInstance.insertDragon(e, user);
     }
 
@@ -91,7 +91,7 @@ public class DragonManager {
         return minDragon;
     }
 
-    public boolean preClearDragonSet(User user){
+    public synchronized boolean preClearDragonSet(User user){
         return dragonDBInstance.deleteDragonsWithAuth(user);
     }
 
@@ -102,7 +102,7 @@ public class DragonManager {
             .forEach(this::removeDragon);
     }
 
-    public boolean preRemoveDragon(Dragon e, User user){
+    public synchronized boolean preRemoveDragon(Dragon e, User user){
         return dragonDBInstance.deleteDragonsWithAuth(user, e.getId());
     }
 
