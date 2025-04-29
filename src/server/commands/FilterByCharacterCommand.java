@@ -6,9 +6,9 @@ import client.commands.utility.ConsoleInputHandler;
 import client.commands.utility.exceptions.ArgumentEnumException;
 import collection.Dragon;
 import collection.DragonCharacter;
-import collection.User;
 import server.managers.DragonManager;
 import server.managers.ServerCommandManager;
+import server.psql.auth.User;
 
 /**
  * Команда для вывода элементов коллекции, значение поля character которых равно заданному.

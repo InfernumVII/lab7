@@ -9,7 +9,6 @@ import java.util.Scanner;
 import java.util.concurrent.TimeoutException;
 
 import client.commands.RegistrationCommand;
-import collection.User;
 import network.Settings;
 import network.exceptions.TimeOutException;
 import network.models.Answer;
@@ -17,6 +16,7 @@ import network.models.NetCommand;
 import network.models.NetCommandAuth;
 import server.managers.exceptions.ParseCommandException;
 import server.psql.auth.RegistrationEnums;
+import server.psql.auth.User;
 
 public class ClientTerminalWithAuth extends ClientTerminal {
     private RegistrationCommand registrationCommand = new RegistrationCommand();

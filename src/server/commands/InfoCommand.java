@@ -3,9 +3,9 @@ package server.commands;
 import java.util.StringJoiner;
 
 import client.commands.utility.ConsoleInputHandler;
-import collection.User;
 import server.managers.DragonManager;
 import server.managers.ServerCommandManager;
+import server.psql.auth.User;
 
 /**
  * Команда для вывода информации о коллекции.

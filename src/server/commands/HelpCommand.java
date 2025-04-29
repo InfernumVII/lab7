@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 import client.commands.utility.ConsoleInputHandler;
-import collection.User;
 import server.managers.ServerCommandManager;
+import server.psql.auth.User;
 /**
  * Команда для вывода справки по доступным командам.
  * Реализует интерфейс {@link Command}.

@@ -1,7 +1,7 @@
 package server.commands;
-import collection.User;
 import server.managers.DragonManager;
 import server.managers.ServerCommandManager;
+import server.psql.auth.User;
 import server.psql.exceptions.UserNotFound;
 
 

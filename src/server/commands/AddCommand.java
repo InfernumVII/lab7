@@ -2,6 +2,7 @@ package server.commands;
 import collection.Dragon.Builder;
 import server.managers.ServerCommandManager;
 import server.psql.auth.Pair;
+import server.psql.auth.User;
 import server.managers.DragonManager;
 
 import java.time.LocalDate;
@@ -14,7 +15,6 @@ import collection.Dragon;
 import collection.DragonCharacter;
 import collection.DragonHead;
 import collection.DragonType;
-import collection.User;
 
 
 /**

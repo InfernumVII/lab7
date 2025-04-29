@@ -5,10 +5,10 @@ import client.commands.utility.ArgHandler;
 import client.commands.utility.ConsoleInputHandler;
 import client.commands.utility.exceptions.ArgumentNumberException;
 import collection.Dragon;
-import collection.User;
 import server.managers.DragonManager;
 import server.managers.ServerCommandManager;
 import server.managers.exceptions.DragonFindException;
+import server.psql.auth.User;
 
 /**
  * Команда для удаления элемента коллекции по его ID.

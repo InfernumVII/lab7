@@ -1,7 +1,7 @@
 package server.commands;
 
-import collection.User;
 import server.managers.ServerCommandManager;
+import server.psql.auth.User;
 
 public class RegistrationCommand implements Command {
 

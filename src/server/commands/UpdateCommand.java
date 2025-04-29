@@ -11,12 +11,12 @@ import collection.Dragon.Builder;
 import collection.DragonCharacter;
 import collection.DragonHead;
 import collection.DragonType;
-import collection.User;
 import network.models.UpdateCommandArgs;
 import server.managers.ServerCommandManager;
 import server.managers.DragonManager;
 import server.managers.exceptions.DragonFindException;
 import server.psql.auth.Pair;
+import server.psql.auth.User;
 
 
 /**

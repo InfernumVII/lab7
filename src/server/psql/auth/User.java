@@ -1,33 +1,30 @@
 package server.psql.auth;
 
-public class User {
-    private int id;
-    private String username;
-    private String password;
+import java.io.Serializable;
 
-    public User(int id, String username, String password){
-        this.id = id;
-        this.username = username;
+public class User implements Serializable{
+    private static final long serialVersionUID = 1L;
+    private final String login;
+    private final String password;
+
+    public User(String login, String password){
+        this.login = login;
         this.password = password;
     }
 
-    @Override
-    public String toString(){
-        return String.format("Key{id=%d, username=%s, password=%s}", id, username, password);
+    public String getLogin() {
+        return login;
     }
 
-	public int getId() {
-		return id;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    @Override
+    public String toString() {
+        return String.format("User{login='%s', password='%s'}",
+                login, password);
+    }
 
-
-
-	public String getPassword() {
-		return password;
-	}
     
 }

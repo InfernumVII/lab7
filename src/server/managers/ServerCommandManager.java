@@ -1,12 +1,12 @@
 package server.managers;
 
 
-import collection.User;
 import managers.CommandManager;
 import server.ServerMain;
 import server.commands.*;
 import server.psql.auth.Auth;
 import server.psql.auth.Pair;
+import server.psql.auth.User;
 
 
 public class ServerCommandManager extends CommandManager<Command> {

@@ -4,8 +4,8 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import client.commands.utility.ConsoleInputHandler;
-import collection.User;
 import server.managers.ServerCommandManager;
+import server.psql.auth.User;
 
 /**
  * Команда для вывода последних 5 выполненных команд (без аргументов).

@@ -1,6 +1,6 @@
 package server.commands;
 
-import collection.User;
+import server.psql.auth.User;
 
 public interface Command {
     Object execute(Object arg, User user); 

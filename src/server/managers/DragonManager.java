@@ -16,12 +16,12 @@ import java.util.concurrent.ForkJoinPool;
 
 
 import collection.Dragon;
-import collection.User;
 import server.ServerMain;
 import server.managers.exceptions.DragonFindException;
 import server.managers.utility.CSV;
 import server.managers.utility.DragonCSVParser;
 import server.psql.auth.Pair;
+import server.psql.auth.User;
 import server.psql.dragon.DragonDB;
 
 

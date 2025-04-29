@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
 
-import collection.User;
 import network.utility.SHA1;
 import server.psql.PSQL;
 //import server.psql.exceptions.UserNotFound;
@@ -28,7 +27,7 @@ public class Auth extends PSQL {
         return resultSet.next();
     }
 
-    public RegistrationEnums registerUser(collection.User user){
+    public RegistrationEnums registerUser(server.psql.auth.User user){
         try {
             if (checkLoginIsExist(user.getLogin())){
                 return RegistrationEnums.LOGIN_IS_EXIST;
@@ -92,7 +91,7 @@ public class Auth extends PSQL {
         return null;
     }
 
-    public boolean insertUser(collection.User user){
+    public boolean insertUser(server.psql.auth.User user){
         try {
             PreparedStatement pStatement = createPreparedStatement("INSERT INTO auth (login, password, salt) values (?, ?, ?)");
             byte[] salt = makeSalt();

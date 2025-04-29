@@ -14,10 +14,10 @@ import collection.Dragon;
 import collection.DragonCharacter;
 import collection.DragonHead;
 import collection.DragonType;
-import collection.User;
 import server.managers.ServerCommandManager;
 import server.psql.PSQL;
 import server.psql.auth.Pair;
+import server.psql.auth.User;
 import server.psql.exceptions.UserNotFound;
 
 public class DragonDB extends PSQL {

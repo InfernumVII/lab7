@@ -4,9 +4,9 @@ import java.util.StringJoiner;
 import client.commands.utility.ArgHandler;
 import client.commands.utility.ConsoleInputHandler;
 import collection.Dragon;
-import collection.User;
 import server.managers.DragonManager;
 import server.managers.ServerCommandManager;
+import server.psql.auth.User;
 
 /**
  * Команда для вывода элементов коллекции, значение поля head которых меньше заданного.

@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 
 import client.commands.utility.ConsoleInputHandler;
 import collection.Dragon;
-import collection.User;
 import network.models.RemoveGreaterCommandArgs;
 import server.managers.ServerCommandManager;
+import server.psql.auth.User;
 import server.managers.DragonManager;
 
 

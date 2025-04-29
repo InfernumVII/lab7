@@ -6,7 +6,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
 
-import collection.User;
 import network.Settings;
 import network.UdpNetwork;
 import network.exceptions.TimeOutException;
@@ -17,6 +16,7 @@ import server.managers.DragonManager;
 import server.managers.ServerCommandManager;
 import server.managers.exceptions.DragonFindException;
 import server.psql.auth.Pair;
+import server.psql.auth.User;
 
 public class ServerUdpNetwork extends UdpNetwork {
     private DragonManager dManager;
