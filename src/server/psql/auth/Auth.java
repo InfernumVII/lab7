@@ -22,7 +22,7 @@ public class Auth extends PSQL {
 
     public boolean checkLoginIsExist(String login) throws SQLException{
         PreparedStatement pStatement = createPreparedStatement("SELECT * FROM auth WHERE login = ?");
-        pStatement.setString(1, login);
+        pStatement.setString(1, login); //TODO почичать реализацию
         ResultSet resultSet = pStatement.executeQuery();
         return resultSet.next();
     }

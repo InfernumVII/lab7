@@ -52,7 +52,7 @@ public class RemoveByIdCommand implements Command {
                 Dragon dragon = dragonManager.returnDragonById(id);
                 if (dragon != null){
                     if (!dragonManager.preRemoveDragon(dragon, user)){
-                        return "Ошибка удаления";
+                        return "Ошибка удаления"; //Переименовать
                     }
                     dragonManager.removeDragon(dragon);
                     return "Дракон удалён.";

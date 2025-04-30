@@ -2,6 +2,8 @@ package server;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
@@ -24,7 +26,7 @@ public class ServerUdpNetwork extends UdpNetwork {
 
     ExecutorService responseSender;
     ForkJoinPool commandProcessor;
-
+    
     public ServerUdpNetwork(Settings settings) throws IOException {
         inetSocketAddress = getSocketAddress(settings);
         datagramChannel = createDatagramChannel(inetSocketAddress);
@@ -54,7 +56,7 @@ public class ServerUdpNetwork extends UdpNetwork {
 
             new Thread(() -> {
                 commandProcessor.submit(() -> {
-                    System.out.println(command.user());
+                    //System.out.println(command.user());
                     Answer answer = new Answer(serverCommandManager.executeCommand(command.command(),
                             new Pair<User, Object>(command.user(), command.arg())));
                     responseSender.submit(() -> {
@@ -66,7 +68,6 @@ public class ServerUdpNetwork extends UdpNetwork {
                     });
                 });
             }).start();
-
         }
     }
 }

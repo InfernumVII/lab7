@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class DragonHead implements Serializable {
     private static final long serialVersionUID = 1L; // уникальный идентификатор версии сериализованного класса. 
 
-    private Float eyesCount; //Поле может быть null
+    private Float eyesCount; //Поле может быть null и положительным
 
     /**
      * Конструктор для создания объекта головы дракона.

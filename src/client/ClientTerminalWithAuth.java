@@ -41,7 +41,7 @@ public class ClientTerminalWithAuth extends ClientTerminal {
         switch (choose) {
             case 2:
                 doReg(user);
-                break;
+                break; 
             case 1:
                 doAuth(user);
                 break;
